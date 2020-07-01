@@ -9,7 +9,7 @@ import scrapy
 import re
 
 
-class YKSpider(scrapy.Spider):
+class LESpider(scrapy.Spider):
     name = 'LE'
 
     def __init__(self):

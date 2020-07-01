@@ -1,7 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="3b19ede0-1e0c-41c1-8a55-285ade05eb03" name="Default Changelist" comment="" />
+    <list default="true" id="3b19ede0-1e0c-41c1-8a55-285ade05eb03" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/LEScrapy/LEScrapy/spiders/LESpider.py" beforeDir="false" afterPath="$PROJECT_DIR$/LEScrapy/LEScrapy/spiders/LESpider.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TXScrapy/TXScrapy/spiders/TXSpider.py" beforeDir="false" afterPath="$PROJECT_DIR$/TXScrapy/TXScrapy/spiders/TXSpider.py" afterDir="false" />
+    </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -42,16 +48,45 @@
         </counts>
       </usages-collector>
     </session>
+    <session id="-1752805609">
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.open.time.0" value="1" />
+          <entry key="project.opened" value="1" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.edit">
+        <counts>
+          <entry key="py" value="1233" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.edit">
+        <counts>
+          <entry key="Python" value="1233" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.extensions.open">
+        <counts>
+          <entry key="py" value="2" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.file.types.open">
+        <counts>
+          <entry key="Python" value="2" />
+        </counts>
+      </usages-collector>
+    </session>
   </component>
   <component name="FileEditorManager">
-    <leaf>
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
       <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TXScrapy/TXScrapy/spiders/TXSpider.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="187">
-              <caret line="79" lean-forward="true" selection-start-line="79" selection-end-line="79" />
+            <state relative-caret-position="732">
+              <caret line="131" column="53" selection-start-line="131" selection-start-column="53" selection-end-line="131" selection-end-column="53" />
               <folding>
                 <element signature="e#47#58#0" expanded="true" />
+                <marker date="1593591716116" expanded="true" signature="1256:1750" ph="..." />
               </folding>
             </state>
           </provider>
@@ -66,6 +101,9 @@
       </list>
     </option>
   </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
+  </component>
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
@@ -75,29 +113,30 @@
         <option value="$PROJECT_DIR$/LEScrapy/LEScrapy/middlewares.py" />
         <option value="$PROJECT_DIR$/LEScrapy/LEScrapy/pipelines.py" />
         <option value="$PROJECT_DIR$/LEScrapy/LEScrapy/settings.py" />
-        <option value="$PROJECT_DIR$/LEScrapy/LEScrapy/spiders/LESpider.py" />
         <option value="$PROJECT_DIR$/TXScrapy/TXScrapy/items.py" />
         <option value="$PROJECT_DIR$/TXScrapy/TXScrapy/middlewares.py" />
         <option value="$PROJECT_DIR$/TXScrapy/TXScrapy/pipelines.py" />
         <option value="$PROJECT_DIR$/TXScrapy/StartTX.py" />
         <option value="$PROJECT_DIR$/TXScrapy/TXScrapy/spiders/utils.py" />
-        <option value="$PROJECT_DIR$/TXScrapy/TXScrapy/spiders/TXSpider.py" />
         <option value="$PROJECT_DIR$/TXScrapy/TXScrapy/settings.py" />
+        <option value="$PROJECT_DIR$/LEScrapy/LEScrapy/spiders/LESpider.py" />
+        <option value="$PROJECT_DIR$/TXScrapy/TXScrapy/spiders/TXSpider.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds" extendedState="6">
-    <option name="x" value="586" />
-    <option name="y" value="19" />
-    <option name="width" value="1299" />
-    <option name="height" value="1055" />
+  <component name="ProjectFrameBounds">
+    <option name="x" value="-7" />
+    <option name="width" value="1435" />
+    <option name="height" value="1087" />
+  </component>
+  <component name="ProjectLevelVcsManager" settingsEditedManually="true">
+    <ConfirmationsSetting value="2" id="Add" />
   </component>
   <component name="ProjectView">
     <navigator proportions="" version="1">
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Course" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -127,15 +166,23 @@
               <item name="TXScrapy" type="462c0819:PsiDirectoryNode" />
               <item name="TXScrapy" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="ScrapyProj" type="b2602c69:ProjectViewProjectNode" />
+              <item name="ScrapyProj" type="462c0819:PsiDirectoryNode" />
+              <item name="TXScrapy" type="462c0819:PsiDirectoryNode" />
+              <item name="TXScrapy" type="462c0819:PsiDirectoryNode" />
+              <item name="spiders" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Course" />
     </panes>
   </component>
   <component name="PropertiesComponent">
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
-    <property name="settings.editor.selected.configurable" value="preferences.sourceCode.Python" />
+    <property name="settings.editor.selected.configurable" value="reference.settingsdialog.IDE.editor.colors.General" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -189,18 +236,14 @@
     <configuration />
   </component>
   <component name="ToolWindowManager">
-    <frame x="-7" y="-7" width="1295" height="735" extended-state="6" />
+    <frame x="-7" y="0" width="1435" height="1087" extended-state="0" />
     <editor active="true" />
     <layout>
-      <window_info id="DB Browser" />
-      <window_info id="Project Explorer" />
-      <window_info id="Job Explorer" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.14455917" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.22787611" />
       <window_info id="Structure" order="1" weight="0.25" />
-      <window_info anchor="bottom" id="Console" />
-      <window_info anchor="bottom" id="DB Execution Console" />
-      <window_info anchor="bottom" id="Version Control" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Python Console" />
+      <window_info id="Project Explorer" order="2" />
+      <window_info id="DB Browser" order="3" />
+      <window_info id="Job Explorer" order="4" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
       <window_info anchor="bottom" id="Run" order="2" weight="0.1184" />
@@ -208,6 +251,10 @@
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Console" order="7" />
+      <window_info anchor="bottom" id="DB Execution Console" order="8" />
+      <window_info anchor="bottom" id="Version Control" order="9" />
+      <window_info anchor="bottom" id="Python Console" order="10" />
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -248,10 +295,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="264">
           <caret line="12" column="12" selection-start-line="12" selection-start-column="12" selection-end-line="12" selection-end-column="12" />
-          <folding>
-            <marker date="1593509649025" expanded="true" signature="204:205" ph="..." />
-            <marker date="1593509649025" expanded="true" signature="204:211" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -259,9 +302,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-1948">
           <caret line="11" selection-start-line="11" selection-end-line="18" />
-          <folding>
-            <element signature="e#168#181#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -269,9 +309,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="198">
           <caret line="9" column="13" selection-start-line="9" selection-start-column="13" selection-end-line="9" selection-end-column="13" />
-          <folding>
-            <element signature="e#169#195#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -279,9 +316,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="54">
           <caret line="13" column="8" lean-forward="true" selection-start-line="13" selection-start-column="8" selection-end-line="13" selection-end-column="8" />
-          <folding>
-            <marker date="1593503767731" expanded="true" signature="315:612" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -289,9 +323,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="132">
           <caret line="6" selection-start-line="6" selection-end-line="7" selection-end-column="37" />
-          <folding>
-            <element signature="e#193#215#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -299,9 +330,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="242">
           <caret line="11" lean-forward="true" selection-start-line="11" selection-end-line="11" />
-          <folding>
-            <element signature="e#193#204#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -333,24 +361,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/LEScrapy/LEScrapy/spiders/LESpider.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="277">
-          <caret line="87" column="22" lean-forward="true" selection-end-line="90" />
-          <folding>
-            <element signature="e#47#58#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TXScrapy/TXScrapy/items.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="159">
           <caret line="15" column="12" selection-start-line="15" selection-start-column="6" selection-end-line="15" selection-end-column="12" />
-          <folding>
-            <marker date="1593583547813" expanded="true" signature="315:320" ph="..." />
-            <marker date="1593583547813" expanded="true" signature="315:612" ph="..." />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -368,12 +382,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TXScrapy/TXScrapy/spiders/TXSpider.py">
+    <entry file="file://$PROJECT_DIR$/LEScrapy/LEScrapy/spiders/LESpider.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="187">
-          <caret line="79" lean-forward="true" selection-start-line="79" selection-end-line="79" />
+        <state relative-caret-position="-1039">
+          <caret line="11" column="13" lean-forward="true" selection-start-line="11" selection-start-column="13" selection-end-line="11" selection-end-column="13" />
           <folding>
             <element signature="e#47#58#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://D:/Program/Anaconda/Lib/site-packages/scrapy/http/request/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="299">
+          <caret line="20" column="41" selection-start-line="20" selection-start-column="41" selection-end-line="20" selection-end-column="41" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TXScrapy/TXScrapy/spiders/TXSpider.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="732">
+          <caret line="131" column="53" selection-start-line="131" selection-start-column="53" selection-end-line="131" selection-end-column="53" />
+          <folding>
+            <element signature="e#47#58#0" expanded="true" />
+            <marker date="1593591716116" expanded="true" signature="1256:1750" ph="..." />
           </folding>
         </state>
       </provider>

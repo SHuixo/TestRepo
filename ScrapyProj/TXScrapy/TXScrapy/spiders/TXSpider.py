@@ -1,90 +1,134 @@
 # -*- coding: utf-8 -*-
 # 使用selenium解决动态加载数据抓取
 import copy
-
-import requests
-from LEScrapy.items import TXItem
+from TXScrapy.items import TXItem
 import logging
 import scrapy
 import re
 
+from TXScrapy.TXScrapy.spiders import utils
 
-class YKSpider(scrapy.Spider):
+
+class TXSpider(scrapy.Spider):
     name = 'TX'
 
     def __init__(self):
 
         self.strRegex = re.compile('[^\w\u4e00-\u9fff]')
         self.Type = ['电视剧', '电影', '综艺', '动漫']
-        self.ListUrls = [
-            "http://list.le.com/getLesoData?from=pc&src=1&stype=1&ps=30&pn={lpage}&ph=420001&dt=1&cg=2&or=4&stt=1&vt=180001&s=1",
-            ##剧集热播
-            "http://list.le.com/getLesoData?from=pc&src=1&stype=1&ps=30&pn={lpage}&ph=420001&dt=1&cg=2&or=5&stt=1&vt=180001&s=1",
-            ##剧集最新
-            "http://list.le.com/getLesoData?from=pc&src=1&stype=1&ps=30&pn={lpage}&ph=420001&dt=1&cg=1&or=4&stt=1&vt=180001&s=1",
-            ##电影热播
-            "http://list.le.com/getLesoData?from=pc&src=1&stype=1&ps=30&pn={lpage}&ph=420001&dt=1&cg=1&or=1&stt=1&vt=180001&s=1",
-            ##电影最新
-            "http://list.le.com/getLesoData?from=pc&src=1&stype=1&ps=30&pn={lpage}&ph=420001&dt=1&cg=11&or=4&stt=1&s=3",
-            ##综艺热播
-            "http://list.le.com/getLesoData?from=pc&src=1&stype=1&ps=30&pn={lpage}&ph=420001&dt=1&cg=11&or=7&stt=1&s=3",
-            ##综艺最新
-            "http://list.le.com/getLesoData?from=pc&src=1&stype=1&ps=30&pn={lpage}&ph=420001&dt=1&cg=5&or=4&stt=1&s=1",
-            ##动漫热播
-            "http://list.le.com/getLesoData?from=pc&src=1&stype=1&ps=30&pn={lpage}&ph=420001&dt=1&cg=5&or=5&stt=1&s=1"
-            ##动漫最新
-        ]
-        self.LEUrl = "http://www.le.com/ptv/vplay/{vid}.html"
-        self.Maps = {"cg=2&": 0, "cg=1&": 1, "cg=11&": 2, "cg=5&": 3}
+        self.Areas = [utils.TX_TVAreas, utils.TX_MovieAreas, utils.TX_VarietyAreas, utils.TX_CartoonAreas]
+        self.Maps = {"tv": 0, "movie": 1, "variety": 2, "cartoon": 3}
+        self.Funcs = [self.getTvItem,self.getMovieItem,self.getVarietyItem,self.getTvItem]
 
     def start_requests(self):
-
-        for reqUrl in self.ListUrls:
-            logging.warning("Start reqUrl {url}".format(url=reqUrl))
-            lindex = [self.Maps[key] for key in self.Maps if key in reqUrl][0]
-            for lpage in range(1, 20):
-                logging.warning("start reqUrl page at {page}".format(page=lpage))
-                resHtml = requests.get(reqUrl.format(lpage=lpage))
-                resHtml.encoding = 'utf-8'
-                resHtml = resHtml.text
-                resData = re.search(r'"data":{"more":(.*?)}}', resHtml).group(1)
-                if resData == "false":
-                    break;
-                vids = re.findall(r'"vids":"(.*?)",', resHtml)
-                for vid in vids:
-                    if vid is not None:
-                        for vid in vid.split(','):
-                            item = TXItem()
-                            item["uid"] = vid
-                            url = self.LEUrl.format(vid = vid)
-                            yield scrapy.Request(url=url, meta={"meta":copy.deepcopy(item)},callback= lambda response, index = lindex: self.parseItemDetails(response, index))
-            logging.warning("finish reqUrl all page")
+        for reqUrl in utils.TX_Urls:
+            index = [self.Maps[key] for key in self.Maps if key in reqUrl][0]
+            Area = self.Areas[index]
+            for iarea in Area:
+                for lpage in range(1,50):
+                    response = scrapy.Request(url=reqUrl.format(iarea=iarea,ofset=lpage*30),meta=copy.deepcopy({"index":index}),callback=self.getHtml)
+                    yield response
+                logging.warning("finish reqUrl all page")
+            logging.warning("finish reqUrl all area")
         logging.warning("Finish all reqUrls")
 
-    def parseItemDetails(self, response, index):
-        item = response.meta["meta"]
+    def getHtml(self, response):
+        index = response.meta["index"]
+        resHtml = response.text
+        if len(resHtml) > 10:
+            hrefs = response.xpath('/html/body/*/a/@href').extract()
+            hrefs.extend(response.xpath('/html/body/div/div/div[2]/*/a/@href').extract())
+            hrefs = list(set(hrefs))
+            for href in hrefs:
+                response = scrapy.Request(url=href,meta=copy.deepcopy({"index": index,"href": href}),callback=self.Funcs[index])
+                yield response
+
+    def getTvItem(self, response):
+        index = response.meta["index"]
+        href = response.meta["href"]
         reshtml = response.text
-        errmsg = str(response.xpath('string(/html/body/div[2]/div/div[2]/h2)').extract_first()[:2])
-        badmsg = str(re.findall(r'<head><title>(.*?)</title></head>',reshtml))
-
-        if "抱歉" != errmsg and "502 Bad Gateway" not in badmsg and reshtml is not None:
-            item["title"] = self.strRegex.sub('',str(re.search(r'pTitle:"(.*?)",',reshtml).group(1)))
-            item["pid"] = re.search(r'pid:(.*?),',reshtml).group(1)
+        if reshtml is not None:
+            item = TXItem()
+            item["title"] = str(response.xpath('string(//*[@id="container_player"]/div/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/h2/a)').extract_first()).strip()
+            item["category"] = str(response.xpath('string(//*[@id="container_player"]/div/div[2]/div[1]/div[2]/div/div[4])').extract_first()).replace('\n','').replace(' ','').strip()
+            item["actor"] = None
+            item["pid"] = None
             item["hid"] = None
-            ##演员
-            reGroup = re.search(r'<b>主演：</b><span>(.*?)</span>',reshtml)
-            if reGroup is not None:
-                item["actor"] = str(re.findall(r'title="(.*?)"', reGroup.group(1)))
+            ## 获得每一集的ID
+            vidGroup = re.search(r'{"vid":\[(.*?)\],',reshtml)
+            if vidGroup is not None:
+                vids = vidGroup.group(1)
+                if len(vids) > 2:
+                    vids = vids.replace('"','').split(',')
+                    for vid in vids:
+                        reqUrl = href[:-5]+'/'+vid+'.html'
+                        response2 = scrapy.Request(url=reqUrl)
+                        name = str(response2.xpath('string(//*[@id="container_player"]/div/div[2]/div[1]/div[1]/h1)').extract_first()).strip()
+                        ##预防包含非正常符号，导致出错
+                        item["name"] = self.strRegex.sub('',name)
+                        item["type"] = self.Type[index]
+                        yield item
+                else:
+                    logging.warning("Err no vids at href {}".format(href))
             else:
-                item["actor"] = None
-
-            reAll = re.findall(r'>(.*?)</a>', re.search(r'<b>类型：</b><span>(.*?)</span>',reshtml))
-            if reAll is not None:
-                item["category"] = str(reAll.group(1))
-            else:
-                item["category"] = None
-            item["name"] = self.strRegex.sub('',str(re.search(r'title:"(.*?)",',reshtml).group(1)))
-            item["type"] = self.Type[index]
-            yield item
+                logging.warning("Err no vidGroup at href {}".format(href))
         else:
-            logging.warning("Err No Item at uid {}".format(item["uid"]))
+            logging.warning("Err No reshtml at href {}".format(href))
+
+    def getMovieItem(self,response):
+        index = response.meta["index"]
+        href = response.meta["href"]
+        reshtml = response.text
+        if reshtml is not None:
+            item = TXItem()
+            item["title"] = str(response.xpath('string(//*[@id="container_player"]/div/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/h2/a)').extract_first()).strip()
+            item["category"] = str(response.xpath('string(//*[@id="container_player"]/div/div[2]/div[1]/div[2]/div/div[3])').extract_first()).replace('\n','').replace(' ','').strip()
+            item["actor"] = None
+            item["pid"] = None
+            item["hid"] = None
+            ## 获得每一集的ID
+            vidGroup = re.search(r'{"vid":\[(.*?)\],',reshtml)
+            if vidGroup is not None:
+                vids = vidGroup.group(1).replace('"','').split(',')
+                for vid in vids:
+                    reqUrl = href[:-5]+'/'+vid+'.html'
+                    response2 = scrapy.Request(url=reqUrl)
+                    name = str(response2.xpath('string(//*[@id="container_player"]/div/div[2]/div[1]/div[1]/h1)').extract_first()).strip()
+                    ##预防包含非正常符号，导致出错
+                    item["name"] = self.strRegex.sub('',name)
+                    item["type"] = self.Type[index]
+                    yield item
+            else:
+                logging.warning("Err no vidGroup at href {}".format(href))
+        else:
+            logging.warning("Err No reshtml at href {}".format(href))
+
+    def getVarietyItem(self,response):
+        index = response.meta["index"]
+        reshtml = response.text
+        if reshtml is not None:
+            item = TXItem()
+            item["title"] = str(response.xpath('string(//*[@id="container_player"]/div[2]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/h2/a)').extract_first()).strip()
+            item["category"] = str(response.xpath('string(//*[@id="container_player"]/div[2]/div[2]/div[1]/div[2]/div/div[3])').extract_first()).replace('\n','').replace(' ','').strip()
+            item["actor"] = None
+            item["pid"] = None
+            item["hid"] = None
+            hrefs = response.xpath('//*[@id="video_scroll_wrap"]/div[5]/div/ul/*/a[1]/@href').extract()
+            for href in hrefs:
+                if href is not None:
+                    vidGroup = re.search(r'/(.*?).html',href)
+                    if vidGroup is not None:
+                        item["uid"] = vidGroup.group(1).split('/')[-1]
+                        reqUrl = "https://v.qq.com" + href
+                        response2 = scrapy.Request(url=reqUrl)
+                        name = str(response2.xpath('string(//*[@id="container_player"]/div[2]/div[2]/div[1]/div[1]/h1)').extract_first()).strip()
+                        ##预防包含非正常符号，导致出错
+                        item["name"] = self.strRegex.sub('',name)
+                        item["type"] = self.Type[index]
+                        yield item
+                    else:
+                        logging.warning("Err no vidGroup at href {}".format(href))
+                else:
+                    logging.warning("Err href is None")
+        else:
+            logging.warning("Err No reshtml at getVarietyItem")
