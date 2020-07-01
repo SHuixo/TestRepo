@@ -13,7 +13,7 @@ class TxscrapyItem(scrapy.Item):
     # name = scrapy.Field()
     pass
 
-class TXItem(scrapy.item):
+class TXItem(scrapy.Item):
     uid = scrapy.Field()   # 视频url请求id
     pid = scrapy.Field()   # 视频系列id
     hid = scrapy.Field()   # 视频隐藏id

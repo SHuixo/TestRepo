@@ -1,12 +1,12 @@
 # -*- coding: utf-8 -*-
 # 使用selenium解决动态加载数据抓取
 import copy
-from TXScrapy.items import TXItem
 import logging
 import scrapy
 import re
 
-from TXScrapy.TXScrapy.spiders import utils
+from TXScrapy.items import TXItem
+from TXScrapy.spiders import utils
 
 
 class TXSpider(scrapy.Spider):
@@ -22,10 +22,13 @@ class TXSpider(scrapy.Spider):
 
     def start_requests(self):
         for reqUrl in utils.TX_Urls:
+            logging.warning("start requrl {}".format(reqUrl))
             index = [self.Maps[key] for key in self.Maps if key in reqUrl][0]
             Area = self.Areas[index]
             for iarea in Area:
+                logging.warning("start requrl  iarea{}".format(iarea))
                 for lpage in range(1,50):
+                    logging.warning("start requrl  iarea lpage{}".format(lpage))
                     response = scrapy.Request(url=reqUrl.format(iarea=iarea,ofset=lpage*30),meta=copy.deepcopy({"index":index}),callback=self.getHtml)
                     yield response
                 logging.warning("finish reqUrl all page")
@@ -61,13 +64,10 @@ class TXSpider(scrapy.Spider):
                 if len(vids) > 2:
                     vids = vids.replace('"','').split(',')
                     for vid in vids:
+                        item["uid"] = vid
                         reqUrl = href[:-5]+'/'+vid+'.html'
-                        response2 = scrapy.Request(url=reqUrl)
-                        name = str(response2.xpath('string(//*[@id="container_player"]/div/div[2]/div[1]/div[1]/h1)').extract_first()).strip()
-                        ##预防包含非正常符号，导致出错
-                        item["name"] = self.strRegex.sub('',name)
-                        item["type"] = self.Type[index]
-                        yield item
+                        response = scrapy.Request(url=reqUrl,meta=copy.deepcopy({"meta":item,"index":index}),callback=self.getItem)
+                        yield response
                 else:
                     logging.warning("Err no vids at href {}".format(href))
             else:
@@ -91,13 +91,10 @@ class TXSpider(scrapy.Spider):
             if vidGroup is not None:
                 vids = vidGroup.group(1).replace('"','').split(',')
                 for vid in vids:
+                    item["uid"] = vid
                     reqUrl = href[:-5]+'/'+vid+'.html'
-                    response2 = scrapy.Request(url=reqUrl)
-                    name = str(response2.xpath('string(//*[@id="container_player"]/div/div[2]/div[1]/div[1]/h1)').extract_first()).strip()
-                    ##预防包含非正常符号，导致出错
-                    item["name"] = self.strRegex.sub('',name)
-                    item["type"] = self.Type[index]
-                    yield item
+                    response = scrapy.Request(url=reqUrl,meta=copy.deepcopy({"meta":item,"index":index}),callback=self.getItem)
+                    yield response
             else:
                 logging.warning("Err no vidGroup at href {}".format(href))
         else:
@@ -120,15 +117,23 @@ class TXSpider(scrapy.Spider):
                     if vidGroup is not None:
                         item["uid"] = vidGroup.group(1).split('/')[-1]
                         reqUrl = "https://v.qq.com" + href
-                        response2 = scrapy.Request(url=reqUrl)
-                        name = str(response2.xpath('string(//*[@id="container_player"]/div[2]/div[2]/div[1]/div[1]/h1)').extract_first()).strip()
-                        ##预防包含非正常符号，导致出错
-                        item["name"] = self.strRegex.sub('',name)
-                        item["type"] = self.Type[index]
-                        yield item
+                        response = scrapy.Request(url=reqUrl,meta=copy.deepcopy({"meta":item,"index":index}),callback=self.getItem)
+                        yield response
                     else:
                         logging.warning("Err no vidGroup at href {}".format(href))
                 else:
                     logging.warning("Err href is None")
         else:
             logging.warning("Err No reshtml at getVarietyItem")
+
+    def getItem(self,response):
+        index = response.meta["index"]
+        item = response.meta["meta"]
+        if index == 2:
+            name = str(response.xpath('string(//*[@id="container_player"]/div[2]/div[2]/div[1]/div[1]/h1)').extract_first()).strip()
+        else:
+            name = str(response.xpath('string(//*[@id="container_player"]/div/div[2]/div[1]/div[1]/h1)').extract_first()).strip()
+        ##预防包含非正常符号，导致出错
+        item["name"] = self.strRegex.sub('',name)
+        item["type"] = self.Type[index]
+        yield item
