@@ -69,15 +69,16 @@ ROBOTSTXT_OBEY = True
 
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
-#SPIDER_MIDDLEWARES = {
-#    'YKScrapy.middlewares.YkscrapySpiderMiddleware': 543,
-#}
+# SPIDER_MIDDLEWARES = {
+#         'YKScrapy.middlewares.YkscrapySpiderMiddleware': 543,
+# }
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    'YKScrapy.middlewares.YkscrapyDownloaderMiddleware': 543,
-#}
+DOWNLOADER_MIDDLEWARES = {
+        'YKScrapy.middlewares.YkscrapyDownloaderMiddleware': 543,
+        'YKScrapy.middlewares.RandomUserAgentMiddleWare': 542,
+}
 
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html
@@ -87,9 +88,10 @@ ROBOTSTXT_OBEY = True
 
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
-#ITEM_PIPELINES = {
-#    'YKScrapy.pipelines.YkscrapyPipeline': 300,
-#}
+ITEM_PIPELINES = {
+        'YKScrapy.pipelines.YkscrapyPipeline': 300,
+        'YKScrapy.pipelines.MySQLPipeline': 299,
+}
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html

@@ -69,16 +69,16 @@ ROBOTSTXT_OBEY = True
 
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
-SPIDER_MIDDLEWARES = {
-    'TXScrapy.middlewares.TxscrapySpiderMiddleware': 543,
-    'TXScrapy.middlewares.RandomUserAgentMiddleWare': 542,
-}
+# SPIDER_MIDDLEWARES = {
+#     'TXScrapy.middlewares.TxscrapySpiderMiddleware': 543,
+# }
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
-#DOWNLOADER_MIDDLEWARES = {
-#    'TXScrapy.middlewares.TxscrapyDownloaderMiddleware': 543,
-#}
+DOWNLOADER_MIDDLEWARES = {
+    'TXScrapy.middlewares.TxscrapyDownloaderMiddleware': 543,
+    'TXScrapy.middlewares.RandomUserAgentMiddleWare': 542,
+}
 
 # Enable or disable extensions
 # See https://doc.scrapy.org/en/latest/topics/extensions.html

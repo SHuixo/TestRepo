@@ -4,7 +4,8 @@
 #
 # See documentation in:
 # https://doc.scrapy.org/en/latest/topics/spider-middleware.html
-
+import random
+from scrapy.conf import settings
 from scrapy import signals
 
 
@@ -87,6 +88,9 @@ class YkscrapyDownloaderMiddleware(object):
         # - return a Response object
         # - return a Request object
         # - or raise IgnoreRequest
+
+
+
         return response
 
     def process_exception(self, request, exception, spider):
@@ -101,3 +105,11 @@ class YkscrapyDownloaderMiddleware(object):
 
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
+
+class RandomUserAgentMiddleWare(object):
+
+    def __init__(self):
+        self.user_agents=settings["USER_AGENTS"]
+
+    def process_request(self, request, spider):
+        request.headers.setdefault("User-Agent", random.choice(self.user_agents))
