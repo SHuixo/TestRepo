@@ -45,47 +45,10 @@ class YKSpider(scrapy.Spider):
 				yield scrapy.Request(url=jdurl, callback=self.parse)
 
 	def parse(self, response):
-		"""京东"""
-		urls = response.xpath('//li[@class="gl-item"]/div/div[@class="p-name p-name-type-2"]/a')
-		for url in urls:
-			item = JDSItem()
-			item['keyword'] = self.keyword
-			url = url.xpath('@href').extract()
-			item['link']  = response.urljoin(url[0])# 商品链接
 
-			for link in url:
-				url = response.urljoin(link)
 				yield scrapy.Request(url=url, meta={'meta': item}, callback=self.parseItemDetails)
 
 	def parseItemDetails(self, response):
-		item = response.meta["meta"]
-		#获取商品的id，构建评论url
-		item["id"] = item["link"].split('/')[-1].split('.')[0]
-		#print("获得商品的品牌")
-		item_mark = str(response.xpath('string(//*[@id="crumb-wrap"]/div/div[1]/div[7]/a)').extract()[0])
-		item_mark += str(response.xpath('string(//*[@id="crumb-wrap"]/div/div[1]/div[7]/div/div/div[1]/a)').extract()[0])
-		item["mark"] = item_mark
-		#print("获得商品的名称")
-		item["name"] = str(response.xpath('string(//*[@class="sku-name"])').extract()[0]).strip()
-		#print("获得产品的颜色")
-		item_color = response.xpath('//*[@id="choose-attr-1"]/div[2]//@data-value').extract()
-		item_color = ",".join(item_color)
-		item["color"] = item_color
-		#print("获得产品的型号")
-		item_type = response.xpath('//*[@id="choose-attr-2"]/div[2]//@data-value').extract()
-		item_type = ",".join(item_type)
-		item["type"] = item_type
-		#获得产品价格
-		price_url = "https://p.3.cn/prices/mgets?callback=jQuery8876824&skuIds=" + str(item["id"])
-		price = requests.get(price_url).text
-		money = re.findall(r'\"p\"\:\"(.*?)\"}]\)', price)
-		item['price'] = money[0]
 
-		commenturl = "https://club.jd.com/comment/productCommentSummaries.action?referenceIds=" + str(item["id"])
-		comres = requests.get(commenturl).text
-		datares = json.loads(comres)
-		##累计评论数
-		comnumstr = datares['CommentsCount'][0]['CommentCountStr']
-		item['ccountstr'] = comnumstr
 
 		yield item

@@ -2,12 +2,9 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3b19ede0-1e0c-41c1-8a55-285ade05eb03" name="Default Changelist" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/LEScrapy/LOG_LE.log" beforeDir="false" afterPath="$PROJECT_DIR$/LEScrapy/LOG_LE.log" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TXScrapy/TXScrapy/items.py" beforeDir="false" afterPath="$PROJECT_DIR$/TXScrapy/TXScrapy/items.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TXScrapy/TXScrapy/settings.py" beforeDir="false" afterPath="$PROJECT_DIR$/TXScrapy/TXScrapy/settings.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/TXScrapy/TXScrapy/spiders/TXSpider.py" beforeDir="false" afterPath="$PROJECT_DIR$/TXScrapy/TXScrapy/spiders/TXSpider.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/TXScrapy/LOG_TX.log" beforeDir="false" afterPath="$PROJECT_DIR$/TXScrapy/LOG_TX.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/YKScrapy/YKScrapy/spiders/YKSpider.py" beforeDir="false" afterPath="$PROJECT_DIR$/YKScrapy/YKScrapy/spiders/YKSpider.py" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -81,26 +78,26 @@
       <usages-collector id="statistics.file.extensions.open">
         <counts>
           <entry key="cfg" value="1" />
-          <entry key="log" value="6" />
-          <entry key="py" value="10" />
+          <entry key="log" value="9" />
+          <entry key="py" value="16" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
-          <entry key="PLAIN_TEXT" value="7" />
-          <entry key="Python" value="10" />
+          <entry key="PLAIN_TEXT" value="10" />
+          <entry key="Python" value="16" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="log" value="2" />
-          <entry key="py" value="479" />
+          <entry key="log" value="3" />
+          <entry key="py" value="485" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PLAIN_TEXT" value="2" />
-          <entry key="Python" value="479" />
+          <entry key="PLAIN_TEXT" value="3" />
+          <entry key="Python" value="485" />
         </counts>
       </usages-collector>
     </session>
@@ -110,8 +107,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/TXScrapy/TXScrapy/spiders/TXSpider.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="256">
-              <caret line="93" column="37" selection-start-line="93" selection-start-column="37" selection-end-line="93" selection-end-column="37" />
+            <state relative-caret-position="242">
+              <caret line="11" column="30" selection-start-line="11" selection-start-column="30" selection-end-line="11" selection-end-column="30" />
               <folding>
                 <element signature="e#47#58#0" expanded="true" />
               </folding>
@@ -120,37 +117,34 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TXScrapy/TXScrapy/settings.py">
+        <entry file="file://$PROJECT_DIR$/YKScrapy/YKScrapy/items.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="304">
-              <caret line="55" column="32" lean-forward="true" selection-start-line="55" selection-start-column="32" selection-end-line="55" selection-end-column="32" />
+            <state relative-caret-position="48">
+              <caret line="13" column="12" lean-forward="true" selection-start-line="13" selection-start-column="12" selection-end-line="13" selection-end-column="12" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/YKScrapy/YKScrapy/middlewares.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="484">
+              <caret line="22" selection-start-line="22" selection-end-line="22" />
+              <folding>
+                <element signature="e#691#861#0" />
+                <element signature="e#934#1146#0" />
+                <element signature="e#1524#1581#0" />
+                <element signature="e#1955#3598#0" />
+              </folding>
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/TXScrapy/LOG_TX.log">
+        <entry file="file://$PROJECT_DIR$/YKScrapy/YKScrapy/spiders/YKSpider.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="252">
-              <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TXScrapy/TXScrapy/pipelines.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-418">
-              <caret line="11" selection-start-line="11" selection-end-line="11" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/TXScrapy/StartTX.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="132">
-              <caret line="6" selection-start-line="6" selection-end-line="6" />
+            <state relative-caret-position="202">
+              <caret line="47" column="8" selection-start-line="47" selection-start-column="8" selection-end-line="47" selection-end-column="8" />
             </state>
           </provider>
         </entry>
@@ -163,6 +157,11 @@
         <option value="Python Script" />
       </list>
     </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>100033</find>
+    </findStrings>
   </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
@@ -179,20 +178,22 @@
         <option value="$PROJECT_DIR$/TXScrapy/TXScrapy/middlewares.py" />
         <option value="$PROJECT_DIR$/TXScrapy/TXScrapy/pipelines.py" />
         <option value="$PROJECT_DIR$/TXScrapy/StartTX.py" />
-        <option value="$PROJECT_DIR$/TXScrapy/TXScrapy/spiders/utils.py" />
         <option value="$PROJECT_DIR$/LEScrapy/LEScrapy/spiders/LESpider.py" />
         <option value="$PROJECT_DIR$/TXScrapy/TXScrapy/items.py" />
         <option value="$PROJECT_DIR$/TXScrapy/TXScrapy/spiders/TXSpider.py" />
-        <option value="$PROJECT_DIR$/TXScrapy/LOG_TX.log" />
         <option value="$PROJECT_DIR$/TXScrapy/TXScrapy/settings.py" />
         <option value="$PROJECT_DIR$/LEScrapy/LOG_LE.log" />
+        <option value="$PROJECT_DIR$/TXScrapy/LOG_TX.log" />
+        <option value="$PROJECT_DIR$/TXScrapy/TXScrapy/spiders/utils.py" />
+        <option value="$PROJECT_DIR$/YKScrapy/YKScrapy/spiders/YKSpider.py" />
       </list>
     </option>
   </component>
-  <component name="ProjectFrameBounds">
-    <option name="x" value="-7" />
-    <option name="width" value="1435" />
-    <option name="height" value="1087" />
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="x" value="585" />
+    <option name="y" value="18" />
+    <option name="width" value="1299" />
+    <option name="height" value="1056" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="true" />
   <component name="ProjectView">
@@ -210,18 +211,20 @@
             <path>
               <item name="ScrapyProj" type="b2602c69:ProjectViewProjectNode" />
               <item name="ScrapyProj" type="462c0819:PsiDirectoryNode" />
-              <item name="LEScrapy" type="462c0819:PsiDirectoryNode" />
+              <item name="YKScrapy" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ScrapyProj" type="b2602c69:ProjectViewProjectNode" />
               <item name="ScrapyProj" type="462c0819:PsiDirectoryNode" />
-              <item name="TXScrapy" type="462c0819:PsiDirectoryNode" />
+              <item name="YKScrapy" type="462c0819:PsiDirectoryNode" />
+              <item name="YKScrapy" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="ScrapyProj" type="b2602c69:ProjectViewProjectNode" />
               <item name="ScrapyProj" type="462c0819:PsiDirectoryNode" />
-              <item name="TXScrapy" type="462c0819:PsiDirectoryNode" />
-              <item name="TXScrapy" type="462c0819:PsiDirectoryNode" />
+              <item name="YKScrapy" type="462c0819:PsiDirectoryNode" />
+              <item name="YKScrapy" type="462c0819:PsiDirectoryNode" />
+              <item name="spiders" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -315,14 +318,14 @@
     <frame x="-7" y="-7" width="1295" height="735" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" weight="0.14455917" />
+      <window_info content_ui="combo" id="Project" order="0" weight="0.18903892" />
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Project Explorer" order="2" />
       <window_info id="DB Browser" order="3" />
       <window_info id="Job Explorer" order="4" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3216" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.2096" />
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
@@ -343,24 +346,10 @@
     <option name="myLimit" value="2678400000" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/YKScrapy/YKScrapy/middlewares.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="132">
-          <caret line="6" lean-forward="true" selection-start-line="6" selection-end-line="6" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/YKScrapy/YKScrapy/settings.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="431">
           <caret line="90" column="12" lean-forward="true" selection-start-line="90" selection-start-column="12" selection-end-line="90" selection-end-column="12" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/YKScrapy/YKScrapy/spiders/YKSpider.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="217">
-          <caret line="16" column="25" selection-end-line="91" />
         </state>
       </provider>
     </entry>
@@ -369,13 +358,6 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/LEScrapy/LEScrapy/spiders/__init__.py">
       <provider selected="true" editor-type-id="text-editor" />
-    </entry>
-    <entry file="file://$PROJECT_DIR$/YKScrapy/YKScrapy/items.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="264">
-          <caret line="12" column="12" selection-start-line="12" selection-start-column="12" selection-end-line="12" selection-end-column="12" />
-        </state>
-      </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/LEScrapy/LEScrapy/middlewares.py">
       <provider selected="true" editor-type-id="text-editor">
@@ -409,13 +391,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="220">
           <caret line="10" column="18" lean-forward="true" selection-start-line="10" selection-start-column="18" selection-end-line="10" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TXScrapy/TXScrapy/spiders/utils.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="726">
-          <caret line="33" column="5" selection-start-line="33" selection-start-column="5" selection-end-line="33" selection-end-column="5" />
         </state>
       </provider>
     </entry>
@@ -458,27 +433,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TXScrapy/TXScrapy/spiders/TXSpider.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="256">
-          <caret line="93" column="37" selection-start-line="93" selection-start-column="37" selection-end-line="93" selection-end-column="37" />
-          <folding>
-            <element signature="e#47#58#0" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/TXScrapy/TXScrapy/pipelines.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-418">
           <caret line="11" selection-start-line="11" selection-end-line="11" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/TXScrapy/TXScrapy/settings.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="304">
-          <caret line="55" column="32" lean-forward="true" selection-start-line="55" selection-start-column="32" selection-end-line="55" selection-end-column="32" />
         </state>
       </provider>
     </entry>
@@ -487,8 +445,59 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/TXScrapy/LOG_TX.log">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="252">
-          <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+        <state relative-caret-position="211">
+          <caret line="2433" column="63" lean-forward="true" selection-start-line="2433" selection-start-column="63" selection-end-line="2433" selection-end-column="63" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TXScrapy/TXScrapy/settings.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="484">
+          <caret line="22" column="70" lean-forward="true" selection-start-line="22" selection-start-column="70" selection-end-line="22" selection-end-column="70" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TXScrapy/TXScrapy/spiders/utils.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="9" column="17" lean-forward="true" selection-start-line="9" selection-start-column="17" selection-end-line="9" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/TXScrapy/TXScrapy/spiders/TXSpider.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="11" column="30" selection-start-line="11" selection-start-column="30" selection-end-line="11" selection-end-column="30" />
+          <folding>
+            <element signature="e#47#58#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/YKScrapy/YKScrapy/items.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="48">
+          <caret line="13" column="12" lean-forward="true" selection-start-line="13" selection-start-column="12" selection-end-line="13" selection-end-column="12" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/YKScrapy/YKScrapy/middlewares.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="484">
+          <caret line="22" selection-start-line="22" selection-end-line="22" />
+          <folding>
+            <element signature="e#691#861#0" />
+            <element signature="e#934#1146#0" />
+            <element signature="e#1524#1581#0" />
+            <element signature="e#1955#3598#0" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/YKScrapy/YKScrapy/spiders/YKSpider.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="202">
+          <caret line="47" column="8" selection-start-line="47" selection-start-column="8" selection-end-line="47" selection-end-column="8" />
         </state>
       </provider>
     </entry>
