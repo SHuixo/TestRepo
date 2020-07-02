@@ -1,0 +1,29 @@
+2020-07-02 17:07:35 [root] WARNING: 开始执行 reqUrl -> https://list.youku.com/category/page?c=97&s=1&a={area}&type=show&p={lpage}
+2020-07-02 17:07:35 [root] WARNING: 开始执行 reqUrl area -> 
+2020-07-02 17:07:35 [root] WARNING: 开始执行 reqUrl area lpage -> 1
+2020-07-02 17:07:35 [root] WARNING: 开始执行 reqUrl area lpage -> 2
+2020-07-02 17:07:35 [root] WARNING: 开始执行 reqUrl area lpage -> 3
+2020-07-02 17:07:35 [root] WARNING: 开始执行 reqUrl area lpage -> 4
+2020-07-02 17:07:35 [root] WARNING: 开始执行 reqUrl area lpage -> 5
+2020-07-02 17:07:35 [root] WARNING: 开始执行 reqUrl area lpage -> 6
+2020-07-02 17:07:35 [root] WARNING: 开始执行 reqUrl area lpage -> 7
+2020-07-02 17:07:35 [root] WARNING: 开始执行 reqUrl area lpage -> 8
+2020-07-02 17:07:35 [root] WARNING: 开始执行 reqUrl area lpage -> 9
+2020-07-02 17:07:35 [root] WARNING: 开始执行 reqUrl area lpage -> 10
+2020-07-02 17:07:35 [root] WARNING: 开始执行 reqUrl area lpage -> 11
+2020-07-02 17:07:35 [root] WARNING: 开始执行 reqUrl area lpage -> 12
+2020-07-02 17:07:35 [root] WARNING: 开始执行 reqUrl area lpage -> 13
+2020-07-02 17:07:35 [root] WARNING: 开始执行 reqUrl area lpage -> 14
+2020-07-02 17:07:35 [root] WARNING: 开始执行 reqUrl area lpage -> 15
+2020-07-02 17:07:37 [root] WARNING: 开始执行 reqUrl area lpage -> 16
+2020-07-02 17:07:37 [root] WARNING: 完成执行 reqUrl area lpage !!
+2020-07-02 17:07:37 [root] WARNING: 开始执行 reqUrl area -> %E4%B8%AD%E5%9B%BD
+2020-07-02 17:07:37 [root] WARNING: 开始执行 reqUrl area lpage -> 1
+2020-07-02 17:07:38 [root] WARNING: 开始执行 reqUrl area lpage -> 2
+2020-07-02 17:07:41 [root] WARNING: 开始执行 getTVItem -> https://v.youku.com/v_show/id_XNDEzMzUwOTQyNA==.html
+2020-07-02 17:07:55 [root] WARNING: 完成执行 getTVItem -> https://v.youku.com/v_show/id_XNDEzMzUwOTQyNA==.html
+2020-07-02 17:07:57 [root] WARNING: 开始执行 getTVItem -> https://v.youku.com/v_show/id_XNTIwMzY1NTc2.html
+2020-07-02 17:08:11 [root] WARNING: 开始执行 getTVItem -> https://v.youku.com/v_show/id_XMjE1Njk1NjQ0.html
+2020-07-02 17:08:23 [root] WARNING: 开始执行 getTVItem -> https://v.youku.com/v_show/id_XNzk0MDM4NDI4.html
+2020-07-02 17:08:37 [root] WARNING: 开始执行 getTVItem -> https://v.youku.com/v_show/id_XMzA3Mzc3ODg4OA==.html
+2020-07-02 17:08:51 [root] WARNING: 开始执行 getTVItem -> https://v.youku.com/v_show/id_XMTM5OTM3MzE2MA==.html

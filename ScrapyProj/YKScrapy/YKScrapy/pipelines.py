@@ -4,6 +4,7 @@
 #
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
+import copy
 from scrapy.conf import settings
 import MySQLdb.cursors
 from twisted.enterprise import adbapi
