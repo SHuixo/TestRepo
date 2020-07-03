@@ -22,3 +22,4 @@ class LEItem(scrapy.Item):
     actor = scrapy.Field()   # 视频演员
     category = scrapy.Field()   # 视频标签
     type = scrapy.Field()   # 视频类型
+    app = scrapy.Field()   # app（网站）名称

@@ -136,4 +136,5 @@ class TXSpider(scrapy.Spider):
         ##预防包含非正常符号，导致出错
         item["name"] = self.strRegex.sub('',name)
         item["type"] = self.Type[index]
+        item["app"] = "TENCENT"
         yield item

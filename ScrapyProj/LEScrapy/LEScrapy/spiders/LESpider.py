@@ -85,6 +85,7 @@ class LESpider(scrapy.Spider):
                 item["category"] = None
             item["name"] = self.strRegex.sub('',str(re.search(r'title:"(.*?)",',reshtml).group(1)))
             item["type"] = self.Type[index]
+            item["app"] = "LE"
             yield item
         else:
             logging.warning("Err No Item at uid {}".format(item["uid"]))

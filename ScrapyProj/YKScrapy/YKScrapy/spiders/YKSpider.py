@@ -149,4 +149,5 @@ class YKSpider(scrapy.Spider):
         item["hid"] = re.search(r"videoId2: '(.*?)',",resHtml).group(1)
         item["type"] = self.Type[index]
         item["actor"] = None
+        item["app"] = "YOUKU"
         yield item
