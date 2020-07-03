@@ -2,6 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="3b19ede0-1e0c-41c1-8a55-285ade05eb03" name="Default Changelist" comment="">
+<<<<<<< Updated upstream
       <change beforePath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/codeStyles/Project.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
@@ -17,6 +18,12 @@
       <change beforePath="$PROJECT_DIR$/YKScrapy/YKScrapy/middlewares.py" beforeDir="false" afterPath="$PROJECT_DIR$/YKScrapy/YKScrapy/middlewares.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/YKScrapy/YKScrapy/pipelines.py" beforeDir="false" afterPath="$PROJECT_DIR$/YKScrapy/YKScrapy/pipelines.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/YKScrapy/YKScrapy/spiders/YKSpider.py" beforeDir="false" afterPath="$PROJECT_DIR$/YKScrapy/YKScrapy/spiders/YKSpider.py" afterDir="false" />
+=======
+      <change beforePath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/YKScrapy/LOG_YOUKU.log" beforeDir="false" afterPath="$PROJECT_DIR$/YKScrapy/LOG_YOUKU.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/YKScrapy/YKScrapy/pipelines.py" beforeDir="false" afterPath="$PROJECT_DIR$/YKScrapy/YKScrapy/pipelines.py" afterDir="false" />
+>>>>>>> Stashed changes
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
@@ -98,27 +105,34 @@
         <counts>
           <entry key="cfg" value="1" />
           <entry key="log" value="12" />
-          <entry key="py" value="28" />
+          <entry key="py" value="30" />
           <entry key="xml" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.open">
         <counts>
           <entry key="PLAIN_TEXT" value="13" />
-          <entry key="Python" value="28" />
+          <entry key="Python" value="30" />
           <entry key="XML" value="1" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.extensions.edit">
         <counts>
-          <entry key="log" value="11" />
-          <entry key="py" value="1447" />
+          <entry key="log" value="12" />
+          <entry key="py" value="1449" />
         </counts>
       </usages-collector>
       <usages-collector id="statistics.file.types.edit">
         <counts>
-          <entry key="PLAIN_TEXT" value="11" />
-          <entry key="Python" value="1447" />
+          <entry key="PLAIN_TEXT" value="12" />
+          <entry key="Python" value="1449" />
+        </counts>
+      </usages-collector>
+      <usages-collector id="statistics.lifecycle.project">
+        <counts>
+          <entry key="project.closed" value="1" />
+          <entry key="project.open.time.8" value="1" />
+          <entry key="project.opened" value="1" />
         </counts>
       </usages-collector>
     </session>
@@ -135,10 +149,17 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+<<<<<<< Updated upstream
         <entry file="file://$PROJECT_DIR$/YKScrapy/YKScrapy/pipelines.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="1058">
               <caret line="46" column="21" lean-forward="true" selection-start-line="46" selection-start-column="21" selection-end-line="46" selection-end-column="21" />
+=======
+        <entry file="file://$PROJECT_DIR$/YKScrapy/YKScrapy/spiders/YKSpider.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="1760">
+              <caret line="80" column="35" selection-start-line="80" selection-start-column="35" selection-end-line="80" selection-end-column="35" />
+>>>>>>> Stashed changes
               <folding>
                 <element signature="e#193#204#0" expanded="true" />
               </folding>
@@ -147,15 +168,23 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+<<<<<<< Updated upstream
         <entry file="file://$PROJECT_DIR$/YKScrapy/YKScrapy/items.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="483">
               <caret line="24" column="8" selection-start-line="24" selection-start-column="4" selection-end-line="24" selection-end-column="8" />
+=======
+        <entry file="file://$PROJECT_DIR$/YKScrapy/YKScrapy/pipelines.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="154">
+              <caret line="7" column="9" lean-forward="true" selection-start-line="7" selection-start-column="9" selection-end-line="7" selection-end-column="9" />
+>>>>>>> Stashed changes
             </state>
           </provider>
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+<<<<<<< Updated upstream
         <entry file="file://$PROJECT_DIR$/YKScrapy/YKScrapy/spiders/YKSpider.py">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="-1319">
@@ -178,6 +207,20 @@
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="429">
               <caret line="122" selection-start-line="122" selection-end-line="122" />
+=======
+        <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/MySQLdb/cursors.py">
+          <provider selected="true" editor-type-id="text-editor" />
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
+        <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/MySQLdb/__init__.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="198">
+              <caret line="9" column="15" lean-forward="true" selection-start-line="9" selection-start-column="15" selection-end-line="9" selection-end-column="15" />
+              <folding>
+                <element signature="e#359#424#0" expanded="true" />
+              </folding>
+>>>>>>> Stashed changes
             </state>
           </provider>
         </entry>
@@ -215,6 +258,7 @@
         <option value="$PROJECT_DIR$/YKScrapy/LOG_YOUKU.log" />
         <option value="$PROJECT_DIR$/YKScrapy/StartYK.py" />
         <option value="$PROJECT_DIR$/YKScrapy/YKScrapy/middlewares.py" />
+<<<<<<< Updated upstream
         <option value="$PROJECT_DIR$/YKScrapy/YKScrapy/items.py" />
         <option value="$PROJECT_DIR$/YKScrapy/YKScrapy/spiders/YKSpider.py" />
         <option value="$PROJECT_DIR$/TXScrapy/TXScrapy/items.py" />
@@ -227,6 +271,12 @@
         <option value="$PROJECT_DIR$/YKScrapy/YKScrapy/settings.py" />
         <option value="$PROJECT_DIR$/YKScrapy/YKScrapy/pipelines.py" />
         <option value="$PROJECT_DIR$/YKScrapy/YKScrapy/spiders/utils.py" />
+=======
+        <option value="$PROJECT_DIR$/YKScrapy/YKScrapy/settings.py" />
+        <option value="$PROJECT_DIR$/YKScrapy/YKScrapy/spiders/YKSpider.py" />
+        <option value="$PROJECT_DIR$/YKScrapy/LOG_YOUKU.log" />
+        <option value="$PROJECT_DIR$/YKScrapy/YKScrapy/pipelines.py" />
+>>>>>>> Stashed changes
       </list>
     </option>
   </component>
@@ -405,25 +455,40 @@
     <configuration />
   </component>
   <component name="ToolWindowManager">
+<<<<<<< Updated upstream
     <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
     <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.09747102" />
+=======
+    <frame x="-7" y="-7" width="1295" height="735" extended-state="6" />
+    <layout>
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.15250199" />
+>>>>>>> Stashed changes
       <window_info id="Structure" order="1" weight="0.25" />
       <window_info id="Project Explorer" order="2" />
       <window_info id="DB Browser" order="3" />
       <window_info id="Job Explorer" order="4" />
       <window_info anchor="bottom" id="Message" order="0" />
       <window_info anchor="bottom" id="Find" order="1" />
+<<<<<<< Updated upstream
       <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.29242262" />
+=======
+      <window_info anchor="bottom" id="Run" order="2" weight="0.2704" />
+>>>>>>> Stashed changes
       <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
       <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="bottom" id="Console" order="7" />
       <window_info anchor="bottom" id="DB Execution Console" order="8" />
+<<<<<<< Updated upstream
       <window_info anchor="bottom" id="Version Control" order="9" weight="0.21558164" />
       <window_info anchor="bottom" id="Python Console" order="10" weight="0.32977587" />
+=======
+      <window_info anchor="bottom" id="Version Control" order="9" visible="true" weight="0.44" />
+      <window_info anchor="bottom" id="Python Console" order="10" weight="0.3296" />
+>>>>>>> Stashed changes
       <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
       <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
       <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
@@ -444,6 +509,17 @@
               <option name="RECENTLY_FILTERED_BRANCH_GROUPS">
                 <collection />
               </option>
+<<<<<<< Updated upstream
+=======
+              <option name="COLUMN_ORDER">
+                <list>
+                  <option value="0" />
+                  <option value="1" />
+                  <option value="2" />
+                  <option value="3" />
+                </list>
+              </option>
+>>>>>>> Stashed changes
             </State>
           </value>
         </entry>
@@ -572,6 +648,7 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/LEScrapy/LEScrapy/items.py">
       <provider selected="true" editor-type-id="text-editor">
+<<<<<<< Updated upstream
         <state relative-caret-position="391">
           <caret line="17" column="35" lean-forward="true" selection-start-line="17" selection-start-column="35" selection-end-line="17" selection-end-column="35" />
         </state>
@@ -584,6 +661,10 @@
           <folding>
             <element signature="e#47#58#0" expanded="true" />
           </folding>
+=======
+        <state relative-caret-position="-836">
+          <caret line="10" lean-forward="true" selection-start-line="10" selection-end-line="10" />
+>>>>>>> Stashed changes
         </state>
       </provider>
     </entry>
@@ -615,6 +696,7 @@
         </state>
       </provider>
     </entry>
+<<<<<<< Updated upstream
     <entry file="file://$PROJECT_DIR$/YKScrapy/StartYK.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="115">
@@ -633,6 +715,12 @@
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="322">
           <caret line="29" column="28" lean-forward="true" selection-start-line="29" selection-start-column="28" selection-end-line="29" selection-end-column="28" />
+=======
+    <entry file="file://$PROJECT_DIR$/YKScrapy/YKScrapy/middlewares.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="2486">
+          <caret line="113" lean-forward="true" selection-start-line="113" selection-end-line="113" />
+>>>>>>> Stashed changes
         </state>
       </provider>
     </entry>
@@ -650,20 +738,54 @@
         </state>
       </provider>
     </entry>
+<<<<<<< Updated upstream
     <entry file="file://$PROJECT_DIR$/YKScrapy/YKScrapy/pipelines.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="1058">
           <caret line="46" column="21" lean-forward="true" selection-start-line="46" selection-start-column="21" selection-end-line="46" selection-end-column="21" />
+=======
+    <entry file="file://$PROJECT_DIR$/YKScrapy/StartYK.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="66">
+          <caret line="3" selection-start-line="3" selection-end-line="3" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/YKScrapy/YKScrapy/spiders/YKSpider.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="1760">
+          <caret line="80" column="35" selection-start-line="80" selection-start-column="35" selection-end-line="80" selection-end-column="35" />
+>>>>>>> Stashed changes
           <folding>
             <element signature="e#193#204#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
+<<<<<<< Updated upstream
     <entry file="file://$PROJECT_DIR$/YKScrapy/YKScrapy/spiders/utils.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="230">
           <caret line="10" column="13" selection-start-line="5" selection-start-column="3" selection-end-line="10" selection-end-column="13" />
+=======
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/MySQLdb/cursors.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/YKScrapy/YKScrapy/pipelines.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="154">
+          <caret line="7" column="9" lean-forward="true" selection-start-line="7" selection-start-column="9" selection-end-line="7" selection-end-column="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$USER_HOME$/Anaconda3/Lib/site-packages/MySQLdb/__init__.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="198">
+          <caret line="9" column="15" lean-forward="true" selection-start-line="9" selection-start-column="15" selection-end-line="9" selection-end-column="15" />
+          <folding>
+            <element signature="e#359#424#0" expanded="true" />
+          </folding>
+>>>>>>> Stashed changes
         </state>
       </provider>
     </entry>
