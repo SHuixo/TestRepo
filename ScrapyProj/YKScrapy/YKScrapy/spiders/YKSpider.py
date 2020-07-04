@@ -69,7 +69,6 @@ class YKSpider(scrapy.Spider):
                 for page in range(1, 4):
                     action = self.browser.find_element_by_xpath('//*[@id="app"]/div/div[2]/div[2]/div[1]/div/div[2]/div/div[2]/div[2]/div[1]/div[2]/dt/a[{page}]/span'.format(page=page))
                     ActionChains(self.browser).move_to_element(action).click(action).perform()
-                    print("点击操作！！")
                     time.sleep(1)
                     res_field = self.browser.page_source
                     if res_field:
@@ -88,7 +87,6 @@ class YKSpider(scrapy.Spider):
                 for page in range(1, res_pages):
                     action = self.browser.find_element_by_xpath('//*[@id="app"]/div/div[2]/div[2]/div[1]/div/div[2]/div/div[2]/div[2]/div[1]/div[2]/dd/a[{page}]'.format(page=page))
                     ActionChains(self.browser).move_to_element(action).click(action).perform()
-                    print("点击操作！！")
                     time.sleep(1)
                     res_field = self.browser.page_source
                     if res_field:
