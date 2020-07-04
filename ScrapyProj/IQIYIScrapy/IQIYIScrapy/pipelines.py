@@ -5,11 +5,14 @@
 # Don't forget to add your pipeline to the ITEM_PIPELINES setting
 # See: https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 import copy
-import MySQLdb.cursors
+
+import MySQLdb
+
 from scrapy.conf import settings
 from twisted.enterprise import adbapi
 
-class YkscrapyPipeline(object):
+
+class IqiyiscrapyPipeline(object):
     def process_item(self, item, spider):
         return item
 
@@ -36,9 +39,9 @@ class MySQLPipeline(object):
 
     # 写入数据库中
     def _conditional_insert(self, tx, item):
-        sql = "insert into youkusrc(crawler_app_id1,crawler_app_id2,crawler_app_id3,crawler_name,crawler_name2,crawler_actor,crawler_property,crawler_content_type,app_from) " \
-              "values(%s,%s, %s,%s,%s,%s,%s,%s,%s)"
-        params = (item["uid"], item["pid"],item["hid"], item["title"],item["name"], item["actor"],item["category"],item['type'],item['app'])
+        sql = "insert into lesrc(crawler_app_id1,crawler_app_id2,crawler_app_id3,crawler_name,crawler_name2,crawler_actor,crawler_property,crawler_content_type,app_from) " \
+              "values(%s,%s, %s,%s,%s,%s,%s,%s)"
+        params = (item["uid"], item["pid"],item["hid"], item["title"],item["name"], item["actor"],item["category"],item['type'],item["app"])
         tx.execute(sql, params)
 
     # 错误处理方法
