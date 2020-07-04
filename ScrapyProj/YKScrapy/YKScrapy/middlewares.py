@@ -8,7 +8,6 @@ import random
 
 from scrapy import signals
 from scrapy.conf import settings
-from scrapy.downloadermiddlewares.useragent import UserAgentMiddleware
 
 
 class YkscrapySpiderMiddleware(object):
@@ -108,7 +107,10 @@ class YkscrapyDownloaderMiddleware(object):
     def spider_opened(self, spider):
         spider.logger.info('Spider opened: %s' % spider.name)
 
-class RandomUserAgentMiddleWare(UserAgentMiddleware):
+class RandomUserAgentMiddleWare(object):
+
+    def __init__(self):
+        self.user_agents=settings["USER_AGENTS"]
 
     def process_request(self, request, spider):
-        request.headers.setdefault("User-Agent", random.choice(settings["USER_AGENTS"]))
+        request.headers.setdefault("User-Agent", random.choice(self.user_agents))
