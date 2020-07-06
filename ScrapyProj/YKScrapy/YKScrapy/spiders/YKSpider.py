@@ -136,12 +136,8 @@ class YKSpider(scrapy.Spider):
         item["category"] = response.xpath('string(//*[@id="app"]/div/div[2]/div[2]/div[2]/div[1]/div/div/div)').extract_first()
         if '内容简介' in item["category"]:
             item["category"] = item["category"].split('内容简介')[1]
-        if index == 0 or index == 3:
-            item["name"] = self.strRegex.sub('',response.xpath('string(//*[@id="left-title-content-wrap"]/div)').extract_first())
-        elif index == 1:
-            item["name"] = None
-        elif index == 2:
-            item["name"] = self.strRegex.sub('',re.search(r'<meta content=(.*?) property="og:title"/>',resHtml).group(1))
+
+        item["name"] = self.strRegex.sub('',response.xpath('string(//*[@id="left-title-content-wrap"])').extract_first())
         item["uid"] = re.search(r"videoId: '(.*?)',",resHtml).group(1)
         item["pid"] = re.search(r"showid: '(.*?)',",resHtml).group(1)
         item["hid"] = re.search(r"videoId2: '(.*?)',",resHtml).group(1)
