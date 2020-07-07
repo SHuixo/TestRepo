@@ -23,3 +23,7 @@
 2020-07-07 19:27:36 [root] WARNING: 开始执行 reqUrl  type style area lpage -> 1
 2020-07-07 19:27:36 [root] WARNING: 开始执行 reqUrl  type style area lpage -> 2
 2020-07-07 19:27:43 [root] WARNING: 开始执行 getTVItem -> https://v.youku.com/v_show/id_XNDAwMjMyNTc4MA==.html
+2020-07-07 19:28:00 [root] WARNING: 完成执行 getTVItem -> https://v.youku.com/v_show/id_XNDAwMjMyNTc4MA==.html
+2020-07-07 19:28:05 [root] WARNING: 开始执行 getTVItem -> https://v.youku.com/v_show/id_XNDczNjQwMTY2MA==.html
+2020-07-07 19:28:18 [root] WARNING: 完成执行 getTVItem -> https://v.youku.com/v_show/id_XNDczNjQwMTY2MA==.html
+2020-07-07 19:28:23 [root] WARNING: 开始执行 getTVItem -> https://v.youku.com/v_show/id_XNDQ2NDI4MjA1Ng==.html
