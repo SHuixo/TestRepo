@@ -1,0 +1,25 @@
+2020-07-07 19:27:35 [root] WARNING: 开始执行 reqUrl -> https://list.youku.com/category/page?c={ktype}&s={style}&a={area}&type=show&p={lpage}
+2020-07-07 19:27:35 [root] WARNING: 开始执行 reqUrl  type -> 177
+2020-07-07 19:27:35 [root] WARNING: 开始执行 reqUrl  type style-> 1
+2020-07-07 19:27:35 [root] WARNING: 开始执行 reqUrl  type style area -> 
+2020-07-07 19:27:35 [root] WARNING: 开始执行 reqUrl  type style area lpage -> 1
+2020-07-07 19:27:35 [root] WARNING: 开始执行 reqUrl  type style area lpage -> 2
+2020-07-07 19:27:35 [root] WARNING: 开始执行 reqUrl  type style area lpage -> 3
+2020-07-07 19:27:35 [root] WARNING: 开始执行 reqUrl  type style area lpage -> 4
+2020-07-07 19:27:35 [root] WARNING: 开始执行 reqUrl  type style area lpage -> 5
+2020-07-07 19:27:35 [root] WARNING: 开始执行 reqUrl  type style area lpage -> 6
+2020-07-07 19:27:35 [root] WARNING: 开始执行 reqUrl  type style area lpage -> 7
+2020-07-07 19:27:35 [root] WARNING: 开始执行 reqUrl  type style area lpage -> 8
+2020-07-07 19:27:35 [root] WARNING: 开始执行 reqUrl  type style area lpage -> 9
+2020-07-07 19:27:35 [root] WARNING: 开始执行 reqUrl  type style area lpage -> 10
+2020-07-07 19:27:35 [root] WARNING: 开始执行 reqUrl  type style area lpage -> 11
+2020-07-07 19:27:35 [root] WARNING: 开始执行 reqUrl  type style area lpage -> 12
+2020-07-07 19:27:35 [root] WARNING: 开始执行 reqUrl  type style area lpage -> 13
+2020-07-07 19:27:35 [root] WARNING: 开始执行 reqUrl  type style area lpage -> 14
+2020-07-07 19:27:35 [root] WARNING: 开始执行 reqUrl  type style area lpage -> 15
+2020-07-07 19:27:36 [root] WARNING: 开始执行 reqUrl  type style area lpage -> 16
+2020-07-07 19:27:36 [root] WARNING: 完成执行 reqUrl  type style area lpage !!
+2020-07-07 19:27:36 [root] WARNING: 开始执行 reqUrl  type style area -> %E4%B8%AD%E5%9B%BD
+2020-07-07 19:27:36 [root] WARNING: 开始执行 reqUrl  type style area lpage -> 1
+2020-07-07 19:27:36 [root] WARNING: 开始执行 reqUrl  type style area lpage -> 2
+2020-07-07 19:27:43 [root] WARNING: 开始执行 getTVItem -> https://v.youku.com/v_show/id_XNDAwMjMyNTc4MA==.html

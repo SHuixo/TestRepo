@@ -56,12 +56,13 @@ class YKSpider(scrapy.Spider):
         videoIDs = re.findall(r'videoId":"(.*?)",',resData)
         for videoID in videoIDs:
             index = [self.Maps[key] for key in self.Maps if key in ktype][0]
-            print("index {}".format(index))
+
             yield scrapy.Request(url=self.TvUrl.format(ID=videoID),meta=copy.deepcopy({"index":index,"id":videoID}),callback=self.Funcs[index])
 
     def getTVItem(self, response):
         index = response.meta["index"]
         id = response.meta["id"]
+        print("index {}".format(index))
         self.browser = webdriver.Chrome(chrome_options=self.browser_options)
         logging.warning("开始执行 getTVItem -> {}".format(self.TvUrl.format(ID=id)))
         self.browser.get(self.TvUrl.format(ID=id))
@@ -80,8 +81,10 @@ class YKSpider(scrapy.Spider):
                     res_field = self.browser.page_source
                     if res_field:
                         field_sel = etree.HTML(res_field)
-                        refList.extend(field_sel.xpath('//*[@id="app"]/div/div[2]/div[2]/div[1]/div/div[2]/div/div[2]/div[2]/div[2]/div[1]/a/@href'))
-
+                        if index == 0:
+                            refList.extend(field_sel.xpath('//*[@id="app"]/div/div[2]/div[2]/div[1]/div/div[2]/div/div[2]/div[2]/div[2]/div[1]/a/@href'))
+                        if index == 4:
+                            refList.extend(field_sel.xpath('//*[@id="app"]/div/div[2]/div[2]/div[1]/div/div[2]/div/div[2]/div[2]/div[2]/div[1]/*/a/@href'))
                 action = self.browser.find_element_by_xpath('//*[@id="app"]/div/div[2]/div[2]/div[1]/div/div[2]/div/div[2]/div[2]/div[1]/div[2]/dt/a[4]/span')
                 ActionChains(self.browser).move_to_element(action).click(action).perform()
                 res_field = self.browser.page_source
@@ -105,7 +108,10 @@ class YKSpider(scrapy.Spider):
                 if len(lparts[-1])>3:
                     res_pages = res_pages + 1
                 if res_pages == 1:
-                    refList = resEtree.xpath('//*[@id="app"]/div/div[2]/div[2]/div[1]/div/div[2]/div/div[2]/div[2]/div[2]/div[1]/a/@href')
+                    if index == 0:
+                        refList.extend(resEtree.xpath('//*[@id="app"]/div/div[2]/div[2]/div[1]/div/div[2]/div/div[2]/div[2]/div[2]/div[1]/a/@href'))
+                    if index == 4:
+                        refList.extend(resEtree.xpath('//*[@id="app"]/div/div[2]/div[2]/div[1]/div/div[2]/div/div[2]/div[2]/div[2]/div[1]/*/a/@href'))
                 elif res_pages > 1:
                     for page in range(1, res_pages):
                         action = self.browser.find_element_by_xpath('//*[@id="app"]/div/div[2]/div[2]/div[1]/div/div[2]/div/div[2]/div[2]/div[1]/div[2]/dt/a[{page}]/span'.format(page=page))
@@ -114,7 +120,10 @@ class YKSpider(scrapy.Spider):
                         res_field = self.browser.page_source
                         if res_field:
                             field_sel = etree.HTML(res_field)
-                            refList.extend(field_sel.xpath('//*[@id="app"]/div/div[2]/div[2]/div[1]/div/div[2]/div/div[2]/div[2]/div[2]/div[1]/a/@href'))
+                            if index == 0:
+                                refList.extend(field_sel.xpath('//*[@id="app"]/div/div[2]/div[2]/div[1]/div/div[2]/div/div[2]/div[2]/div[2]/div[1]/a/@href'))
+                            if index == 4:
+                                refList.extend(field_sel.xpath('//*[@id="app"]/div/div[2]/div[2]/div[1]/div/div[2]/div/div[2]/div[2]/div[2]/div[1]/*/a/@href'))
         self.browser.close()
         if refList != []:
             for refUrl in refList:
