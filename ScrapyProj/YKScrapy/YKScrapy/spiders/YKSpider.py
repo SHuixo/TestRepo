@@ -56,6 +56,7 @@ class YKSpider(scrapy.Spider):
         videoIDs = re.findall(r'videoId":"(.*?)",',resData)
         for videoID in videoIDs:
             index = [self.Maps[key] for key in self.Maps if key in ktype][0]
+            print("index {}".format(index))
             yield scrapy.Request(url=self.TvUrl.format(ID=videoID),meta=copy.deepcopy({"index":index,"id":videoID}),callback=self.Funcs[index])
 
     def getTVItem(self, response):
@@ -137,7 +138,7 @@ class YKSpider(scrapy.Spider):
         index = response.meta["index"]
         resHtml = response.text
         item = YKItem()
-        
+
         item["title"] = response.xpath('string(//*[@id="module_basic_dayu_sub"]/div/div[1]/a[1])').extract_first()
         item["category"] = response.xpath('string(//*[@id="app"]/div/div[2]/div[2]/div[2]/div[1]/div/div/div)').extract_first()
         if '内容简介' in item["category"]:
