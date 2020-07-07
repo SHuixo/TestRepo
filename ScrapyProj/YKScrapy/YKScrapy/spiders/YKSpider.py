@@ -24,24 +24,30 @@ class YKSpider(scrapy.Spider):
 
         self.TvUrl = "https://v.youku.com/v_show/id_{ID}.html"
         self.strRegex = re.compile('[^\w\u4e00-\u9fff]')
-        self.Type = ['电视剧', '电影', '综艺', '动漫']
-        self.Maps = {"c=97": 0, "c=96": 1, "c=85": 2, "c=100": 3}
-        self.Funcs = [self.getTVItem,self.parseItem,self.getShowItem,self.getTVItem]
+        self.Type = ['电视剧', '电影', '综艺', '动漫',"少儿"]
+        self.Maps = {"97": 0, "96": 1, "85": 2, "100": 3, "177":4}
+        self.Funcs = [self.getTVItem,self.parseItem,self.getShowItem,self.getTVItem,self.getTVItem]
 
     def start_requests(self):
         for reqUrl in utils.YK_Urls:
             logging.warning("开始执行 reqUrl -> {}".format(reqUrl))
-            for area in utils.YK_Areas:
-                logging.warning("开始执行 reqUrl area -> {}".format(area))
-                for lpage in range(1,17):
-                    logging.warning("开始执行 reqUrl area lpage -> {}".format(lpage))
-                    yield scrapy.Request(url=reqUrl.format(area=area,lpage=lpage),meta=copy.deepcopy({"url":reqUrl}),callback=self.getHtml)
-                logging.warning("完成执行 reqUrl area lpage !!")
-            logging.warning("完成执行 reqUrl area !!")
+            for ktype in utils.YKTypes:
+                logging.warning("开始执行 reqUrl  type -> {}".format(ktype))
+                for style in utils.YKStyles:
+                    logging.warning("开始执行 reqUrl  type style-> {}".format(style))
+                    for area in utils.YK_Areas:
+                        logging.warning("开始执行 reqUrl  type style area -> {}".format(area))
+                        for page in range(1,17):
+                            logging.warning("开始执行 reqUrl  type style area lpage -> {}".format(page))
+                            yield scrapy.Request(url=reqUrl.format(ktype=ktype,style=style,area=area,lpage=page),meta=copy.deepcopy({"ktype":ktype}),callback=self.getHtml)
+                        logging.warning("完成执行 reqUrl  type style area lpage !!")
+                    logging.warning("完成执行 reqUrl  type style area !!")
+                logging.warning("完成执行 reqUrl  type style!!")
+            logging.warning("完成执行 reqUrl  type!!")
         logging.warning("完成执行 reqUrl!!")
 
     def getHtml(self,response):
-        refUrl = response.meta["url"]
+        ktype = response.meta["ktype"]
         resHtml = response.text
 
         resData = re.search(r'data":(.*?),"code"',resHtml).group(1)
@@ -49,7 +55,7 @@ class YKSpider(scrapy.Spider):
             yield
         videoIDs = re.findall(r'videoId":"(.*?)",',resData)
         for videoID in videoIDs:
-            index = [self.Maps[key] for key in self.Maps if key in refUrl][0]
+            index = [self.Maps[key] for key in self.Maps if key in ktype][0]
             yield scrapy.Request(url=self.TvUrl.format(ID=videoID),meta=copy.deepcopy({"index":index,"id":videoID}),callback=self.Funcs[index])
 
     def getTVItem(self, response):
@@ -66,8 +72,8 @@ class YKSpider(scrapy.Spider):
             #获取该优酷影视是否有多个分集模块
             lpart = resEtree.xpath('string(//*[@id="app"]/div/div[2]/div[2]/div[1]/div/div[2]/div/div[2]/div[2]/div[1]/div[2]/dt)')
             if lpart[-4:] == "更多视频":
-                for page in range(1, 4):
-                    action = self.browser.find_element_by_xpath('//*[@id="app"]/div/div[2]/div[2]/div[1]/div/div[2]/div/div[2]/div[2]/div[1]/div[2]/dt/a[{page}]/span'.format(page=page))
+                for lpage in range(1, 4):
+                    action = self.browser.find_element_by_xpath('//*[@id="app"]/div/div[2]/div[2]/div[1]/div/div[2]/div/div[2]/div[2]/div[1]/div[2]/dt/a[{lpage}]/span'.format(lpage=lpage))
                     ActionChains(self.browser).move_to_element(action).click(action).perform()
                     time.sleep(1)
                     res_field = self.browser.page_source
@@ -84,8 +90,8 @@ class YKSpider(scrapy.Spider):
                 res_pages = len(lparts)
                 if len(lparts[-1])>3:
                     res_pages = res_pages + 1
-                for page in range(1, res_pages):
-                    action = self.browser.find_element_by_xpath('//*[@id="app"]/div/div[2]/div[2]/div[1]/div/div[2]/div/div[2]/div[2]/div[1]/div[2]/dd/a[{page}]'.format(page=page))
+                for rpage in range(1, res_pages):
+                    action = self.browser.find_element_by_xpath('//*[@id="app"]/div/div[2]/div[2]/div[1]/div/div[2]/div/div[2]/div[2]/div[1]/div[2]/dd/a[{rpage}]'.format(rpage=rpage))
                     ActionChains(self.browser).move_to_element(action).click(action).perform()
                     time.sleep(1)
                     res_field = self.browser.page_source
@@ -115,7 +121,7 @@ class YKSpider(scrapy.Spider):
                 yield response
         logging.warning("完成执行 getTVItem -> {}".format(self.TvUrl.format(ID=id)))
 
-    def getMovieItem(self, response):
+    def getBabyItem(self, response):
         return None
 
     def getShowItem(self,response):
@@ -131,7 +137,7 @@ class YKSpider(scrapy.Spider):
         index = response.meta["index"]
         resHtml = response.text
         item = YKItem()
-
+        
         item["title"] = response.xpath('string(//*[@id="module_basic_dayu_sub"]/div/div[1]/a[1])').extract_first()
         item["category"] = response.xpath('string(//*[@id="app"]/div/div[2]/div[2]/div[2]/div[1]/div/div/div)').extract_first()
         if '内容简介' in item["category"]:

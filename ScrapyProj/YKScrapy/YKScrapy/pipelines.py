@@ -34,14 +34,15 @@ class MySQLPipeline(object):
         query.addErrback(self._handle_error, asyncitem, spider)  # 调用异常处理方法
         return asyncitem
 
-    # 写入数据库中
+    # 写入数据库中(设置了unique索引，保证id号的唯一性)
     def _conditional_insert(self, tx, item):
-        sql = "insert into youkusrc(crawler_app_id1,crawler_app_id2,crawler_app_id3,crawler_name,crawler_name2,crawler_actor,crawler_property,crawler_content_type,app_from) " \
+        sql = "replace into youkusrc(crawler_app_id1,crawler_app_id2,crawler_app_id3,crawler_name,crawler_name2,crawler_actor,crawler_property,crawler_content_type,app_from) " \
               "values(%s,%s, %s,%s,%s,%s,%s,%s,%s)"
         params = (item["uid"], item["pid"],item["hid"], item["title"],item["name"], item["actor"],item["category"],item['type'],item['app'])
         tx.execute(sql, params)
+        print("# database replace into sunccess ! ")
 
     # 错误处理方法
     def _handle_error(self, failue, item, spider):
-        print('--------------database operation exception!!-----------------')
+        print('* * * * * * *  database operation exception ! ! * * * * * * *')
         print(failue)
