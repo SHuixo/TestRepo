@@ -39,7 +39,7 @@ class MySQLPipeline(object):
 
     # 写入数据库中
     def _conditional_insert(self, tx, item):
-        sql = "insert into lesrc(crawler_app_id1,crawler_app_id2,crawler_app_id3,crawler_name,crawler_name2,crawler_actor,crawler_property,crawler_content_type,app_from) " \
+        sql = "insert ignore into lesrc(crawler_app_id1,crawler_app_id2,crawler_app_id3,crawler_name,crawler_name2,crawler_actor,crawler_property,crawler_content_type,app_from) " \
               "values(%s,%s, %s,%s,%s,%s,%s,%s)"
         params = (item["uid"], item["pid"],item["hid"], item["title"],item["name"], item["actor"],item["category"],item['type'],item["app"])
         tx.execute(sql, params)
