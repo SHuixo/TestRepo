@@ -19,6 +19,7 @@ class TXSpider(scrapy.Spider):
         self.Areas = [utils.TX_TVAreas, utils.TX_MovieAreas, utils.TX_VarietyAreas, utils.TX_CartoonAreas]
         self.Maps = {"tv": 0, "movie": 1, "variety": 2, "cartoon": 3}
         self.Funcs = [self.getTvItem,self.getMovieItem,self.getVarietyItem,self.getTvItem]
+        self.SWITCH = True   #用于从网站获取内容和从本地文件获取内容的切换。
 
     def start_requests(self):
         for reqUrl in utils.TX_Urls:
@@ -55,7 +56,7 @@ class TXSpider(scrapy.Spider):
             item["title"] = self.strRegex.sub('',response.xpath('string(//*[@id="container_player"]/div/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/h2/a)').extract_first())
             item["category"] = self.strRegex.sub('',response.xpath('string(//*[@id="container_player"]/div/div[2]/div[1]/div[2]/div/div[4])').extract_first())
             item["actor"] = None
-            item["pid"] = None
+            item["pid"] = re.search(r'cover/(.*?).html',href)
             item["hid"] = None
             ## 获得每一集的ID
             vidGroup = re.search(r'{"vid":\[(.*?)\],',reshtml)
@@ -84,7 +85,7 @@ class TXSpider(scrapy.Spider):
             item["title"] = self.strRegex.sub('',response.xpath('string(//*[@id="container_player"]/div/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/h2/a)').extract_first())
             item["category"] = self.strRegex.sub('',response.xpath('string(//*[@id="container_player"]/div/div[2]/div[1]/div[2]/div/div[3])').extract_first())
             item["actor"] = None
-            item["pid"] = None
+            item["pid"] = re.search(r'cover/(.*?).html',href)
             item["hid"] = None
             ## 获得每一集的ID
             vidGroup = re.search(r'{"vid":\[(.*?)\],',reshtml)
