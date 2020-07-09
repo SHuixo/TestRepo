@@ -68,22 +68,22 @@ class LESpider(scrapy.Spider):
         badmsg = str(re.findall(r'<head><title>(.*?)</title></head>',reshtml))
 
         if "抱歉" != errmsg and "502 Bad Gateway" not in badmsg and reshtml is not None:
-            item["title"] = self.strRegex.sub('',str(re.search(r'pTitle:"(.*?)",',reshtml).group(1))).replace(",","；").replace("|","；")
+            item["title"] = self.strRegex.sub('',str(re.search(r'pTitle:"(.*?)",',reshtml).group(1)))
             item["pid"] = re.search(r'pid:(.*?),',reshtml).group(1)
             item["hid"] = None
             ##演员
             reGroup = re.search(r'<b>主演：</b><span>(.*?)</span>',reshtml)
             if reGroup is not None:
-                item["actor"] = str(re.findall(r'title="(.*?)"', reGroup.group(1))).replace(",","；").replace("|","；")
+                item["actor"] = self.strRegex.sub('',str(re.findall(r'title="(.*?)"', reGroup.group(1))))
             else:
                 item["actor"] = None
 
             reAll = re.findall(r'>(.*?)</a>', re.search(r'<b>类型：</b><span>(.*?)</span>',reshtml))
             if reAll is not None:
-                item["category"] = str(reAll.group(1)).replace(",","；").replace("|","；")
+                item["category"] = self.strRegex.sub('',str(reAll.group(1)))
             else:
                 item["category"] = None
-            item["name"] = self.strRegex.sub('',str(re.search(r'title:"(.*?)",',reshtml).group(1))).replace(",","；").replace("|","；")
+            item["name"] = self.strRegex.sub('',str(re.search(r'title:"(.*?)",',reshtml).group(1)))
             item["type"] = self.Type[index]
             item["app"] = "LE"
             yield item
