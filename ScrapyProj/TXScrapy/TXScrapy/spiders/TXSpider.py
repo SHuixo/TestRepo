@@ -52,8 +52,8 @@ class TXSpider(scrapy.Spider):
         reshtml = response.text
         if reshtml is not None:
             item = TXItem()
-            item["title"] = str(response.xpath('string(//*[@id="container_player"]/div/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/h2/a)').extract_first()).strip().replace("|","，")
-            item["category"] = str(response.xpath('string(//*[@id="container_player"]/div/div[2]/div[1]/div[2]/div/div[4])').extract_first()).replace('\n','').replace(' ','').strip().replace("|","，")
+            item["title"] = str(response.xpath('string(//*[@id="container_player"]/div/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/h2/a)').extract_first()).strip().replace(",","；").replace("|","；")
+            item["category"] = str(response.xpath('string(//*[@id="container_player"]/div/div[2]/div[1]/div[2]/div/div[4])').extract_first()).replace('\n','').replace(' ','').strip().replace(",","；").replace("|","；")
             item["actor"] = None
             item["pid"] = None
             item["hid"] = None
@@ -81,8 +81,8 @@ class TXSpider(scrapy.Spider):
         reshtml = response.text
         if reshtml is not None:
             item = TXItem()
-            item["title"] = str(response.xpath('string(//*[@id="container_player"]/div/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/h2/a)').extract_first()).strip().replace("|","，")
-            item["category"] = str(response.xpath('string(//*[@id="container_player"]/div/div[2]/div[1]/div[2]/div/div[3])').extract_first()).replace('\n','').replace(' ','').strip().replace("|","，")
+            item["title"] = str(response.xpath('string(//*[@id="container_player"]/div/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/h2/a)').extract_first()).strip().replace(",","；").replace("|","；")
+            item["category"] = str(response.xpath('string(//*[@id="container_player"]/div/div[2]/div[1]/div[2]/div/div[3])').extract_first()).replace('\n','').replace(' ','').strip().replace(",","；").replace("|","；")
             item["actor"] = None
             item["pid"] = None
             item["hid"] = None
@@ -105,8 +105,8 @@ class TXSpider(scrapy.Spider):
         reshtml = response.text
         if reshtml is not None:
             item = TXItem()
-            item["title"] = str(response.xpath('string(//*[@id="container_player"]/div[2]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/h2/a)').extract_first()).strip().replace("|","，")
-            item["category"] = str(response.xpath('string(//*[@id="container_player"]/div[2]/div[2]/div[1]/div[2]/div/div[3])').extract_first()).replace('\n','').replace(' ','').strip().replace("|","，")
+            item["title"] = str(response.xpath('string(//*[@id="container_player"]/div[2]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/h2/a)').extract_first()).strip().replace(",","；").replace("|","；")
+            item["category"] = str(response.xpath('string(//*[@id="container_player"]/div[2]/div[2]/div[1]/div[2]/div/div[3])').extract_first()).replace('\n','').replace(' ','').strip().replace(",","；").replace("|","；")
             item["actor"] = None
             item["pid"] = None
             item["hid"] = None
@@ -130,9 +130,9 @@ class TXSpider(scrapy.Spider):
         index = response.meta["index"]
         item = response.meta["meta"]
         if index == 2:
-            name = str(response.xpath('string(//*[@id="container_player"]/div[2]/div[2]/div[1]/div[1]/h1)').extract_first()).strip().replace("|","，")
+            name = str(response.xpath('string(//*[@id="container_player"]/div[2]/div[2]/div[1]/div[1]/h1)').extract_first()).strip().replace(",","；").replace("|","；")
         else:
-            name = str(response.xpath('string(//*[@id="container_player"]/div/div[2]/div[1]/div[1]/h1)').extract_first()).strip().replace("|","，")
+            name = str(response.xpath('string(//*[@id="container_player"]/div/div[2]/div[1]/div[1]/h1)').extract_first()).strip().replace(",","；").replace("|","；")
         ##预防包含非正常符号，导致出错
         item["name"] = self.strRegex.sub('',name)
         item["type"] = self.Type[index]
