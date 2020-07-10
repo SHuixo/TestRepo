@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 # 使用selenium解决动态加载数据抓取
 import copy
+import csv
 
 import requests
 from LEScrapy.items import LEItem
@@ -36,34 +37,48 @@ class LESpider(scrapy.Spider):
         ]
         self.LEUrl = "http://www.le.com/ptv/vplay/{vid}.html"
         self.Maps = {"cg=2&": 0, "cg=1&": 1, "cg=11&": 2, "cg=5&": 3}
+        self.SWITCH = False   #用于从网站获取内容(True)和从本地文件(False)获取内容的切换。
+        self.File = r"C:\Users\Asxh-PC\OneDrive\checkLE.txt"
 
     def start_requests(self):
+        if self.SWITCH:
+            for reqUrl in self.ListUrls:
+                logging.warning("Start reqUrl {url}".format(url=reqUrl))
+                lindex = [self.Maps[key] for key in self.Maps if key in reqUrl][0]
+                for lpage in range(1, 20):
+                    logging.warning("start reqUrl page at {page}".format(page=lpage))
+                    resHtml = requests.get(reqUrl.format(lpage=lpage))
+                    resHtml.encoding = 'utf-8'
+                    resHtml = resHtml.text
+                    resData = re.search(r'"data":{"more":(.*?)}}', resHtml).group(1)
+                    if resData == "false":
+                        break;
+                    vids = re.findall(r'"vids":"(.*?)",', resHtml)
+                    for lvid in vids:
+                        if lvid is not None:
+                            for vid in lvid.split(','):
+                                item = LEItem()
+                                item["uid"] = vid
+                                url = self.LEUrl.format(vid = vid)
+                                yield scrapy.Request(url=url, meta={"meta":copy.deepcopy(item)},callback= self.parseItemDetails)
+                logging.warning("finish reqUrl all page")
+            logging.warning("Finish all reqUrls")
+        else:
+            #从本地文件读取入手！！
+            with open(self.File) as csvfile:
+                lines = csv.reader(csvfile)
+                for line in lines:
+                    item = LEItem()
+                    item["uid"] = line[0]
+                    logging.warning("Start spider 读取到 line= {}".format(line[0]))
+                    url = self.LEUrl.format(vid = line[0])
+                    yield scrapy.Request(url=url,meta={"meta":copy.deepcopy(item)},callback=self.parseItemDetails,dont_filter=True)
+                logging.warning("读取完毕！！")
 
-        for reqUrl in self.ListUrls:
-            logging.warning("Start reqUrl {url}".format(url=reqUrl))
-            lindex = [self.Maps[key] for key in self.Maps if key in reqUrl][0]
-            for lpage in range(1, 20):
-                logging.warning("start reqUrl page at {page}".format(page=lpage))
-                resHtml = requests.get(reqUrl.format(lpage=lpage))
-                resHtml.encoding = 'utf-8'
-                resHtml = resHtml.text
-                resData = re.search(r'"data":{"more":(.*?)}}', resHtml).group(1)
-                if resData == "false":
-                    break;
-                vids = re.findall(r'"vids":"(.*?)",', resHtml)
-                for vid in vids:
-                    if vid is not None:
-                        for vid in vid.split(','):
-                            item = LEItem()
-                            item["uid"] = vid
-                            url = self.LEUrl.format(vid = vid)
-                            yield scrapy.Request(url=url, meta={"meta":copy.deepcopy(item)},callback= lambda response, index = lindex: self.parseItemDetails(response, index))
-            logging.warning("finish reqUrl all page")
-        logging.warning("Finish all reqUrls")
-
-    def parseItemDetails(self, response, index):
+    def parseItemDetails(self, response):
         item = response.meta["meta"]
         reshtml = response.text
+
         errmsg = str(response.xpath('string(/html/body/div[2]/div/div[2]/h2)').extract_first()[:2])
         badmsg = str(re.findall(r'<head><title>(.*?)</title></head>',reshtml))
 
@@ -71,20 +86,16 @@ class LESpider(scrapy.Spider):
             item["title"] = self.strRegex.sub('',str(re.search(r'pTitle:"(.*?)",',reshtml).group(1)))
             item["pid"] = re.search(r'pid:(.*?),',reshtml).group(1)
             item["hid"] = None
-            ##演员
-            reGroup = re.search(r'<b>主演：</b><span>(.*?)</span>',reshtml)
+            reGroup = re.search(r'<!--主演-->(.*?)<!--简介',str(reshtml))
+            reAll = re.search(r'<!--类型-->(.*?)<!--主演-->',str(reshtml))
             if reGroup is not None:
-                item["actor"] = self.strRegex.sub('',str(re.findall(r'title="(.*?)"', reGroup.group(1))))
+                item["actor"] = self.strRegex.sub('',str(re.findall(r'title="(.*?)"', str(reGroup.group(1)))))
+                item["category"] = self.strRegex.sub('',str(re.findall(r'title="(.*?)"', str(reAll.group(1)))))
             else:
                 item["actor"] = None
-
-            reAll = re.findall(r'>(.*?)</a>', re.search(r'<b>类型：</b><span>(.*?)</span>',reshtml))
-            if reAll is not None:
-                item["category"] = self.strRegex.sub('',str(reAll.group(1)))
-            else:
                 item["category"] = None
             item["name"] = self.strRegex.sub('',str(re.search(r'title:"(.*?)",',reshtml).group(1)))
-            item["type"] = self.Type[index]
+            item["type"] = str(re.search(r'cid:(.*?),',reshtml).group(1))  ##频道id
             item["app"] = "LE"
             yield item
         else:
