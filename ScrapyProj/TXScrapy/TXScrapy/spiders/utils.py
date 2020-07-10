@@ -14,6 +14,10 @@ TX_CartoonAreas = [
     ##全部，内地，日本， 欧美，其他
     "-1", "1", "2", "3", "4"
     ]
+TX_ChildAreas = [
+    ##全部，欧美，日韩，国内
+    "-1", "1","2","3"
+]
 ## {ofset} 设置为 30 的倍数
 TX_Urls = [
     "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=1&channel=tv&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=19",      ##剧集某地区最新
@@ -31,4 +35,7 @@ TX_Urls = [
     "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=0&channel=cartoon&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=19", ##动漫某地区最新
     "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=0&channel=cartoon&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=18", ##动漫某地区最热
     "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=0&channel=cartoon&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=20",  ##动漫某地区好评
+    "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=0&channel=child&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=19",    ##少儿某地区最新
+    "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=0&channel=child&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=18",    ##少儿某地区最热
+    "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=0&channel=child&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=20",    ##少儿某地区好评
     ]
