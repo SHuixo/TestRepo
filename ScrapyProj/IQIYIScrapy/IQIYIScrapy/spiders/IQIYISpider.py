@@ -1,11 +1,15 @@
 # -*- coding: utf-8 -*-
 # 使用selenium解决动态加载数据抓取
 import copy
+import random
+
 import requests
 import logging
 import scrapy
 import re
 from IQIYIScrapy.items import IQIYItem
+
+from IQIYIScrapy.spiders import utils
 
 
 class LESpider(scrapy.Spider):
@@ -14,48 +18,73 @@ class LESpider(scrapy.Spider):
     def __init__(self):
 
         self.strRegex = re.compile('[^\w\u4e00-\u9fff]')
-        self.Type = ['电视剧', '电影', '综艺', '动漫']
-        self.ListUrls = [
-            "https://list.iqiyi.com/www/2/-------------24-{lPage}-1-iqiyi--.html", ##电视剧综合排序
-            "https://list.iqiyi.com/www/2/-------------11-{lPage}-1-iqiyi--.html", ##电视剧热播榜
-            "https://list.iqiyi.com/www/2/-------------4-{lPage}-1-iqiyi--.html",  ##电视剧新上线
-            "https://list.iqiyi.com/www/1/-------------24-{lPage}-1-iqiyi--.html", ##电影综合排序
-            "https://list.iqiyi.com/www/1/-------------11-{lPage}-1-iqiyi--.html", ##电影热播榜
-            "https://list.iqiyi.com/www/1/-------------8-{lPage}-1-iqiyi--.html",  ##电影好评榜
-            "https://list.iqiyi.com/www/1/-------------4-{lPage}-1-iqiyi--.html",  ##电影新上线
-            "https://list.iqiyi.com/www/6/-------------24-{lPage}-1-iqiyi--.html", ##综艺综合排序
-            "https://list.iqiyi.com/www/6/-------------11-{lPage}-1-iqiyi--.html", ##综艺热播榜
-            "https://list.iqiyi.com/www/6/-------------4-{lPage}-1-iqiyi--.html",  ##综艺新上线
-            "https://list.iqiyi.com/www/4/-------------24-{lPage}-1-iqiyi--.html",  ##动漫综合排序
-            "https://list.iqiyi.com/www/4/-------------11-{lPage}-1-iqiyi--.html", ##动漫热播榜
-            "https://list.iqiyi.com/www/4/-------------4-{lPage}-1-iqiyi--.html"   ##动漫新上线
-        ]
-        self.Maps = {"/2/": 0, "/1/": 1, "/6/": 2, "/4/": 3}
+        self.Type = ['电视剧', '电影', '综艺', '动漫',"纪录片"]
+        self.Areas = [utils.TVAreas,utils.MovieAreas,utils.ShowAreas,utils.AnimalAreas,utils.VlogAreas]
+        self.Maps = {"channel_id=2": 0, "channel_id=1": 1, "channel_id=6": 2, "channel_id=4": 3, "channel_id=3":4}
         self.Func = [self.ParseTvPage, self.ParseMoviePage, self.ParseShowPage, self.ParseAnimalPage]
 
     def start_requests(self):
 
-        for reqUrl in self.ListUrls:
+        for reqUrl in utils.IQIYIUrls:
             logging.warning("Start reqUrl {url}".format(url=reqUrl))
-            lindex = [self.Maps[key] for key in self.Maps if key in reqUrl][0]
-            for lpage in range(1, 20):
-                logging.warning("start reqUrl page at {page}".format(page=lpage))
-                yield scrapy.Request(url=reqUrl.format(lPage=lpage), meta={"index":copy.deepcopy(lindex)},callback= self.getHtml)
-            logging.warning("finish reqUrl all page")
-        logging.warning("Finish all reqUrls")
+            for mode in utils.IQIYIModes:
+                logging.warning("Start reqUrl ：{url} | mode： {mode}".format(url=reqUrl,mode=mode))
+                lindex = [self.Maps[key] for key in self.Maps if key in reqUrl][0]
+                for iarea in self.Areas[lindex]:
+                    logging.warning("Start reqUrl :{url}| mode：{mode} | iarea : {iarea}".format(url=reqUrl,mode=mode,iarea=iarea))
+                    for lpage in range(1, 20):
+                        logging.warning("Start reqUrl :{url}| mode：{mode} | iarea : {iarea} | page : {page}".format(url=reqUrl,mode=mode,iarea=iarea,page=lpage))
+                        yield scrapy.Request(url=reqUrl.format(lPage=lpage), meta=copy.deepcopy({"index":lindex}),callback= self.getHtml)
+                    logging.warning("finish all page")
+                logging.warning("finish all area")
+            logging.warning("finish all mode")
+        logging.warning("Finish all reqUrl")
 
     def getHtml(self,response):
 
-        lindex = response.meta["index"]
-        playUrls = re.findall(r'playUrl":"(.*?)",', response.text)
-        for playurl in playUrls:
-            yield scrapy.Request(url=playurl,callback= self.Func[lindex])
+        reshtml = response.text
+        if re.findall(r'"list":(.*?),', reshtml) == []:
+            yield None
+        else:
+            lindex = response.meta["index"]
+            playUrls = re.findall(r'playUrl":"(.*?)",', reshtml)
+            albumIds = re.findall(r'"albumId":(.*?),', reshtml)
+            titles = re.findall(r'"title":"(.*?)",', reshtml)
+            categories = re.findall(r'"categories":(.*?),', reshtml)
+            actors = re.findall(r'"people":{(.*?)}', reshtml)
+            for tag, playurl in enumerate(playUrls):
+                item = IQIYItem()
+                item["pid"] = albumIds[tag]
+                item["title"] = titles[tag]
+                item["category"] = categories[tag]
+                item["actor"] = re.findall(r'"name":"(.*?)"}',str(actors[tag]))
+                yield scrapy.Request(url=playurl,meta=copy.deepcopy({"item":item,"index":lindex}),callback= self.Func[lindex])
+
     #待完善
     def ParseTvPage(self, response):
 
-        errmsg = re.findall(r'<title>(.*?)</title>',response.text)[0][:3]
-        if '404' == errmsg:
-            yield
+        item = response.meta["item"]
+        ##获取该电视剧所有集数的属性信息
+        PageUrl="https://pcw-api.iqiyi.com/albums/album/avlistinfo?aid={aid}&page={page}&size=30"
+        reshtml = requests.get(PageUrl.format(aid=item["pid"],page="1"), headers=random.choice(utils.USER_AGENTS)).text
+        tvIds = re.findall(r'tvId":(.*?),',reshtml)
+        uids = re.findall(r'/v_(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',reshtml)))
+        names = re.findall(r'shortTitle":"(.*?)",',reshtml)
+        pages = (int)(re.findall(r'page":(.*?),',reshtml)[0])
+        if pages > 1:
+            for page in range(2,pages+1):
+                reshtml = requests.get(PageUrl.format(aid=item["pid"], page=page), headers=self.headers).text
+                tvIds.extend(re.findall(r'tvId":(.*?),',reshtml))
+                uids.extend(re.findall(r'/v_(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',reshtml))))
+                names.extend(re.findall(r'shortTitle":"(.*?)",',reshtml))
+
+        for tvTag, tvid in enumerate(tvIds):
+            item["uid"] = tvid
+            item["hid"] = uids[tvTag]
+            item["name"] = names[tvTag]
+            item["type"] = "电视剧"
+            item["app"] = "TENCENT"
+            yield item
 
 
     def parseItem(self, response, index):
