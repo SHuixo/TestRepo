@@ -18,25 +18,19 @@ class LESpider(scrapy.Spider):
         self.strRegex = re.compile('[^\w\u4e00-\u9fff]')
         self.Type = ['电视剧', '电影', '综艺', '动漫']
         self.ListUrls = [
-            "http://list.le.com/getLesoData?from=pc&src=1&stype=1&ps=30&pn={lpage}&ph=420001&dt=1&cg=2&or=4&stt=1&vt=180001&s=1",
-            ##剧集热播
-            "http://list.le.com/getLesoData?from=pc&src=1&stype=1&ps=30&pn={lpage}&ph=420001&dt=1&cg=2&or=5&stt=1&vt=180001&s=1",
-            ##剧集最新
-            "http://list.le.com/getLesoData?from=pc&src=1&stype=1&ps=30&pn={lpage}&ph=420001&dt=1&cg=1&or=4&stt=1&vt=180001&s=1",
-            ##电影热播
-            "http://list.le.com/getLesoData?from=pc&src=1&stype=1&ps=30&pn={lpage}&ph=420001&dt=1&cg=1&or=1&stt=1&vt=180001&s=1",
-            ##电影最新
-            "http://list.le.com/getLesoData?from=pc&src=1&stype=1&ps=30&pn={lpage}&ph=420001&dt=1&cg=11&or=4&stt=1&s=3",
-            ##综艺热播
-            "http://list.le.com/getLesoData?from=pc&src=1&stype=1&ps=30&pn={lpage}&ph=420001&dt=1&cg=11&or=7&stt=1&s=3",
-            ##综艺最新
-            "http://list.le.com/getLesoData?from=pc&src=1&stype=1&ps=30&pn={lpage}&ph=420001&dt=1&cg=5&or=4&stt=1&s=1",
-            ##动漫热播
-            "http://list.le.com/getLesoData?from=pc&src=1&stype=1&ps=30&pn={lpage}&ph=420001&dt=1&cg=5&or=5&stt=1&s=1"
-            ##动漫最新
+            "http://list.le.com/getLesoData?from=pc&src=1&stype=1&ps=30&pn={lpage}&ph=420001&dt=1&cg=2&or=4&stt=1&vt=180001&s=1", ##剧集热播
+            "http://list.le.com/getLesoData?from=pc&src=1&stype=1&ps=30&pn={lpage}&ph=420001&dt=1&cg=2&or=5&stt=1&vt=180001&s=1", ##剧集最新
+            "http://list.le.com/getLesoData?from=pc&src=1&stype=1&ps=30&pn={lpage}&ph=420001&dt=1&cg=1&or=4&stt=1&vt=180001&s=1", ##电影热播
+            "http://list.le.com/getLesoData?from=pc&src=1&stype=1&ps=30&pn={lpage}&ph=420001&dt=1&cg=1&or=1&stt=1&vt=180001&s=1", ##电影最新
+            "http://list.le.com/getLesoData?from=pc&src=1&stype=1&ps=30&pn={lpage}&ph=420001&dt=1&cg=11&or=4&stt=1&s=3",          ##综艺热播
+            "http://list.le.com/getLesoData?from=pc&src=1&stype=1&ps=30&pn={lpage}&ph=420001&dt=1&cg=11&or=7&stt=1&s=3",          ##综艺最新
+            "http://list.le.com/getLesoData?from=pc&src=1&stype=1&ps=30&pn={lpage}&ph=420001&dt=1&cg=5&or=4&stt=1&s=1",           ##动漫热播
+            "http://list.le.com/getLesoData?from=pc&src=1&stype=1&ps=30&pn={lpage}&ph=420001&dt=1&cg=5&or=5&stt=1&s=1"            ##动漫最新
         ]
         self.LEUrl = "http://www.le.com/ptv/vplay/{vid}.html"
         self.Maps = {"cg=2&": 0, "cg=1&": 1, "cg=11&": 2, "cg=5&": 3}
+        self.TypeMaps = {"1":"电影","2":"电视剧","3":"娱乐","5":"动漫","9":"音乐","11":"综艺","16":"纪录片","30":"萌宠","34":"亲子",
+                         "20":"风尚","22":"财经","14":"汽车","23":"旅游","30":"热点","1035":"全景","1009":"资讯","1021":"教育"}
         self.SWITCH = False   #用于从网站获取内容(True)和从本地文件(False)获取内容的切换。
         self.File = r"C:\Users\Asxh-PC\OneDrive\checkLE.txt"
 
@@ -95,7 +89,7 @@ class LESpider(scrapy.Spider):
                 item["actor"] = None
                 item["category"] = None
             item["name"] = self.strRegex.sub('',str(re.search(r'title:"(.*?)",',reshtml).group(1)))
-            item["type"] = str(re.search(r'cid:(.*?),',reshtml).group(1))  ##频道id
+            item["type"] = self.TypeMaps[str(re.search(r'cid:(.*?),',reshtml).group(1)).strip()]  ##频道id
             item["app"] = "LE"
             yield item
         else:
