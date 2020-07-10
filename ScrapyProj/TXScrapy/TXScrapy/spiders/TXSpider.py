@@ -52,7 +52,6 @@ class TXSpider(scrapy.Spider):
     def getOtherItem(self,response):
         ID = response.meta["ID"]
         type = re.search(r'type_name":"(.*?)"',response.text).group(1)
-        print("{} type--> {}".format(ID,type))
         index = [self.TypeMaps[key] for key in self.TypeMaps if key in type][0]
         response = scrapy.Request(url=self.TxUrl.format(ID=ID),meta=copy.deepcopy({"href":self.TxUrl.format(ID=ID)}),callback=self.Funcs[index],dont_filter=True)
         yield response
@@ -104,7 +103,7 @@ class TXSpider(scrapy.Spider):
             item["title"] = self.strRegex.sub('',response.xpath('string(//*[@id="container_player"]/div/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/h2/a)').extract_first())
             item["category"] = self.strRegex.sub('',response.xpath('string(//*[@id="container_player"]/div/div[2]/div[1]/div[2]/div/div[3])').extract_first())
             item["actor"] = None
-            item["pid"] = re.search(r'cover/(.*?).html',href)
+            item["pid"] = re.search(r'cover/(.*?).html',href).group(1)
             item["hid"] = None
             ## 获得每一集的ID
             vidGroup = re.search(r'{"vid":\[(.*?)\],',reshtml)
