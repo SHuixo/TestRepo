@@ -23,7 +23,7 @@ class TXSpider(scrapy.Spider):
         self.Funcs = [self.getTvItem,self.getMovieItem,self.getVarietyItem,self.getVlogItem]
         self.SWITCH = False   #用于从网站获取内容(True)和从本地文件(False)获取内容的切换。
         self.TxUrl = "https://v.qq.com/x/cover/{ID}.html"
-        self.File = r"C:\Users\Asxh-PC\OneDrive\checkTX.txt"
+        self.File = r"./checkTX.txt"
 
     def start_requests(self):
         if self.SWITCH:
@@ -103,7 +103,7 @@ class TXSpider(scrapy.Spider):
             item["title"] = self.strRegex.sub('',response.xpath('string(//*[@id="container_player"]/div/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/h2/a)').extract_first())
             item["category"] = self.strRegex.sub('',response.xpath('string(//*[@id="container_player"]/div/div[2]/div[1]/div[2]/div/div[3])').extract_first())
             item["actor"] = None
-            item["pid"] = re.search(r'cover/(.*?).html',href).group(1)
+            item["pid"] = re.search(r'cover/(.*?).html',href).group(1).strip()
             item["hid"] = None
             ## 获得每一集的ID
             vidGroup = re.search(r'{"vid":\[(.*?)\],',reshtml)

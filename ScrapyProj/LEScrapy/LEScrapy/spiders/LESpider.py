@@ -29,7 +29,7 @@ class LESpider(scrapy.Spider):
         ]
         self.LEUrl = "http://www.le.com/ptv/vplay/{vid}.html"
         self.Maps = {"cg=2&": 0, "cg=1&": 1, "cg=11&": 2, "cg=5&": 3}
-        self.TypeMaps = {"1":"电影","2":"电视剧","3":"娱乐","5":"动漫","9":"音乐","11":"综艺","16":"纪录片","30":"萌宠","34":"亲子",
+        self.TypeMaps = {"1":"电影","2":"电视剧","3":"娱乐","5":"动漫","9":"音乐","11":"综艺","16":"纪录片","34":"亲子",
                          "20":"风尚","22":"财经","14":"汽车","23":"旅游","30":"热点","1035":"全景","1009":"资讯","1021":"教育"}
         self.SWITCH = False   #用于从网站获取内容( True )和从本地文件( False )获取内容的切换。
         self.File = r"./checkLE.txt"
@@ -78,7 +78,7 @@ class LESpider(scrapy.Spider):
 
         if "抱歉" != errmsg and "502 Bad Gateway" not in badmsg and reshtml is not None:
             item["title"] = self.strRegex.sub('',str(re.search(r'pTitle:"(.*?)",',reshtml).group(1)))
-            item["pid"] = re.search(r'pid:(.*?),',reshtml).group(1)
+            item["pid"] = re.search(r'pid:(.*?),',reshtml).group(1).strip()
             item["hid"] = None
             reGroup = re.search(r'<!--主演-->(.*?)<!--简介',str(reshtml))
             reAll = re.search(r'<!--类型-->(.*?)<!--主演-->',str(reshtml))
@@ -89,7 +89,10 @@ class LESpider(scrapy.Spider):
                 item["actor"] = None
                 item["category"] = None
             item["name"] = self.strRegex.sub('',str(re.search(r'title:"(.*?)",',reshtml).group(1)))
-            item["type"] = self.TypeMaps[str(re.search(r'cid:(.*?),',reshtml).group(1)).strip()]  ##频道id
+            try:
+                item["type"] = self.TypeMaps[str(re.search(r'cid:(.*?),',reshtml).group(1)).strip()]  ##频道id
+            except KeyError:
+                item["type"] = "其他"
             item["app"] = "LE"
             yield item
         else:

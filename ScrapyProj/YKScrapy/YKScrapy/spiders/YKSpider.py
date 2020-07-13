@@ -62,6 +62,8 @@ class YKSpider(scrapy.Spider):
 
 
     def getHtml(self,response):
+        if "抱歉" in str(response.xpath(r'string(//*[@id="root"]/div/div/div[1])').extract_first()):
+            yield None
         resHtml = response.text
         if self.SWITCH:
             ktype = response.meta["ktype"]
@@ -82,8 +84,8 @@ class YKSpider(scrapy.Spider):
             else:
                 try:
                     cindex = [self.CatMaps[key] for key in self.CatMaps if key in catName][0]
-                    yield scrapy.Request(url=self.TvUrl.format(ID=id),meta=copy.deepcopy({"index":cindex,"id":id}),callback=self.getVLogItem,dont_filter=True)
-                except IndexError as e:
+                    yield scrapy.Request(url=self.TvUrl.format(ID=id),meta=copy.deepcopy({"index":cindex,"id":id}),callback=self.self.Funcs[cindex],dont_filter=True)
+                except:
                     # print(catName,self.TvUrl.format(ID=id))
                     response = scrapy.Request(url=self.TvUrl.format(ID=id),callback=self.parseItem,dont_filter=True)
                     yield response
@@ -173,22 +175,25 @@ class YKSpider(scrapy.Spider):
         logging.warning("开始执行 getShowItem -> {}".format(self.TvUrl.format(ID=id)))
 
     def parseItem(self, response):
-        resHtml = response.text
-        item = YKItem()
-        if self.SWITCH:
-            item["title"] = self.strRegex.sub('',response.xpath('string(//*[@id="module_basic_dayu_sub"]/div/div[1]/a[1])').extract_first())
-            item["category"] = self.strRegex.sub('',response.xpath('string(//*[@id="app"]/div/div[2]/div[2]/div[2]/div[1]/div/div/div)').extract_first())
-            if '内容简介' in item["category"]:
-                item["category"] = item["category"].split('内容简介')[1]
+        if "抱歉" in str(response.xpath(r'string(//*[@id="root"]/div/div/div[1])').extract_first()):
+            yield None
         else:
-            item["title"] = None
-            item["category"] = None
+            resHtml = response.text
+            item = YKItem()
+            if self.SWITCH:
+                item["title"] = self.strRegex.sub('',response.xpath('string(//*[@id="module_basic_dayu_sub"]/div/div[1]/a[1])').extract_first())
+                item["category"] = self.strRegex.sub('',response.xpath('string(//*[@id="app"]/div/div[2]/div[2]/div[2]/div[1]/div/div/div)').extract_first())
+                if '内容简介' in item["category"]:
+                    item["category"] = item["category"].split('内容简介')[1]
+            else:
+                item["title"] = None
+                item["category"] = None
 
-        item["name"] = self.strRegex.sub('',response.xpath('string(//*[@id="left-title-content-wrap"])').extract_first())
-        item["uid"] = re.search(r"videoId: '(.*?)',",resHtml).group(1)
-        item["pid"] = re.search(r"showid: '(.*?)',",resHtml).group(1)
-        item["hid"] = re.search(r"videoId2: '(.*?)',",resHtml).group(1)
-        item["type"] = re.search(r"catName: '(.*?)',",resHtml).group(1)
-        item["actor"] = None
-        item["app"] = "YOUKU"
-        yield item
+            item["name"] = self.strRegex.sub('',response.xpath('string(//*[@id="left-title-content-wrap"])').extract_first())
+            item["uid"] = re.search(r"videoId: '(.*?)',",resHtml).group(1).strip()
+            item["pid"] = re.search(r"showid: '(.*?)',",resHtml).group(1).strip()
+            item["hid"] = re.search(r"videoId2: '(.*?)',",resHtml).group(1).strip()
+            item["type"] = re.search(r"catName: '(.*?)',",resHtml).group(1).strip()
+            item["actor"] = None
+            item["app"] = "YOUKU"
+            yield item
