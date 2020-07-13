@@ -23,12 +23,12 @@ class YKSpider(scrapy.Spider):
         self.browser_options = webdriver.ChromeOptions()
         self.browser_options.add_experimental_option("prefs", self.prefs)
         self.browser_options.add_argument('lang=zh_CN.utf-8')
-        self.File = r"C:\Users\Asxh-PC\OneDrive\checkYK.txt"
+        self.File = r"./checkYK.txt"
         self.TvUrl = "https://v.youku.com/v_show/id_{ID}.html"
         self.strRegex = re.compile('[^\w\u4e00-\u9fff]')
         self.Maps = {"97": 0, "96": 1, "85": 2, "100": 3, "177":4}
         self.CatMaps = {"电视剧": 0, "电影": 1, "综艺": 2, "动漫": 3, "少儿":4,"微电影":5,"教育":5}
-        self.SWITCH = False #True #False  # 标识是否从文件中读取id，默认不从文件读取 True
+        self.SWITCH = False #True #False  #默认从网页开始True / 从文件读取 False
         self.Funcs = [self.getTVItem,self.parseItem,self.getShowItem,self.getTVItem,self.getTVItem,self.getOtherItem]
 
     def start_requests(self):

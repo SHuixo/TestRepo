@@ -31,8 +31,8 @@ class LESpider(scrapy.Spider):
         self.Maps = {"cg=2&": 0, "cg=1&": 1, "cg=11&": 2, "cg=5&": 3}
         self.TypeMaps = {"1":"电影","2":"电视剧","3":"娱乐","5":"动漫","9":"音乐","11":"综艺","16":"纪录片","30":"萌宠","34":"亲子",
                          "20":"风尚","22":"财经","14":"汽车","23":"旅游","30":"热点","1035":"全景","1009":"资讯","1021":"教育"}
-        self.SWITCH = False   #用于从网站获取内容(True)和从本地文件(False)获取内容的切换。
-        self.File = r"C:\Users\Asxh-PC\OneDrive\checkLE.txt"
+        self.SWITCH = False   #用于从网站获取内容( True )和从本地文件( False )获取内容的切换。
+        self.File = r"./checkLE.txt"
 
     def start_requests(self):
         if self.SWITCH:

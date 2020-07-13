@@ -60,31 +60,48 @@ class LESpider(scrapy.Spider):
                 item["actor"] = re.findall(r'"name":"(.*?)"}',str(actors[tag]))
                 yield scrapy.Request(url=playurl,meta=copy.deepcopy({"item":item,"index":lindex}),callback= self.Func[lindex])
 
-    #待完善
+
     def ParseTvPage(self, response):
 
         item = response.meta["item"]
+        lindex = response.meta["index"]
         ##获取该电视剧所有集数的属性信息
         PageUrl="https://pcw-api.iqiyi.com/albums/album/avlistinfo?aid={aid}&page={page}&size=30"
         reshtml = requests.get(PageUrl.format(aid=item["pid"],page="1"), headers=random.choice(utils.USER_AGENTS)).text
         tvIds = re.findall(r'tvId":(.*?),',reshtml)
-        uids = re.findall(r'/v_(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',reshtml)))
+        hids = re.findall(r'/v_(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',reshtml)))
         names = re.findall(r'shortTitle":"(.*?)",',reshtml)
         pages = (int)(re.findall(r'page":(.*?),',reshtml)[0])
         if pages > 1:
             for page in range(2,pages+1):
                 reshtml = requests.get(PageUrl.format(aid=item["pid"], page=page), headers=self.headers).text
                 tvIds.extend(re.findall(r'tvId":(.*?),',reshtml))
-                uids.extend(re.findall(r'/v_(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',reshtml))))
+                hids.extend(re.findall(r'/v_(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',reshtml))))
                 names.extend(re.findall(r'shortTitle":"(.*?)",',reshtml))
 
         for tvTag, tvid in enumerate(tvIds):
             item["uid"] = tvid
-            item["hid"] = uids[tvTag]
+            item["hid"] = hids[tvTag]
             item["name"] = names[tvTag]
-            item["type"] = "电视剧"
+            item["type"] = self.Type[lindex]
             item["app"] = "TENCENT"
             yield item
+
+    #ok
+    def ParseMoviePage(self, response):
+
+        item = response.meta["item"]
+        lindex = response.meta["index"]
+        reshtml = response.text
+
+        item["uid"] = re.search(r'param\[\'tvid\'\] = "(.*?)";',reshtml).group(1)
+        item["hid"] = re.search(r'/v_(.*?).html"', str(response.url)).group(1)
+        item["name"] = item["title"]
+        item["type"] = self.Type[lindex]
+        item["app"] = "TENCENT"
+
+        yield item
+
 
 
     def parseItem(self, response, index):
