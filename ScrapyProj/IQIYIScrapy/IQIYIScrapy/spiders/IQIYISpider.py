@@ -139,7 +139,6 @@ class LESpider(scrapy.Spider):
 
                 item["uid"] = tvId
                 item["name"] = names[aindex]
-
                 yield item
 
     def ParseAnimalPage(self,response):
