@@ -70,7 +70,7 @@ class LESpider(scrapy.Spider):
         reshtml = requests.get(PageUrl.format(aid=item["pid"],page="1"), headers=headers).text
         tvIds = re.findall(r'tvId":(.*?),',reshtml)
         hids = re.findall(r'/v_(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',reshtml)))
-        names = re.findall(r'shortTitle":"(.*?)",',reshtml)
+        names = re.findall(r'name":"(.*?)",',str(re.findall(r'"tvId":(.*?)"playUrl"',reshtml)))
         if len(hids) != len(tvIds):
             hids = [hid.split('/')[-1] for hid in re.findall(r'/(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',reshtml)))]
         rp =  re.findall(r'page":(.*?),',reshtml)
@@ -83,7 +83,7 @@ class LESpider(scrapy.Spider):
                 reshtml = requests.get(PageUrl.format(aid=item["pid"], page=page), headers=headers).text
                 tvtmp = re.findall(r'tvId":(.*?),',reshtml)
                 htmp = re.findall(r'/v_(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',reshtml)))
-                nametmp = re.findall(r'shortTitle":"(.*?)",',reshtml)
+                nametmp = re.findall(r'name":"(.*?)",',str(re.findall(r'"tvId":(.*?)"playUrl"',reshtml)))
                 if len(htmp) != len(tvtmp):
                     htmp = [hid.split('/')[-1] for hid in re.findall(r'/(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',reshtml)))]
                 tvIds.extend(tvtmp)

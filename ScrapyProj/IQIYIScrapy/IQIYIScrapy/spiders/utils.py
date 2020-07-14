@@ -23,10 +23,10 @@ USER_AGENTS = [
         ]
 IQIYIUrls = [
     "https://pcw-api.iqiyi.com/search/recommend/list?channel_id=2&data_type=1&mode={mode}&page_id={lPage}&ret_num=48&session=ca05f72f509d4e276146faa28bf2d8d6&three_category_id={iarea}", ##电视剧
-    "https://pcw-api.iqiyi.com/search/recommend/list?channel_id=1&data_type=1&mode={mode}&page_id={lPage}&ret_num=48&session=a105f758273445da58870f216c587d2d&three_category_id={iarea}" #电影
-    "https://pcw-api.iqiyi.com/search/recommend/list?channel_id=6&data_type=1&mode={mode}&page_id={lPage}&ret_num=48&session=f925f77fd151b32777af7744a0c10446&three_category_id={iarea}" #综艺
-    "https://pcw-api.iqiyi.com/search/recommend/list?channel_id=4&data_type=1&mode={mode}&page_id={lPage}&ret_num=48&session=f3d5f7c5ae71ce1ee3d998c698653137&three_category_id={iarea}" #动漫
-    "https://pcw-api.iqiyi.com/search/recommend/list?channel_id=3&data_type=1&mode={mode}&page_id={lPage}&ret_num=48&session=1a15f7b5be34ce712fa319a7e1be29d9&three_category_id={iarea}" #纪录片
+    "https://pcw-api.iqiyi.com/search/recommend/list?channel_id=1&data_type=1&mode={mode}&page_id={lPage}&ret_num=48&session=a105f758273445da58870f216c587d2d&three_category_id={iarea}", #电影
+    "https://pcw-api.iqiyi.com/search/recommend/list?channel_id=6&data_type=1&mode={mode}&page_id={lPage}&ret_num=48&session=f925f77fd151b32777af7744a0c10446&three_category_id={iarea}", #综艺
+    "https://pcw-api.iqiyi.com/search/recommend/list?channel_id=4&data_type=1&mode={mode}&page_id={lPage}&ret_num=48&session=f3d5f7c5ae71ce1ee3d998c698653137&three_category_id={iarea}", #动漫
+    "https://pcw-api.iqiyi.com/search/recommend/list?channel_id=3&data_type=1&mode={mode}&page_id={lPage}&ret_num=48&session=1a15f7b5be34ce712fa319a7e1be29d9&three_category_id={iarea}", #纪录片
     ]
 IQIYIModes = [
     # 综合排序，热播榜，好评榜，新上线
