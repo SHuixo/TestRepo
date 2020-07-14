@@ -21,7 +21,7 @@ class LESpider(scrapy.Spider):
         self.Type = ['电视剧', '电影', '综艺', '动漫',"纪录片"]
         self.Areas = [utils.TVAreas,utils.MovieAreas,utils.ShowAreas,utils.AnimalAreas,utils.VlogAreas]
         self.Maps = {"channel_id=2": 0, "channel_id=1": 1, "channel_id=6": 2, "channel_id=4": 3, "channel_id=3":4}
-        self.Func = [self.ParseTvPage, self.ParseMoviePage, self.ParseShowPage, self.ParseAnimalPage]
+        self.Func = [self.ParseTvPage, self.ParseMoviePage, self.ParseShowPage, self.ParseAnimalPage,self.ParseVlogPage]
 
     def start_requests(self):
 
@@ -55,9 +55,9 @@ class LESpider(scrapy.Spider):
             for tag, playurl in enumerate(playUrls):
                 item = IQIYItem()
                 item["pid"] = albumIds[tag]
-                item["title"] = titles[tag]
-                item["category"] = categories[tag]
-                item["actor"] = re.findall(r'"name":"(.*?)"}',str(actors[tag]))
+                item["title"] = self.strRegex.sub('',titles[tag])
+                item["category"] = self.strRegex.sub('',categories[tag])
+                item["actor"] = self.strRegex.sub('',re.findall(r'"name":"(.*?)"}',str(actors[tag])))
                 yield scrapy.Request(url=playurl,meta=copy.deepcopy({"item":item,"index":lindex}),callback= self.Func[lindex])
 
 
@@ -82,7 +82,7 @@ class LESpider(scrapy.Spider):
         for tvTag, tvid in enumerate(tvIds):
             item["uid"] = tvid
             item["hid"] = hids[tvTag]
-            item["name"] = names[tvTag]
+            item["name"] = self.strRegex.sub('',names[tvTag])
             item["type"] = self.Type[lindex]
             item["app"] = "TENCENT"
             yield item
@@ -102,33 +102,47 @@ class LESpider(scrapy.Spider):
 
         yield item
 
+    ## 综艺类节目，hid不好获取暂时置为None
+    def ParseShowPage(self,response):
+        item = response.meta["item"]
+        lindex = response.meta["index"]
+        item["hid"] = None
+        item["type"] = self.Type[lindex]
+        item["app"] = "TENCENT"
+        resSoup = response.text
+        #ok!
+        allData = re.findall(r'<div class=\"qy-player-side-list j_sourcelist_cont\" data-initialized=\'\[(.*)?\]\'>',resSoup)
+        if [] == allData:
+            allData = re.findall(r'<div class=\"qy-player-side-list j_sourcelist_cont\" data-initialized="\[(.*)?\]">',resSoup)
+        if [] == allData:
+            item["pid"] = re.findall(r'param\[\'albumid\'\] = "(.*?)";',resSoup)[0]
+            item["uid"] = re.findall(r'param\[\'tvid\'\] = "(.*?)";',resSoup)
+            item["name"] = re.findall(r'meta content="(.*?)" property="og:title"/>',resSoup)[0]
 
-
-    def parseItem(self, response, index):
-        item = response.meta["meta"]
-        reshtml = response.text
-        errmsg = str(response.xpath('string(/html/body/div[2]/div/div[2]/h2)').extract_first()[:2])
-        badmsg = str(re.findall(r'<head><title>(.*?)</title></head>',reshtml))
-
-        if "抱歉" != errmsg and "502 Bad Gateway" not in badmsg and reshtml is not None:
-            item["title"] = self.strRegex.sub('',str(re.search(r'pTitle:"(.*?)",',reshtml).group(1)))
-            item["pid"] = re.search(r'pid:(.*?),',reshtml).group(1)
-            item["hid"] = None
-            ##演员
-            reGroup = re.search(r'<b>主演：</b><span>(.*?)</span>',reshtml)
-            if reGroup is not None:
-                item["actor"] = self.strRegex.sub('',str(re.findall(r'title="(.*?)"', reGroup.group(1))))
-            else:
-                item["actor"] = None
-
-            reAll = re.findall(r'>(.*?)</a>', re.search(r'<b>类型：</b><span>(.*?)</span>',reshtml))
-            if reAll is not None:
-                item["category"] = self.strRegex.sub('',str(reAll.group(1)).replace(",","；").replace("|","；"))
-            else:
-                item["category"] = None
-            item["name"] = self.strRegex.sub('',str(re.search(r'title:"(.*?)",',reshtml).group(1)))
-            item["type"] = self.Type[index]
-            item["app"] = "LE"
             yield item
         else:
-            logging.warning("Err No Item at uid {}".format(item["uid"]))
+            allData = allData[0]
+            if "albumId&quot;:" in allData:
+                albumids = re.findall(r'albumId&quot;:(.*?),',allData)[0]
+                tvIds = re.findall(r'tvId&quot;:(.*?),',allData)
+                names = re.findall(r'name&quot;:&quot;(.*?)&quot;,',allData)
+            elif 'albumId":' in allData:
+                albumids = re.findall(r'albumId":(.*?),',allData)[0]
+                tvIds = re.findall(r'tvId":(.*?),',allData)
+                names = re.findall(r'name":"(.*?)",',allData)
+
+            for aindex, albumid in enumerate(albumids):
+
+                item["uid"] = tvIds[aindex]
+                item["pid"] = albumid
+                item["name"] = names[aindex]
+
+                yield item
+
+
+
+    def ParseAnimalPage(self,response):
+        yield None
+
+    def ParseVlogPage(self,response):
+        yield None
