@@ -2,7 +2,6 @@
 # 使用selenium解决动态加载数据抓取
 import copy
 import random
-
 import requests
 import logging
 import scrapy
@@ -34,7 +33,7 @@ class LESpider(scrapy.Spider):
                     logging.warning("Start reqUrl :{url}| mode：{mode} | iarea : {iarea}".format(url=reqUrl,mode=mode,iarea=iarea))
                     for lpage in range(1, 20):
                         logging.warning("Start reqUrl :{url}| mode：{mode} | iarea : {iarea} | page : {page}".format(url=reqUrl,mode=mode,iarea=iarea,page=lpage))
-                        yield scrapy.Request(url=reqUrl.format(lPage=lpage), meta=copy.deepcopy({"index":lindex}),callback= self.getHtml)
+                        yield scrapy.Request(url=reqUrl.format(mode=mode,iarea=iarea,lPage=lpage), meta=copy.deepcopy({"index":lindex}),callback= self.getHtml)
                     logging.warning("finish all page")
                 logging.warning("finish all area")
             logging.warning("finish all mode")
@@ -47,7 +46,7 @@ class LESpider(scrapy.Spider):
             yield None
         else:
             lindex = response.meta["index"]
-            playUrls = re.findall(r'playUrl":"(.*?)",', reshtml)
+            playUrls = [url.split('"')[0] for url in re.findall(r'playUrl":"(.*?)",', reshtml)]
             albumIds = re.findall(r'"albumId":(.*?),', reshtml)
             titles = re.findall(r'"title":"(.*?)",', reshtml)
             categories = re.findall(r'"categories":(.*?),', reshtml)
@@ -57,7 +56,7 @@ class LESpider(scrapy.Spider):
                 item["pid"] = albumIds[tag]
                 item["title"] = self.strRegex.sub('',titles[tag])
                 item["category"] = self.strRegex.sub('',categories[tag])
-                item["actor"] = self.strRegex.sub('',re.findall(r'"name":"(.*?)"}',str(actors[tag])))
+                item["actor"] = self.strRegex.sub('',str(re.findall(r'"name":"(.*?)"}',str(actors[tag]))))
                 yield scrapy.Request(url=playurl,meta=copy.deepcopy({"item":item,"index":lindex}),callback= self.Func[lindex])
 
 
@@ -66,17 +65,22 @@ class LESpider(scrapy.Spider):
         item = response.meta["item"]
         lindex = response.meta["index"]
         ##获取该电视剧所有集数的属性信息
+        headers = {"User-Agent": random.choice(utils.USER_AGENTS)}
         PageUrl="https://pcw-api.iqiyi.com/albums/album/avlistinfo?aid={aid}&page={page}&size=30"
-        reshtml = requests.get(PageUrl.format(aid=item["pid"],page="1"), headers=random.choice(utils.USER_AGENTS)).text
+        reshtml = requests.get(PageUrl.format(aid=item["pid"],page="1"), headers=headers).text
         tvIds = re.findall(r'tvId":(.*?),',reshtml)
         hids = re.findall(r'/v_(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',reshtml)))
         names = re.findall(r'shortTitle":"(.*?)",',reshtml)
         if len(hids) != len(tvIds):
             hids = [hid.split('/')[-1] for hid in re.findall(r'/(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',reshtml)))]
-        pages = (int)(re.findall(r'page":(.*?),',reshtml)[0])
+        rp =  re.findall(r'page":(.*?),',reshtml)
+        if rp is not None:
+            pages = (int)(rp[0])
+        else:
+            pages = 1
         if pages > 1:
             for page in range(2,pages+1):
-                reshtml = requests.get(PageUrl.format(aid=item["pid"], page=page), headers=self.headers).text
+                reshtml = requests.get(PageUrl.format(aid=item["pid"], page=page), headers=headers).text
                 tvtmp = re.findall(r'tvId":(.*?),',reshtml)
                 htmp = re.findall(r'/v_(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',reshtml)))
                 nametmp = re.findall(r'shortTitle":"(.*?)",',reshtml)
@@ -91,7 +95,7 @@ class LESpider(scrapy.Spider):
             item["hid"] = hids[tvTag]
             item["name"] = self.strRegex.sub('',names[tvTag])
             item["type"] = self.Type[lindex]
-            item["app"] = "TENCENT"
+            item["app"] = "IQIYI"
             yield item
 
     #ok
@@ -102,11 +106,14 @@ class LESpider(scrapy.Spider):
         reshtml = response.text
 
         item["uid"] = re.search(r'param\[\'tvid\'\] = "(.*?)";',reshtml).group(1)
-        item["hid"] = re.search(r'/v_(.*?).html"', str(response.url)).group(1)
+        rse = re.search(r'/v_(.*?).html"', str(response.url))
+        if rse is not None:
+            item["hid"] = rse.group(1)
+        else:
+            item["hid"]  = None
         item["name"] = item["title"]
         item["type"] = self.Type[lindex]
-        item["app"] = "TENCENT"
-
+        item["app"] = "IQIYI"
         yield item
 
     ## 综艺类节目，hid不好获取暂时置为None
@@ -115,16 +122,14 @@ class LESpider(scrapy.Spider):
         lindex = response.meta["index"]
         item["hid"] = None
         item["type"] = self.Type[lindex]
-        item["app"] = "TENCENT"
+        item["app"] = "IQIYI"
         resSoup = response.text
-
         allData = re.findall(r'<div class=\"qy-player-side-list j_sourcelist_cont\" data-initialized=\'\[(.*)?\]\'>',resSoup)
         if [] == allData:
             allData = re.findall(r'<div class=\"qy-player-side-list j_sourcelist_cont\" data-initialized="\[(.*)?\]">',resSoup)
         if [] == allData:
             item["uid"] = re.findall(r'param\[\'tvid\'\] = "(.*?)";',resSoup)[0]
-            item["name"] = re.findall(r'meta content="(.*?)" property="og:title"/>',resSoup)[0]
-
+            item["name"] = re.findall(r'"tvName":"(.*?)",',resSoup)[0]
             yield item
         else:
             allData = allData[0]
@@ -144,28 +149,32 @@ class LESpider(scrapy.Spider):
     def ParseAnimalPage(self,response):
         item = response.meta["item"]
         lindex = response.meta["index"]
+        headers = {"User-Agent": random.choice(utils.USER_AGENTS)}
         resSoup = response.text
         item["type"] = self.Type[lindex]
-        item["app"] = "TENCENT"
+        item["app"] = "IQIYI"
         if '0' == item["pid"]:
             item["uid"] = re.findall(r'param\[\'tvid\'\] = "(.*?)";',resSoup)[0]
             item["hid"] = re.findall(r'/v_(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',resSoup)))[0]
             item["name"] = re.findall(r'meta content="(.*?)" property="og:title"/>',resSoup)[0]
-
             yield item
         else:
 
             PageUrl="https://pcw-api.iqiyi.com/albums/album/avlistinfo?aid={aid}&page={page}&size=30"
-            resSoup = requests.get(PageUrl.format(aid=item["pid"],page="1"), headers=random.choice(utils.USER_AGENTS)).text
+            resSoup = requests.get(PageUrl.format(aid=item["pid"],page="1"), headers=headers).text
             tvIds = re.findall(r'tvId":(.*?),',resSoup)
             hids = re.findall(r'/v_(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',resSoup)))
             names = re.findall(r'"name":"(.*?)"',str(re.findall(r'"tvId":(.*?)"playUrl"',resSoup)))
             if len(hids) != len(tvIds):
                 hids = [hid.split('/')[-1] for hid in re.findall(r'/(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',resSoup)))]
-            pages = (int)(re.findall(r'page":(.*?),',resSoup)[0])
+            rp =  re.findall(r'page":(.*?),',resSoup)
+            if rp is not None:
+                pages = (int)(rp[0])
+            else:
+                pages = 1
             if pages > 1:
                 for page in range(2,pages+1):
-                    resSoup = requests.get(PageUrl.format(aid=item["pid"], page=page), headers=random.choice(utils.USER_AGENTS)).text
+                    resSoup = requests.get(PageUrl.format(aid=item["pid"], page=page), headers=headers).text
                     ttmp = re.findall(r'tvId":(.*?),',resSoup)
                     htmp = re.findall(r'/v_(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',resSoup)))
                     names.extend(re.findall(r'"name":"(.*?)"',str(re.findall(r'"tvId":(.*?)"playUrl"',resSoup))))
@@ -178,7 +187,6 @@ class LESpider(scrapy.Spider):
                 item["uid"] = tvid
                 item["hid"] = hids[anatag]
                 item["name"] = names[anatag]
-
                 yield item
 
     def ParseVlogPage(self,response):
@@ -186,19 +194,23 @@ class LESpider(scrapy.Spider):
         item = response.meta["item"]
         lindex = response.meta["index"]
         item["type"] = self.Type[lindex]
-        item["app"] = "TENCENT"
-
+        item["app"] = "IQIYI"
+        headers = {"User-Agent": random.choice(utils.USER_AGENTS)}
         PageUrl="https://pcw-api.iqiyi.com/albums/album/avlistinfo?aid={aid}&page={page}&size=30"
-        resSoup = requests.get(PageUrl.format(aid=item["pid"],page="1"), headers=random.choice(utils.USER_AGENTS)).text
+        resSoup = requests.get(PageUrl.format(aid=item["pid"],page="1"), headers=headers).text
         tvIds = re.findall(r'tvId":(.*?),',resSoup)
         hids = re.findall(r'/v_(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',resSoup)))
         names = re.findall(r'"name":"(.*?)"',str(re.findall(r'"tvId":(.*?)"playUrl"',resSoup)))
         if len(hids) != len(tvIds):
-                hids = [hid.split('/')[-1] for hid in re.findall(r'/(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',resSoup)))]
-        pages = (int)(re.findall(r'page":(.*?),',resSoup)[0])
+            hids = [hid.split('/')[-1] for hid in re.findall(r'/(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',resSoup)))]
+        rp =  re.findall(r'page":(.*?),',resSoup)
+        if rp is not None:
+            pages = (int)(rp[0])
+        else:
+            pages = 1
         if pages > 1:
             for page in range(2,pages+1):
-                resSoup = requests.get(PageUrl.format(aid=item["pid"], page=page), headers=random.choice(utils.USER_AGENTS)).text
+                resSoup = requests.get(PageUrl.format(aid=item["pid"], page=page), headers=headers).text
                 ttmp = re.findall(r'tvId":(.*?),',resSoup)
                 htmp = re.findall(r'/v_(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',resSoup)))
                 names.extend(re.findall(r'"name":"(.*?)"',str(re.findall(r'"tvId":(.*?)"playUrl"',resSoup))))
@@ -211,5 +223,4 @@ class LESpider(scrapy.Spider):
             item["uid"] = tvid
             item["hid"] = hids[anatag]
             item["name"] = names[anatag]
-
             yield item

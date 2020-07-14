@@ -4,8 +4,7 @@
 #
 # See documentation in:
 # https://doc.scrapy.org/en/latest/topics/spider-middleware.html
-from random import random
-
+import random
 from scrapy import signals
 from scrapy.conf import settings
 
