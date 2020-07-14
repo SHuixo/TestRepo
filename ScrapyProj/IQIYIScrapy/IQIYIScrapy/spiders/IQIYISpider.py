@@ -71,13 +71,20 @@ class LESpider(scrapy.Spider):
         tvIds = re.findall(r'tvId":(.*?),',reshtml)
         hids = re.findall(r'/v_(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',reshtml)))
         names = re.findall(r'shortTitle":"(.*?)",',reshtml)
+        if len(hids) != len(tvIds):
+            hids = [hid.split('/')[-1] for hid in re.findall(r'/(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',reshtml)))]
         pages = (int)(re.findall(r'page":(.*?),',reshtml)[0])
         if pages > 1:
             for page in range(2,pages+1):
                 reshtml = requests.get(PageUrl.format(aid=item["pid"], page=page), headers=self.headers).text
-                tvIds.extend(re.findall(r'tvId":(.*?),',reshtml))
-                hids.extend(re.findall(r'/v_(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',reshtml))))
-                names.extend(re.findall(r'shortTitle":"(.*?)",',reshtml))
+                tvtmp = re.findall(r'tvId":(.*?),',reshtml)
+                htmp = re.findall(r'/v_(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',reshtml)))
+                nametmp = re.findall(r'shortTitle":"(.*?)",',reshtml)
+                if len(htmp) != len(tvtmp):
+                    htmp = [hid.split('/')[-1] for hid in re.findall(r'/(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',reshtml)))]
+                tvIds.extend(tvtmp)
+                hids.extend(htmp)
+                names.extend(nametmp)
 
         for tvTag, tvid in enumerate(tvIds):
             item["uid"] = tvid
@@ -110,39 +117,100 @@ class LESpider(scrapy.Spider):
         item["type"] = self.Type[lindex]
         item["app"] = "TENCENT"
         resSoup = response.text
-        #ok!
+
         allData = re.findall(r'<div class=\"qy-player-side-list j_sourcelist_cont\" data-initialized=\'\[(.*)?\]\'>',resSoup)
         if [] == allData:
             allData = re.findall(r'<div class=\"qy-player-side-list j_sourcelist_cont\" data-initialized="\[(.*)?\]">',resSoup)
         if [] == allData:
-            item["pid"] = re.findall(r'param\[\'albumid\'\] = "(.*?)";',resSoup)[0]
-            item["uid"] = re.findall(r'param\[\'tvid\'\] = "(.*?)";',resSoup)
+            item["uid"] = re.findall(r'param\[\'tvid\'\] = "(.*?)";',resSoup)[0]
             item["name"] = re.findall(r'meta content="(.*?)" property="og:title"/>',resSoup)[0]
 
             yield item
         else:
             allData = allData[0]
             if "albumId&quot;:" in allData:
-                albumids = re.findall(r'albumId&quot;:(.*?),',allData)[0]
                 tvIds = re.findall(r'tvId&quot;:(.*?),',allData)
                 names = re.findall(r'name&quot;:&quot;(.*?)&quot;,',allData)
             elif 'albumId":' in allData:
-                albumids = re.findall(r'albumId":(.*?),',allData)[0]
                 tvIds = re.findall(r'tvId":(.*?),',allData)
                 names = re.findall(r'name":"(.*?)",',allData)
 
-            for aindex, albumid in enumerate(albumids):
+            for aindex, tvId in enumerate(tvIds):
 
-                item["uid"] = tvIds[aindex]
-                item["pid"] = albumid
+                item["uid"] = tvId
                 item["name"] = names[aindex]
 
                 yield item
 
-
-
     def ParseAnimalPage(self,response):
-        yield None
+        item = response.meta["item"]
+        lindex = response.meta["index"]
+        resSoup = response.text
+        item["type"] = self.Type[lindex]
+        item["app"] = "TENCENT"
+        if '0' == item["pid"]:
+            item["uid"] = re.findall(r'param\[\'tvid\'\] = "(.*?)";',resSoup)[0]
+            item["hid"] = re.findall(r'/v_(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',resSoup)))[0]
+            item["name"] = re.findall(r'meta content="(.*?)" property="og:title"/>',resSoup)[0]
+
+            yield item
+        else:
+
+            PageUrl="https://pcw-api.iqiyi.com/albums/album/avlistinfo?aid={aid}&page={page}&size=30"
+            resSoup = requests.get(PageUrl.format(aid=item["pid"],page="1"), headers=random.choice(utils.USER_AGENTS)).text
+            tvIds = re.findall(r'tvId":(.*?),',resSoup)
+            hids = re.findall(r'/v_(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',resSoup)))
+            names = re.findall(r'"name":"(.*?)"',str(re.findall(r'"tvId":(.*?)"playUrl"',resSoup)))
+            if len(hids) != len(tvIds):
+                hids = [hid.split('/')[-1] for hid in re.findall(r'/(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',resSoup)))]
+            pages = (int)(re.findall(r'page":(.*?),',resSoup)[0])
+            if pages > 1:
+                for page in range(2,pages+1):
+                    resSoup = requests.get(PageUrl.format(aid=item["pid"], page=page), headers=random.choice(utils.USER_AGENTS)).text
+                    ttmp = re.findall(r'tvId":(.*?),',resSoup)
+                    htmp = re.findall(r'/v_(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',resSoup)))
+                    names.extend(re.findall(r'"name":"(.*?)"',str(re.findall(r'"tvId":(.*?)"playUrl"',resSoup))))
+                    if len(htmp) != len(ttmp):
+                        htmp = [hid.split('/')[-1] for hid in re.findall(r'/(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',resSoup)))]
+                    tvIds.extend(ttmp)
+                    hids.extend(htmp)
+
+            for anatag, tvid in enumerate(tvIds):
+                item["uid"] = tvid
+                item["hid"] = hids[anatag]
+                item["name"] = names[anatag]
+
+                yield item
 
     def ParseVlogPage(self,response):
-        yield None
+
+        item = response.meta["item"]
+        lindex = response.meta["index"]
+        item["type"] = self.Type[lindex]
+        item["app"] = "TENCENT"
+
+        PageUrl="https://pcw-api.iqiyi.com/albums/album/avlistinfo?aid={aid}&page={page}&size=30"
+        resSoup = requests.get(PageUrl.format(aid=item["pid"],page="1"), headers=random.choice(utils.USER_AGENTS)).text
+        tvIds = re.findall(r'tvId":(.*?),',resSoup)
+        hids = re.findall(r'/v_(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',resSoup)))
+        names = re.findall(r'"name":"(.*?)"',str(re.findall(r'"tvId":(.*?)"playUrl"',resSoup)))
+        if len(hids) != len(tvIds):
+                hids = [hid.split('/')[-1] for hid in re.findall(r'/(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',resSoup)))]
+        pages = (int)(re.findall(r'page":(.*?),',resSoup)[0])
+        if pages > 1:
+            for page in range(2,pages+1):
+                resSoup = requests.get(PageUrl.format(aid=item["pid"], page=page), headers=random.choice(utils.USER_AGENTS)).text
+                ttmp = re.findall(r'tvId":(.*?),',resSoup)
+                htmp = re.findall(r'/v_(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',resSoup)))
+                names.extend(re.findall(r'"name":"(.*?)"',str(re.findall(r'"tvId":(.*?)"playUrl"',resSoup))))
+                if len(htmp) != len(ttmp):
+                    htmp = [hid.split('/')[-1] for hid in re.findall(r'/(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',resSoup)))]
+                tvIds.extend(ttmp)
+                hids.extend(htmp)
+
+        for anatag, tvid in enumerate(tvIds):
+            item["uid"] = tvid
+            item["hid"] = hids[anatag]
+            item["name"] = names[anatag]
+
+            yield item
