@@ -204,7 +204,7 @@ class LESpider(scrapy.Spider):
         if len(hids) != len(tvIds):
             hids = [hid.split('/')[-1] for hid in re.findall(r'/(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',resSoup)))]
         rp =  re.findall(r'page":(.*?),',resSoup)
-        if rp is not None:
+        if rp != []:
             pages = (int)(rp[0])
         else:
             pages = 1
