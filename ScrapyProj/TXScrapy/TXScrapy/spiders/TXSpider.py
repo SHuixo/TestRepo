@@ -131,19 +131,30 @@ class TXSpider(scrapy.Spider):
         reshtml = response.text
         if reshtml is not None:
             item = TXItem()
-            item["title"] = self.strRegex.sub('',response.xpath('string(//*[@id="container_player"]/div/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/h2/a)').extract_first())
-            item["category"] = self.strRegex.sub('',response.xpath('string(//*[@id="container_player"]/div/div[2]/div[1]/div[2]/div/div[3])').extract_first())
-            item["actor"] = None
-            rhtml = re.search(r'cover/(.*?).html',href).group(1).strip()
-            if len(rhtml.split("/")) == 1:
-                item["pid"] =rhtml
-            elif len(rhtml.split("/")) == 2:
-                item["pid"] =rhtml.split("/")[0]
+            vids = []
+            if '/cover/' in href:
+                item["title"] = self.strRegex.sub('',response.xpath('string(//*[@id="container_player"]/div/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/h2/a)').extract_first())
+                item["category"] = self.strRegex.sub('',response.xpath('string(//*[@id="container_player"]/div/div[2]/div[1]/div[2]/div/div[3])').extract_first())
+                item["actor"] = None
+                rhtml = re.search(r'cover/(.*?).html',href).group(1).strip()
+                if len(rhtml.split("/")) == 1:
+                    item["pid"] =rhtml
+                elif len(rhtml.split("/")) == 2:
+                    item["pid"] =rhtml.split("/")[0]
+            elif '/page/' in href:
+                href = "https://v.qq.com/x/page/.html"
+                rhtml = re.search(r'page/(.*?).html',href).group(1).strip()
+                if len(rhtml.split("/")) == 1:
+                    vids.append(rhtml)
+                item["title"] = None
+                item["category"] = None
+                item["actor"] = None
+                item["pid"] = None
             item["hid"] = None
             ## 获得每一集的ID
             vidGroup = re.search(r'{"vid":\[(.*?)\],',reshtml)
             if vidGroup is not None:
-                vids = vidGroup.group(1).replace('"','').split(',')
+                vids.extend(vidGroup.group(1).replace('"','').split(','))
                 for vid in vids:
                     item["uid"] = vid
                     reqUrl = href[:-5]+'/'+vid+'.html'
