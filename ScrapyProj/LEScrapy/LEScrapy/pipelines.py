@@ -43,7 +43,7 @@ class MySQLPipeline(object):
               "values(%s,%s, %s,%s,%s,%s,%s,%s,%s)"
         params = (item["uid"], item["pid"],item["hid"], item["title"],item["name"], item["actor"],item["category"],item['type'],item["app"])
         tx.execute(sql, params)
-        print("success insert!!")
+        print("database operation success!!")
 
     # 错误处理方法
     def _handle_error(self, failue, item, spider):

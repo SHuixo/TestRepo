@@ -23,6 +23,8 @@ class TXSpider(scrapy.Spider):
         self.Funcs = [self.getTvItem,self.getMovieItem,self.getVarietyItem,self.getVlogItem]
         self.SWITCH = False   #用于从网站获取内容(True)和从本地文件(False)获取内容的切换。
         self.TxUrl = "https://v.qq.com/x/cover/{ID}.html"
+        self.TxUrl2 = "https://v.qq.com/x/page/{ID}.html"
+        self.TxUrl3 = "https://v.qq.com/x/cover/{ID1}/{ID2}.html"
         self.File = r"./checkTX.txt"
 
     def start_requests(self):
@@ -45,16 +47,41 @@ class TXSpider(scrapy.Spider):
             with open(self.File) as csvfile:
                 lines = csv.reader(csvfile)
                 for line in lines:
+                    # if line[1] != 'cover' and line[1] != 'page' and line[1] != '' and line[0] != line[1]:
+                    #     print(line)
                     logging.warning("Start spider 读取到 line= {}".format(line[0]))
-                    yield scrapy.Request(url=self.TxUrl.format(ID=line[0]),meta=copy.deepcopy({"ID":line[0]}),callback=self.getOtherItem,dont_filter=True)
+                    if line[1] == 'page':
+                        yield scrapy.Request(url=self.TxUrl2.format(ID=line[0]),meta=copy.deepcopy({"ID":line[0]}),callback=self.getOtherItem,dont_filter=True)
+                    elif line[1] == '' or line[1] == 'cover' or line[0]==line[1]:
+                        yield scrapy.Request(url=self.TxUrl.format(ID=line[0]),meta=copy.deepcopy({"ID":line[0]}),callback=self.getOtherItem,dont_filter=True)
+                    elif line[0] != line[1]:
+                        yield scrapy.Request(url=self.TxUrl3.format(ID1=line[1],ID2=line[0]),meta=copy.deepcopy({"ID":line[0]}),callback=self.getOtherItem,dont_filter=True)
                 logging.warning("读取完毕！！")
 
     def getOtherItem(self,response):
-        ID = response.meta["ID"]
-        type = re.search(r'type_name":"(.*?)"',response.text).group(1)
-        index = [self.TypeMaps[key] for key in self.TypeMaps if key in type][0]
-        response = scrapy.Request(url=self.TxUrl.format(ID=ID),meta=copy.deepcopy({"href":self.TxUrl.format(ID=ID)}),callback=self.Funcs[index],dont_filter=True)
-        yield response
+
+        url = response.url
+        ttype = re.search(r'type_name":"(.*?)"',response.text).group(1)
+        lindex = [self.TypeMaps[key] for key in self.TypeMaps if key in ttype]
+        if lindex != []:
+            index = lindex[0]
+            response = scrapy.Request(url=url,callback=self.Funcs[index],dont_filter=True)
+            yield response
+        elif lindex == []:
+            item = TXItem()
+            item["pid"] = None
+            item["hid"] = None
+            item["actor"] = None
+            item["title"] = None
+            item["category"] = None
+            hrefs = response.xpath(r'/html/body/div[1]/div[3]/div[2]/div[2]/div/div/div[1]/div/div[1]/ul/*/a/@href').extract()
+            titles = response.xpath(r'/html/body/div[1]/div[3]/div[2]/div[2]/div/div/div[1]/div/div[1]/ul/*/a/@title').extract()
+            for ltag, title in enumerate(titles):
+                item["uid"] = re.search(r'page/(.*?).html',hrefs[ltag]).group(1).strip()
+                item["name"] = title
+                item["type"] = re.search(r'type_name":"(.*?)"',response.text).group(1)
+                item["app"] = "TENCENT"
+                yield item
 
     def getHtml(self, response):
         index = response.meta["index"]
@@ -64,18 +91,22 @@ class TXSpider(scrapy.Spider):
             hrefs.extend(response.xpath('/html/body/div/div/div[2]/*/a/@href').extract())
             hrefs = list(set(hrefs))
             for href in hrefs:
-                response = scrapy.Request(url=href,meta=copy.deepcopy({"href": href}),callback=self.Funcs[index])
+                response = scrapy.Request(url=href,callback=self.Funcs[index])
                 yield response
 
     def getTvItem(self, response):
-        href = response.meta["href"]
+        href = response.url
         reshtml = response.text
         if reshtml is not None:
             item = TXItem()
             item["title"] = self.strRegex.sub('',response.xpath('string(//*[@id="container_player"]/div/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/h2/a)').extract_first())
             item["category"] = self.strRegex.sub('',response.xpath('string(//*[@id="container_player"]/div/div[2]/div[1]/div[2]/div/div[4])').extract_first())
             item["actor"] = None
-            item["pid"] = re.search(r'cover/(.*?).html',href)
+            rhtml = re.search(r'cover/(.*?).html',href).group(1).strip()
+            if len(rhtml.split("/")) == 1:
+                item["pid"] =rhtml
+            elif len(rhtml.split("/")) == 2:
+                item["pid"] =rhtml.split("/")[0]
             item["hid"] = None
             ## 获得每一集的ID
             vidGroup = re.search(r'{"vid":\[(.*?)\],',reshtml)
@@ -96,14 +127,18 @@ class TXSpider(scrapy.Spider):
             logging.warning("Err No reshtml at href {}".format(href))
 
     def getMovieItem(self,response):
-        href = response.meta["href"]
+        href = response.url
         reshtml = response.text
         if reshtml is not None:
             item = TXItem()
             item["title"] = self.strRegex.sub('',response.xpath('string(//*[@id="container_player"]/div/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/h2/a)').extract_first())
             item["category"] = self.strRegex.sub('',response.xpath('string(//*[@id="container_player"]/div/div[2]/div[1]/div[2]/div/div[3])').extract_first())
             item["actor"] = None
-            item["pid"] = re.search(r'cover/(.*?).html',href).group(1).strip()
+            rhtml = re.search(r'cover/(.*?).html',href).group(1).strip()
+            if len(rhtml.split("/")) == 1:
+                item["pid"] =rhtml
+            elif len(rhtml.split("/")) == 2:
+                item["pid"] =rhtml.split("/")[0]
             item["hid"] = None
             ## 获得每一集的ID
             vidGroup = re.search(r'{"vid":\[(.*?)\],',reshtml)
