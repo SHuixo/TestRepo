@@ -142,7 +142,7 @@ class TXSpider(scrapy.Spider):
                 elif len(rhtml.split("/")) == 2:
                     item["pid"] =rhtml.split("/")[0]
             elif '/page/' in href:
-                href = "https://v.qq.com/x/page/.html"
+                href = "https://v.qq.com/x/page.html"
                 rhtml = re.search(r'page/(.*?).html',href).group(1).strip()
                 if len(rhtml.split("/")) == 1:
                     vids.append(rhtml)
