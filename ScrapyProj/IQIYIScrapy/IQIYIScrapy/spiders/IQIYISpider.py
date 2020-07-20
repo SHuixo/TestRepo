@@ -21,26 +21,74 @@ class LESpider(scrapy.Spider):
         self.Areas = [utils.TVAreas,utils.MovieAreas,utils.ShowAreas,utils.AnimalAreas,utils.VlogAreas]
         self.Maps = {"channel_id=2": 0, "channel_id=1": 1, "channel_id=6": 2, "channel_id=4": 3, "channel_id=3":4}
         self.Func = [self.ParseTvPage, self.ParseMoviePage, self.ParseShowPage, self.ParseAnimalPage,self.ParseVlogPage]
+        self.SWITCH = False  #用于从网站获取内容(True)和从本地文件(False)获取内容的切换。
+        self.IUrl = "https://www.iqiyi.com/v_{ID}.html"
+        self.File = r"./checkIQIYI.txt"
 
     def start_requests(self):
+        if self.SWITCH:
+            for reqUrl in utils.IQIYIUrls:
+                logging.warning("Start reqUrl {url}".format(url=reqUrl))
+                for mode in utils.IQIYIModes:
+                    logging.warning("Start reqUrl ：{url} | mode： {mode}".format(url=reqUrl,mode=mode))
+                    lindex = [self.Maps[key] for key in self.Maps if key in reqUrl][0]
+                    for iarea in self.Areas[lindex]:
+                        logging.warning("Start reqUrl :{url}| mode：{mode} | iarea : {iarea}".format(url=reqUrl,mode=mode,iarea=iarea))
+                        for lpage in range(1, 20):
+                            logging.warning("Start reqUrl :{url}| mode：{mode} | iarea : {iarea} | page : {page}".format(url=reqUrl,mode=mode,iarea=iarea,page=lpage))
+                            yield scrapy.Request(url=reqUrl.format(mode=mode,iarea=iarea,lPage=lpage), meta=copy.deepcopy({"index":lindex}),callback= self.getHtml)
+                        logging.warning("finish all page")
+                    logging.warning("finish all area")
+                logging.warning("finish all mode")
+            logging.warning("Finish all reqUrl")
+        else:
+            #从本地文件读取入手！！
+            with open(self.File) as csvfile:
+                lines = csv.reader(csvfile)
+                for line in lines:
+                    logging.warning("Start spider 读取到 line= {}".format(line[0]))
+                    yield scrapy.Request(url=self.IUrl.format(ID=line[0]), meta=copy.deepcopy({"ID":line[0]}),callback=self.getOtherItem,dont_filter=True)
+                logging.warning("读取完毕！！")
 
-        for reqUrl in utils.IQIYIUrls:
-            logging.warning("Start reqUrl {url}".format(url=reqUrl))
-            for mode in utils.IQIYIModes:
-                logging.warning("Start reqUrl ：{url} | mode： {mode}".format(url=reqUrl,mode=mode))
-                lindex = [self.Maps[key] for key in self.Maps if key in reqUrl][0]
-                for iarea in self.Areas[lindex]:
-                    logging.warning("Start reqUrl :{url}| mode：{mode} | iarea : {iarea}".format(url=reqUrl,mode=mode,iarea=iarea))
-                    for lpage in range(1, 20):
-                        logging.warning("Start reqUrl :{url}| mode：{mode} | iarea : {iarea} | page : {page}".format(url=reqUrl,mode=mode,iarea=iarea,page=lpage))
-                        yield scrapy.Request(url=reqUrl.format(mode=mode,iarea=iarea,lPage=lpage), meta=copy.deepcopy({"index":lindex}),callback= self.getHtml)
-                    logging.warning("finish all page")
-                logging.warning("finish all area")
-            logging.warning("finish all mode")
-        logging.warning("Finish all reqUrl")
+    def getOtherItem(self,response):
+        reshtml = response.text
+        categoryName = re.search(r'"categoryName":"(.*?)",'reshtml).group(1)
+        item = IQIYItem()
+        indexl = [self.Type[key] for key in self.Type if key in categoryName]
+        if indexl != []:
+            lindex = indexl[0]
+            item["pid"] = re.search(r'"albumId":(.*?),',reshtml).group(1)
+            item["title"] = self.strRegex.sub('',re.search(r'"albumName":"(.*?)",',reshtml).group(1))
+            item["category"] = self.strRegex.sub('',re.search(r'"categories":"(.*?)",',reshtml).group(1))
+            item["actor"] = None
+            yield scrapy.Request(url=playurl,meta=copy.deepcopy({"item":item,"index":lindex}),callback= self.Func[lindex],dont_filter=True)
+        else:
+            allData = re.findall(r'initialized-data=\'\[(.*)?\]\'>',reshtml)
+            if [] == allData:
+                allData = re.findall(r'initialized-data="\[(.*)?\]">',reshtml)
+            if [] == allData:
+                item["uid"] = re.findall(r'param\[\'tvid\'\] = "(.*?)";',reshtml)[0]
+                item["name"] = re.findall(r'"tvName":"(.*?)",',reshtml)[0]
+                item["hid"] = response.meta["ID"]
+                item["type"] = self.strRegex.sub('',categoryName)
+                item["app"] = "IQIYI"
+                yield item
+            else:
+                allData = allData[0]
+                if "albumId&quot;:" in allData:
+                    tvIds = re.findall(r'tvId&quot;:(.*?),',allData)
+                    names = re.findall(r'name&quot;:&quot;(.*?)&quot;,',allData)
+                elif 'albumId":' in allData:
+                    tvIds = re.findall(r'tvId":(.*?),',allData)
+                    names = re.findall(r'name":"(.*?)",',allData)
+                for aindex, tvId in enumerate(tvIds):
+                    item["uid"] = tvId
+                    item["name"] = names[aindex]
+                    item["hid"] = None
+                    yield item
+
 
     def getHtml(self,response):
-
         reshtml = response.text
         if re.findall(r'"list":(.*?),', reshtml) == []:
             yield None
@@ -124,9 +172,9 @@ class LESpider(scrapy.Spider):
         item["type"] = self.Type[lindex]
         item["app"] = "IQIYI"
         resSoup = response.text
-        allData = re.findall(r'<div class=\"qy-player-side-list j_sourcelist_cont\" data-initialized=\'\[(.*)?\]\'>',resSoup)
+        allData = re.findall(r'initialized-data=\'\[(.*)?\]\'>',resSoup)
         if [] == allData:
-            allData = re.findall(r'<div class=\"qy-player-side-list j_sourcelist_cont\" data-initialized="\[(.*)?\]">',resSoup)
+            allData = re.findall(r'initialized-data="\[(.*)?\]">',resSoup)
         if [] == allData:
             item["uid"] = re.findall(r'param\[\'tvid\'\] = "(.*?)";',resSoup)[0]
             item["name"] = re.findall(r'"tvName":"(.*?)",',resSoup)[0]
