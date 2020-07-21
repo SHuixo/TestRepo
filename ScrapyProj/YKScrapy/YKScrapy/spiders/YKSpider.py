@@ -60,7 +60,6 @@ class YKSpider(scrapy.Spider):
                     yield scrapy.Request(url=self.TvUrl.format(ID=line[0]),meta=copy.deepcopy({"id":line[0]}),callback=self.getHtml,dont_filter=True)
                 logging.warning("读取完毕！！")
 
-
     def getHtml(self,response):
         if "抱歉" in str(response.xpath(r'string(//*[@id="root"]/div/div/div[1])').extract_first()):
             yield None
@@ -70,7 +69,7 @@ class YKSpider(scrapy.Spider):
             index = [self.Maps[key] for key in self.Maps if key in ktype][0]
             resData = re.search(r'data":(.*?),"code"',resHtml).group(1)
             if resData == "[]":
-                yield
+                yield None
             videoIDs = re.findall(r'videoId":"(.*?)",',resData)
             for videoID in videoIDs:
                 yield scrapy.Request(url=self.TvUrl.format(ID=videoID),meta=copy.deepcopy({"index":index,"id":videoID}),callback=self.Funcs[index])
