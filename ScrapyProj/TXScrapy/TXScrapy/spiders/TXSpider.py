@@ -61,7 +61,7 @@ class TXSpider(scrapy.Spider):
     def getOtherItem(self,response):
 
         url = response.url
-        ttype = re.search(r'type_name":"(.*?)"',response.text).group(1)
+        ttype = re.search(r'type_name":(.*?),',response.text).group(1).replace('"','')
         lindex = [self.TypeMaps[key] for key in self.TypeMaps if key in ttype]
         if lindex != []:
             index = lindex[0]
