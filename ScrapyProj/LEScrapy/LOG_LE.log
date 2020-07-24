@@ -57630,3 +57630,24 @@ twisted.internet.error.DNSLookupError: DNS lookup failed: no results for hostnam
 2020-07-15 15:46:47 [root] WARNING: Start spider 读取到 line= 67523338
 2020-07-15 15:46:47 [root] WARNING: 读取完毕！！
 2020-07-15 15:46:48 [root] WARNING: Err No Item at uid 673469
+2020-07-21 19:18:58 [scrapy.core.engine] ERROR: Error while obtaining start requests
+Traceback (most recent call last):
+  File "C:\Users\Asxh-PC\Anaconda3\lib\site-packages\scrapy\core\engine.py", line 127, in _next_request
+    request = next(slot.start_requests)
+  File "C:\Users\Asxh-PC\GitHub\GitRep\ScrapyProj\LEScrapy\LEScrapy\spiders\LESpider.py", line 63, in start_requests
+    print(response.xpath(r'string(//*[@id="__layout"]/div/div[1]/div[2]/div/div[2]/div/div[1]/div[1]/p)').extract_first())
+AttributeError: 'Request' object has no attribute 'xpath'
+2020-07-21 19:19:40 [scrapy.core.engine] ERROR: Error while obtaining start requests
+Traceback (most recent call last):
+  File "C:\Users\Asxh-PC\Anaconda3\lib\site-packages\scrapy\core\engine.py", line 127, in _next_request
+    request = next(slot.start_requests)
+  File "C:\Users\Asxh-PC\GitHub\GitRep\ScrapyProj\LEScrapy\LEScrapy\spiders\LESpider.py", line 63, in start_requests
+    print(response.text)
+AttributeError: 'Request' object has no attribute 'text'
+2020-07-21 19:20:08 [scrapy.core.engine] ERROR: Error while obtaining start requests
+Traceback (most recent call last):
+  File "C:\Users\Asxh-PC\Anaconda3\lib\site-packages\scrapy\core\engine.py", line 127, in _next_request
+    request = next(slot.start_requests)
+  File "C:\Users\Asxh-PC\GitHub\GitRep\ScrapyProj\LEScrapy\LEScrapy\spiders\LESpider.py", line 63, in start_requests
+    print(response.text)
+AttributeError: 'Request' object has no attribute 'text'
