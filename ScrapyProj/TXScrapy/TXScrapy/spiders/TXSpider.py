@@ -102,7 +102,10 @@ class TXSpider(scrapy.Spider):
             item["title"] = self.strRegex.sub('',response.xpath('string(//*[@id="container_player"]/div/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/h2/a)').extract_first())
             item["category"] = self.strRegex.sub('',response.xpath('string(//*[@id="container_player"]/div/div[2]/div[1]/div[2]/div/div[4])').extract_first())
             item["actor"] = None
-            rhtml = re.search(r'cover/(.*?).html',href).group(1).strip()
+            if '/page' in href:
+                rhtml = re.search(r'page/(.*?).html',href).group(1).strip()
+            elif '/cover' in href:
+                rhtml = re.search(r'cover/(.*?).html',href).group(1).strip()
             if len(rhtml.split("/")) == 1:
                 item["pid"] =rhtml
             elif len(rhtml.split("/")) == 2:
