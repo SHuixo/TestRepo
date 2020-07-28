@@ -59,14 +59,18 @@ class LESpider(scrapy.Spider):
             logging.warning("Finish all reqUrls")
         else:
             #从本地文件读取入手！！
-            with open(self.File) as csvfile:
+            with open(self.File, 'r', encoding='UTF-8') as csvfile:
                 lines = csv.reader(csvfile)
                 for line in lines:
                     item = LEItem()
                     item["uid"] = line[0]
-                    logging.warning("Start spider 读取到 line= {}".format(line[0]))
-                    url = self.LEUrl.format(vid = line[0])
-                    yield scrapy.Request(url=url,meta={"meta":copy.deepcopy(item)},callback=self.parseItemDetails,dont_filter=True)
+                    ## 判断读取的为纯数字，否则pass
+                    if re.match('\\d+', line[0]):
+                        logging.warning("Start spider 读取到 line= {}".format(line[0]))
+                        url = self.LEUrl.format(vid=line[0])
+                        yield scrapy.Request(url=url, meta={"meta": copy.deepcopy(item)}, callback=self.parseItemDetails, dont_filter=True)
+                    else:
+                        continue
                 logging.warning("读取完毕！！")
 
     def parseItemDetails(self, response):

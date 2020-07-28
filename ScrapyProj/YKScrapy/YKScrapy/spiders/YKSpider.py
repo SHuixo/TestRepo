@@ -53,7 +53,7 @@ class YKSpider(scrapy.Spider):
             logging.warning("完成执行 reqUrl!!")
         else:
             #从本地文件读取入手！！
-            with open(self.File) as csvfile:
+            with open(self.File, 'r', encoding='UTF-8') as csvfile:
                 lines = csv.reader(csvfile)
                 for line in lines:
                     logging.warning("Start spider 读取到 line= {}".format(line[0]))
