@@ -1,0 +1,675 @@
+2020-07-27 17:20:00 [scrapy.core.downloader.handlers] ERROR: Loading "scrapy.core.downloader.handlers.http.HTTPDownloadHandler" for scheme "http"
+Traceback (most recent call last):
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\__init__.py", line 48, in _load_handler
+    dhcls = load_object(path)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\utils\misc.py", line 44, in load_object
+    mod = import_module(module)
+  File "C:\Users\Axiohui\anaconda3\lib\importlib\__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\http.py", line 3, in <module>
+    from .http11 import HTTP11DownloadHandler as HTTPDownloadHandler
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\http11.py", line 16, in <module>
+    from twisted.web.client import Agent, ProxyAgent, ResponseDone, \
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\web\client.py", line 42, in <module>
+    from twisted.internet.endpoints import HostnameEndpoint, wrapClientTLS
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\endpoints.py", line 41, in <module>
+    from twisted.internet.stdio import StandardIO, PipeAddress
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\stdio.py", line 30, in <module>
+    from twisted.internet import _win32stdio
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\_win32stdio.py", line 9, in <module>
+    import win32api
+ImportError: DLL load failed: 找不到指定的程序。
+2020-07-27 17:20:00 [scrapy.core.downloader.handlers] ERROR: Loading "scrapy.core.downloader.handlers.http.HTTPDownloadHandler" for scheme "https"
+Traceback (most recent call last):
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\__init__.py", line 48, in _load_handler
+    dhcls = load_object(path)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\utils\misc.py", line 44, in load_object
+    mod = import_module(module)
+  File "C:\Users\Axiohui\anaconda3\lib\importlib\__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\http.py", line 3, in <module>
+    from .http11 import HTTP11DownloadHandler as HTTPDownloadHandler
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\http11.py", line 16, in <module>
+    from twisted.web.client import Agent, ProxyAgent, ResponseDone, \
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\web\client.py", line 42, in <module>
+    from twisted.internet.endpoints import HostnameEndpoint, wrapClientTLS
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\endpoints.py", line 41, in <module>
+    from twisted.internet.stdio import StandardIO, PipeAddress
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\stdio.py", line 30, in <module>
+    from twisted.internet import _win32stdio
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\_win32stdio.py", line 9, in <module>
+    import win32api
+ImportError: DLL load failed: 找不到指定的程序。
+2020-07-27 17:20:00 [scrapy.core.downloader.handlers] ERROR: Loading "scrapy.core.downloader.handlers.s3.S3DownloadHandler" for scheme "s3"
+Traceback (most recent call last):
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\__init__.py", line 48, in _load_handler
+    dhcls = load_object(path)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\utils\misc.py", line 44, in load_object
+    mod = import_module(module)
+  File "C:\Users\Axiohui\anaconda3\lib\importlib\__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\s3.py", line 6, in <module>
+    from .http import HTTPDownloadHandler
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\http.py", line 3, in <module>
+    from .http11 import HTTP11DownloadHandler as HTTPDownloadHandler
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\http11.py", line 16, in <module>
+    from twisted.web.client import Agent, ProxyAgent, ResponseDone, \
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\web\client.py", line 42, in <module>
+    from twisted.internet.endpoints import HostnameEndpoint, wrapClientTLS
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\endpoints.py", line 41, in <module>
+    from twisted.internet.stdio import StandardIO, PipeAddress
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\stdio.py", line 30, in <module>
+    from twisted.internet import _win32stdio
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\_win32stdio.py", line 9, in <module>
+    import win32api
+ImportError: DLL load failed: 找不到指定的程序。
+2020-07-27 17:20:00 [twisted] CRITICAL: Unhandled error in Deferred:
+2020-07-27 17:20:00 [twisted] CRITICAL: 
+Traceback (most recent call last):
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\defer.py", line 1418, in _inlineCallbacks
+    result = g.send(result)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\crawler.py", line 80, in crawl
+    self.engine = self._create_engine()
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\crawler.py", line 105, in _create_engine
+    return ExecutionEngine(self, lambda _: self.stop())
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\engine.py", line 69, in __init__
+    self.downloader = downloader_cls(crawler)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\__init__.py", line 88, in __init__
+    self.middleware = DownloaderMiddlewareManager.from_crawler(crawler)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\middleware.py", line 53, in from_crawler
+    return cls.from_settings(crawler.settings, crawler)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\middleware.py", line 34, in from_settings
+    mwcls = load_object(clspath)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\utils\misc.py", line 44, in load_object
+    mod = import_module(module)
+  File "C:\Users\Axiohui\anaconda3\lib\importlib\__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\downloadermiddlewares\retry.py", line 20, in <module>
+    from twisted.web.client import ResponseFailed
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\web\client.py", line 42, in <module>
+    from twisted.internet.endpoints import HostnameEndpoint, wrapClientTLS
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\endpoints.py", line 41, in <module>
+    from twisted.internet.stdio import StandardIO, PipeAddress
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\stdio.py", line 30, in <module>
+    from twisted.internet import _win32stdio
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\_win32stdio.py", line 9, in <module>
+    import win32api
+ImportError: DLL load failed: 找不到指定的程序。
+2020-07-27 17:50:18 [scrapy.core.downloader.handlers] ERROR: Loading "scrapy.core.downloader.handlers.http.HTTPDownloadHandler" for scheme "http"
+Traceback (most recent call last):
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\__init__.py", line 48, in _load_handler
+    dhcls = load_object(path)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\utils\misc.py", line 44, in load_object
+    mod = import_module(module)
+  File "C:\Users\Axiohui\anaconda3\lib\importlib\__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\http.py", line 3, in <module>
+    from .http11 import HTTP11DownloadHandler as HTTPDownloadHandler
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\http11.py", line 16, in <module>
+    from twisted.web.client import Agent, ProxyAgent, ResponseDone, \
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\web\client.py", line 42, in <module>
+    from twisted.internet.endpoints import HostnameEndpoint, wrapClientTLS
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\endpoints.py", line 41, in <module>
+    from twisted.internet.stdio import StandardIO, PipeAddress
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\stdio.py", line 30, in <module>
+    from twisted.internet import _win32stdio
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\_win32stdio.py", line 9, in <module>
+    import win32api
+ImportError: DLL load failed: 找不到指定的程序。
+2020-07-27 17:50:18 [scrapy.core.downloader.handlers] ERROR: Loading "scrapy.core.downloader.handlers.http.HTTPDownloadHandler" for scheme "https"
+Traceback (most recent call last):
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\__init__.py", line 48, in _load_handler
+    dhcls = load_object(path)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\utils\misc.py", line 44, in load_object
+    mod = import_module(module)
+  File "C:\Users\Axiohui\anaconda3\lib\importlib\__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\http.py", line 3, in <module>
+    from .http11 import HTTP11DownloadHandler as HTTPDownloadHandler
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\http11.py", line 16, in <module>
+    from twisted.web.client import Agent, ProxyAgent, ResponseDone, \
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\web\client.py", line 42, in <module>
+    from twisted.internet.endpoints import HostnameEndpoint, wrapClientTLS
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\endpoints.py", line 41, in <module>
+    from twisted.internet.stdio import StandardIO, PipeAddress
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\stdio.py", line 30, in <module>
+    from twisted.internet import _win32stdio
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\_win32stdio.py", line 9, in <module>
+    import win32api
+ImportError: DLL load failed: 找不到指定的程序。
+2020-07-27 17:50:18 [scrapy.core.downloader.handlers] ERROR: Loading "scrapy.core.downloader.handlers.s3.S3DownloadHandler" for scheme "s3"
+Traceback (most recent call last):
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\__init__.py", line 48, in _load_handler
+    dhcls = load_object(path)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\utils\misc.py", line 44, in load_object
+    mod = import_module(module)
+  File "C:\Users\Axiohui\anaconda3\lib\importlib\__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\s3.py", line 6, in <module>
+    from .http import HTTPDownloadHandler
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\http.py", line 3, in <module>
+    from .http11 import HTTP11DownloadHandler as HTTPDownloadHandler
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\http11.py", line 16, in <module>
+    from twisted.web.client import Agent, ProxyAgent, ResponseDone, \
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\web\client.py", line 42, in <module>
+    from twisted.internet.endpoints import HostnameEndpoint, wrapClientTLS
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\endpoints.py", line 41, in <module>
+    from twisted.internet.stdio import StandardIO, PipeAddress
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\stdio.py", line 30, in <module>
+    from twisted.internet import _win32stdio
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\_win32stdio.py", line 9, in <module>
+    import win32api
+ImportError: DLL load failed: 找不到指定的程序。
+2020-07-27 17:50:18 [twisted] CRITICAL: Unhandled error in Deferred:
+2020-07-27 17:50:18 [twisted] CRITICAL: 
+Traceback (most recent call last):
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\defer.py", line 1418, in _inlineCallbacks
+    result = g.send(result)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\crawler.py", line 80, in crawl
+    self.engine = self._create_engine()
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\crawler.py", line 105, in _create_engine
+    return ExecutionEngine(self, lambda _: self.stop())
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\engine.py", line 69, in __init__
+    self.downloader = downloader_cls(crawler)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\__init__.py", line 88, in __init__
+    self.middleware = DownloaderMiddlewareManager.from_crawler(crawler)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\middleware.py", line 53, in from_crawler
+    return cls.from_settings(crawler.settings, crawler)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\middleware.py", line 34, in from_settings
+    mwcls = load_object(clspath)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\utils\misc.py", line 44, in load_object
+    mod = import_module(module)
+  File "C:\Users\Axiohui\anaconda3\lib\importlib\__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\downloadermiddlewares\retry.py", line 20, in <module>
+    from twisted.web.client import ResponseFailed
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\web\client.py", line 42, in <module>
+    from twisted.internet.endpoints import HostnameEndpoint, wrapClientTLS
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\endpoints.py", line 41, in <module>
+    from twisted.internet.stdio import StandardIO, PipeAddress
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\stdio.py", line 30, in <module>
+    from twisted.internet import _win32stdio
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\_win32stdio.py", line 9, in <module>
+    import win32api
+ImportError: DLL load failed: 找不到指定的程序。
+2020-07-27 18:11:57 [scrapy.core.downloader.handlers] ERROR: Loading "scrapy.core.downloader.handlers.http.HTTPDownloadHandler" for scheme "http"
+Traceback (most recent call last):
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\__init__.py", line 48, in _load_handler
+    dhcls = load_object(path)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\utils\misc.py", line 44, in load_object
+    mod = import_module(module)
+  File "C:\Users\Axiohui\anaconda3\lib\importlib\__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\http.py", line 3, in <module>
+    from .http11 import HTTP11DownloadHandler as HTTPDownloadHandler
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\http11.py", line 16, in <module>
+    from twisted.web.client import Agent, ProxyAgent, ResponseDone, \
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\web\client.py", line 42, in <module>
+    from twisted.internet.endpoints import HostnameEndpoint, wrapClientTLS
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\endpoints.py", line 41, in <module>
+    from twisted.internet.stdio import StandardIO, PipeAddress
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\stdio.py", line 30, in <module>
+    from twisted.internet import _win32stdio
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\_win32stdio.py", line 9, in <module>
+    import win32api
+ImportError: DLL load failed: 找不到指定的程序。
+2020-07-27 18:11:57 [scrapy.core.downloader.handlers] ERROR: Loading "scrapy.core.downloader.handlers.http.HTTPDownloadHandler" for scheme "https"
+Traceback (most recent call last):
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\__init__.py", line 48, in _load_handler
+    dhcls = load_object(path)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\utils\misc.py", line 44, in load_object
+    mod = import_module(module)
+  File "C:\Users\Axiohui\anaconda3\lib\importlib\__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\http.py", line 3, in <module>
+    from .http11 import HTTP11DownloadHandler as HTTPDownloadHandler
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\http11.py", line 16, in <module>
+    from twisted.web.client import Agent, ProxyAgent, ResponseDone, \
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\web\client.py", line 42, in <module>
+    from twisted.internet.endpoints import HostnameEndpoint, wrapClientTLS
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\endpoints.py", line 41, in <module>
+    from twisted.internet.stdio import StandardIO, PipeAddress
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\stdio.py", line 30, in <module>
+    from twisted.internet import _win32stdio
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\_win32stdio.py", line 9, in <module>
+    import win32api
+ImportError: DLL load failed: 找不到指定的程序。
+2020-07-27 18:11:57 [scrapy.core.downloader.handlers] ERROR: Loading "scrapy.core.downloader.handlers.s3.S3DownloadHandler" for scheme "s3"
+Traceback (most recent call last):
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\__init__.py", line 48, in _load_handler
+    dhcls = load_object(path)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\utils\misc.py", line 44, in load_object
+    mod = import_module(module)
+  File "C:\Users\Axiohui\anaconda3\lib\importlib\__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\s3.py", line 6, in <module>
+    from .http import HTTPDownloadHandler
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\http.py", line 3, in <module>
+    from .http11 import HTTP11DownloadHandler as HTTPDownloadHandler
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\http11.py", line 16, in <module>
+    from twisted.web.client import Agent, ProxyAgent, ResponseDone, \
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\web\client.py", line 42, in <module>
+    from twisted.internet.endpoints import HostnameEndpoint, wrapClientTLS
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\endpoints.py", line 41, in <module>
+    from twisted.internet.stdio import StandardIO, PipeAddress
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\stdio.py", line 30, in <module>
+    from twisted.internet import _win32stdio
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\_win32stdio.py", line 9, in <module>
+    import win32api
+ImportError: DLL load failed: 找不到指定的程序。
+2020-07-27 18:11:57 [twisted] CRITICAL: Unhandled error in Deferred:
+2020-07-27 18:11:57 [twisted] CRITICAL: 
+Traceback (most recent call last):
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\defer.py", line 1418, in _inlineCallbacks
+    result = g.send(result)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\crawler.py", line 80, in crawl
+    self.engine = self._create_engine()
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\crawler.py", line 105, in _create_engine
+    return ExecutionEngine(self, lambda _: self.stop())
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\engine.py", line 69, in __init__
+    self.downloader = downloader_cls(crawler)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\__init__.py", line 88, in __init__
+    self.middleware = DownloaderMiddlewareManager.from_crawler(crawler)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\middleware.py", line 53, in from_crawler
+    return cls.from_settings(crawler.settings, crawler)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\middleware.py", line 34, in from_settings
+    mwcls = load_object(clspath)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\utils\misc.py", line 44, in load_object
+    mod = import_module(module)
+  File "C:\Users\Axiohui\anaconda3\lib\importlib\__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\downloadermiddlewares\retry.py", line 20, in <module>
+    from twisted.web.client import ResponseFailed
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\web\client.py", line 42, in <module>
+    from twisted.internet.endpoints import HostnameEndpoint, wrapClientTLS
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\endpoints.py", line 41, in <module>
+    from twisted.internet.stdio import StandardIO, PipeAddress
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\stdio.py", line 30, in <module>
+    from twisted.internet import _win32stdio
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\_win32stdio.py", line 9, in <module>
+    import win32api
+ImportError: DLL load failed: 找不到指定的程序。
+2020-07-27 19:01:51 [scrapy.core.downloader.handlers] ERROR: Loading "scrapy.core.downloader.handlers.http.HTTPDownloadHandler" for scheme "http"
+Traceback (most recent call last):
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\__init__.py", line 48, in _load_handler
+    dhcls = load_object(path)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\utils\misc.py", line 44, in load_object
+    mod = import_module(module)
+  File "C:\Users\Axiohui\anaconda3\lib\importlib\__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\http.py", line 3, in <module>
+    from .http11 import HTTP11DownloadHandler as HTTPDownloadHandler
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\http11.py", line 16, in <module>
+    from twisted.web.client import Agent, ProxyAgent, ResponseDone, \
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\web\client.py", line 42, in <module>
+    from twisted.internet.endpoints import HostnameEndpoint, wrapClientTLS
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\endpoints.py", line 41, in <module>
+    from twisted.internet.stdio import StandardIO, PipeAddress
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\stdio.py", line 30, in <module>
+    from twisted.internet import _win32stdio
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\_win32stdio.py", line 9, in <module>
+    import win32api
+ImportError: DLL load failed: 找不到指定的程序。
+2020-07-27 19:01:51 [scrapy.core.downloader.handlers] ERROR: Loading "scrapy.core.downloader.handlers.http.HTTPDownloadHandler" for scheme "https"
+Traceback (most recent call last):
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\__init__.py", line 48, in _load_handler
+    dhcls = load_object(path)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\utils\misc.py", line 44, in load_object
+    mod = import_module(module)
+  File "C:\Users\Axiohui\anaconda3\lib\importlib\__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\http.py", line 3, in <module>
+    from .http11 import HTTP11DownloadHandler as HTTPDownloadHandler
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\http11.py", line 16, in <module>
+    from twisted.web.client import Agent, ProxyAgent, ResponseDone, \
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\web\client.py", line 42, in <module>
+    from twisted.internet.endpoints import HostnameEndpoint, wrapClientTLS
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\endpoints.py", line 41, in <module>
+    from twisted.internet.stdio import StandardIO, PipeAddress
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\stdio.py", line 30, in <module>
+    from twisted.internet import _win32stdio
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\_win32stdio.py", line 9, in <module>
+    import win32api
+ImportError: DLL load failed: 找不到指定的程序。
+2020-07-27 19:01:51 [scrapy.core.downloader.handlers] ERROR: Loading "scrapy.core.downloader.handlers.s3.S3DownloadHandler" for scheme "s3"
+Traceback (most recent call last):
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\__init__.py", line 48, in _load_handler
+    dhcls = load_object(path)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\utils\misc.py", line 44, in load_object
+    mod = import_module(module)
+  File "C:\Users\Axiohui\anaconda3\lib\importlib\__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\s3.py", line 6, in <module>
+    from .http import HTTPDownloadHandler
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\http.py", line 3, in <module>
+    from .http11 import HTTP11DownloadHandler as HTTPDownloadHandler
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\handlers\http11.py", line 16, in <module>
+    from twisted.web.client import Agent, ProxyAgent, ResponseDone, \
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\web\client.py", line 42, in <module>
+    from twisted.internet.endpoints import HostnameEndpoint, wrapClientTLS
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\endpoints.py", line 41, in <module>
+    from twisted.internet.stdio import StandardIO, PipeAddress
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\stdio.py", line 30, in <module>
+    from twisted.internet import _win32stdio
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\_win32stdio.py", line 9, in <module>
+    import win32api
+ImportError: DLL load failed: 找不到指定的程序。
+2020-07-27 19:01:51 [twisted] CRITICAL: Unhandled error in Deferred:
+2020-07-27 19:01:51 [twisted] CRITICAL: 
+Traceback (most recent call last):
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\defer.py", line 1418, in _inlineCallbacks
+    result = g.send(result)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\crawler.py", line 80, in crawl
+    self.engine = self._create_engine()
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\crawler.py", line 105, in _create_engine
+    return ExecutionEngine(self, lambda _: self.stop())
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\engine.py", line 69, in __init__
+    self.downloader = downloader_cls(crawler)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\__init__.py", line 88, in __init__
+    self.middleware = DownloaderMiddlewareManager.from_crawler(crawler)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\middleware.py", line 53, in from_crawler
+    return cls.from_settings(crawler.settings, crawler)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\middleware.py", line 34, in from_settings
+    mwcls = load_object(clspath)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\utils\misc.py", line 44, in load_object
+    mod = import_module(module)
+  File "C:\Users\Axiohui\anaconda3\lib\importlib\__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\downloadermiddlewares\retry.py", line 20, in <module>
+    from twisted.web.client import ResponseFailed
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\web\client.py", line 42, in <module>
+    from twisted.internet.endpoints import HostnameEndpoint, wrapClientTLS
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\endpoints.py", line 41, in <module>
+    from twisted.internet.stdio import StandardIO, PipeAddress
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\stdio.py", line 30, in <module>
+    from twisted.internet import _win32stdio
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\_win32stdio.py", line 9, in <module>
+    import win32api
+ImportError: DLL load failed: 找不到指定的程序。
+2020-07-27 19:25:59 [twisted] CRITICAL: Unhandled error in Deferred:
+2020-07-27 19:25:59 [twisted] CRITICAL: 
+Traceback (most recent call last):
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\defer.py", line 1418, in _inlineCallbacks
+    result = g.send(result)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\crawler.py", line 87, in crawl
+    self.engine = self._create_engine()
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\crawler.py", line 101, in _create_engine
+    return ExecutionEngine(self, lambda _: self.stop())
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\engine.py", line 69, in __init__
+    self.downloader = downloader_cls(crawler)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\__init__.py", line 83, in __init__
+    self.middleware = DownloaderMiddlewareManager.from_crawler(crawler)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\middleware.py", line 53, in from_crawler
+    return cls.from_settings(crawler.settings, crawler)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\middleware.py", line 34, in from_settings
+    mwcls = load_object(clspath)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\utils\misc.py", line 50, in load_object
+    mod = import_module(module)
+  File "C:\Users\Axiohui\anaconda3\lib\importlib\__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "C:\Users\Axiohui\GitHub\TestWork\TestRepo\ScrapyProj\TXScrapy\TXScrapy\middlewares.py", line 9, in <module>
+    from scrapy.conf import settings
+ModuleNotFoundError: No module named 'scrapy.conf'
+2020-07-27 19:31:43 [twisted] CRITICAL: Unhandled error in Deferred:
+2020-07-27 19:31:43 [twisted] CRITICAL: 
+Traceback (most recent call last):
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\defer.py", line 1418, in _inlineCallbacks
+    result = g.send(result)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\crawler.py", line 87, in crawl
+    self.engine = self._create_engine()
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\crawler.py", line 101, in _create_engine
+    return ExecutionEngine(self, lambda _: self.stop())
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\engine.py", line 69, in __init__
+    self.downloader = downloader_cls(crawler)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\downloader\__init__.py", line 83, in __init__
+    self.middleware = DownloaderMiddlewareManager.from_crawler(crawler)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\middleware.py", line 53, in from_crawler
+    return cls.from_settings(crawler.settings, crawler)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\middleware.py", line 34, in from_settings
+    mwcls = load_object(clspath)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\utils\misc.py", line 50, in load_object
+    mod = import_module(module)
+  File "C:\Users\Axiohui\anaconda3\lib\importlib\__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "C:\Users\Axiohui\GitHub\TestWork\TestRepo\ScrapyProj\TXScrapy\TXScrapy\middlewares.py", line 9, in <module>
+    from scrapy.conf import settings
+ModuleNotFoundError: No module named 'scrapy.conf'
+2020-07-27 19:33:43 [twisted] CRITICAL: Unhandled error in Deferred:
+2020-07-27 19:33:43 [twisted] CRITICAL: 
+Traceback (most recent call last):
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\defer.py", line 1418, in _inlineCallbacks
+    result = g.send(result)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\crawler.py", line 80, in crawl
+    self.engine = self._create_engine()
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\crawler.py", line 105, in _create_engine
+    return ExecutionEngine(self, lambda _: self.stop())
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\engine.py", line 70, in __init__
+    self.scraper = Scraper(crawler)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\scraper.py", line 71, in __init__
+    self.itemproc = itemproc_cls.from_crawler(crawler)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\middleware.py", line 53, in from_crawler
+    return cls.from_settings(crawler.settings, crawler)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\middleware.py", line 34, in from_settings
+    mwcls = load_object(clspath)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\utils\misc.py", line 44, in load_object
+    mod = import_module(module)
+  File "C:\Users\Axiohui\anaconda3\lib\importlib\__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "C:\Users\Axiohui\GitHub\TestWork\TestRepo\ScrapyProj\TXScrapy\TXScrapy\pipelines.py", line 9, in <module>
+    import MySQLdb.cursors
+ModuleNotFoundError: No module named 'MySQLdb'
+2020-07-27 19:34:25 [twisted] CRITICAL: Unhandled error in Deferred:
+2020-07-27 19:34:25 [twisted] CRITICAL: 
+Traceback (most recent call last):
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\twisted\internet\defer.py", line 1418, in _inlineCallbacks
+    result = g.send(result)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\crawler.py", line 80, in crawl
+    self.engine = self._create_engine()
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\crawler.py", line 105, in _create_engine
+    return ExecutionEngine(self, lambda _: self.stop())
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\engine.py", line 70, in __init__
+    self.scraper = Scraper(crawler)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\core\scraper.py", line 71, in __init__
+    self.itemproc = itemproc_cls.from_crawler(crawler)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\middleware.py", line 53, in from_crawler
+    return cls.from_settings(crawler.settings, crawler)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\middleware.py", line 34, in from_settings
+    mwcls = load_object(clspath)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\utils\misc.py", line 44, in load_object
+    mod = import_module(module)
+  File "C:\Users\Axiohui\anaconda3\lib\importlib\__init__.py", line 127, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 1006, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 983, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 967, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 677, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 728, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "C:\Users\Axiohui\GitHub\TestWork\TestRepo\ScrapyProj\TXScrapy\TXScrapy\pipelines.py", line 9, in <module>
+    import MySQLdb.cursors
+ModuleNotFoundError: No module named 'MySQLdb'
+2020-07-27 19:41:34 [root] WARNING: Start spider 读取到 line= RoZCYM
+2020-07-27 19:41:34 [root] WARNING: Start spider 读取到 line= S00100vZzEZ
+2020-07-27 19:41:34 [root] WARNING: Start spider 读取到 line= S00103ypeLM
+2020-07-27 19:41:34 [root] WARNING: Start spider 读取到 line= S00104RSTwb
+2020-07-27 19:41:34 [root] WARNING: Start spider 读取到 line= S00106ztlmF
+2020-07-27 19:41:34 [root] WARNING: Start spider 读取到 line= S0010934faJ
+2020-07-27 19:41:34 [root] WARNING: Start spider 读取到 line= S0010DcEpnC
+2020-07-27 19:41:34 [root] WARNING: Start spider 读取到 line= S0010EfVway
+2020-07-27 19:41:34 [root] WARNING: Start spider 读取到 line= S0010JJniyl
+2020-07-27 19:41:34 [root] WARNING: Start spider 读取到 line= S0010JJniyl
+2020-07-27 19:41:34 [root] WARNING: Start spider 读取到 line= S0010N1qJhv
+2020-07-27 19:41:34 [root] WARNING: Start spider 读取到 line= S0010S6I2mG
+2020-07-27 19:41:34 [root] WARNING: Start spider 读取到 line= S0010TJx09v
+2020-07-27 19:41:34 [root] WARNING: Start spider 读取到 line= S0010ZAlbWd
+2020-07-27 19:41:34 [root] WARNING: Start spider 读取到 line= S0010ZBERdj
+2020-07-27 19:41:35 [root] WARNING: Start spider 读取到 line= S0010d8VaWm
+2020-07-27 19:41:35 [root] WARNING: Start spider 读取到 line= S0010eUE7WO
+2020-07-27 19:41:36 [root] WARNING: Start spider 读取到 line= S0010gvOXaX
+2020-07-27 19:41:37 [root] WARNING: Start spider 读取到 line= S0010hEKGCW
+2020-07-27 19:41:37 [root] WARNING: Start spider 读取到 line= S0010nU1GPv
+2020-07-27 19:41:41 [root] WARNING: Start spider 读取到 line= S0010ofj5Dq
+2020-07-27 19:41:52 [scrapy.core.scraper] ERROR: Spider error processing <GET https://v.qq.com/x/page/S0010ofj5Dq.html> (referer: https://v.qq.com/x/page/S0010ofj5Dq.html)
+Traceback (most recent call last):
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\utils\defer.py", line 102, in iter_errback
+    yield next(it)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\spidermiddlewares\offsite.py", line 29, in process_spider_output
+    for x in result:
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\spidermiddlewares\referer.py", line 339, in <genexpr>
+    return (_set_referer(r) for r in result or ())
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\spidermiddlewares\urllength.py", line 37, in <genexpr>
+    return (r for r in result or () if _filter(r))
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\spidermiddlewares\depth.py", line 58, in <genexpr>
+    return (r for r in result or () if _filter(r))
+  File "C:\Users\Axiohui\GitHub\TestWork\TestRepo\ScrapyProj\TXScrapy\TXScrapy\spiders\TXSpider.py", line 105, in getTvItem
+    rhtml = re.search(r'cover/(.*?).html',href).group(1).strip()
+AttributeError: 'NoneType' object has no attribute 'group'
+2020-07-27 19:43:07 [root] WARNING: Start spider 读取到 line= RoZCYM
+2020-07-27 19:43:07 [root] WARNING: Start spider 读取到 line= S00100vZzEZ
+2020-07-27 19:43:07 [root] WARNING: Start spider 读取到 line= S00103ypeLM
+2020-07-27 19:43:07 [root] WARNING: Start spider 读取到 line= S00104RSTwb
+2020-07-27 19:43:07 [root] WARNING: Start spider 读取到 line= S00106ztlmF
+2020-07-27 19:43:07 [root] WARNING: Start spider 读取到 line= S0010934faJ
+2020-07-27 19:43:07 [root] WARNING: Start spider 读取到 line= S0010DcEpnC
+2020-07-27 19:43:07 [root] WARNING: Start spider 读取到 line= S0010EfVway
+2020-07-27 19:43:07 [root] WARNING: Start spider 读取到 line= S0010JJniyl
+2020-07-27 19:43:07 [root] WARNING: Start spider 读取到 line= S0010JJniyl
+2020-07-27 19:43:07 [root] WARNING: Start spider 读取到 line= S0010N1qJhv
+2020-07-27 19:43:07 [root] WARNING: Start spider 读取到 line= S0010S6I2mG
+2020-07-27 19:43:07 [root] WARNING: Start spider 读取到 line= S0010TJx09v
+2020-07-27 19:43:07 [root] WARNING: Start spider 读取到 line= S0010ZAlbWd
+2020-07-27 19:43:07 [root] WARNING: Start spider 读取到 line= S0010ZBERdj
+2020-07-27 19:43:08 [root] WARNING: Start spider 读取到 line= S0010d8VaWm
+2020-07-27 19:43:08 [root] WARNING: Start spider 读取到 line= S0010eUE7WO
+2020-07-27 19:43:08 [root] WARNING: Start spider 读取到 line= S0010gvOXaX
+2020-07-27 19:43:09 [root] WARNING: Start spider 读取到 line= S0010hEKGCW
+2020-07-27 19:43:12 [root] WARNING: Start spider 读取到 line= S0010nU1GPv
+2020-07-27 19:43:19 [scrapy.core.scraper] ERROR: Spider error processing <GET https://v.qq.com/x/page/S0010hEKGCW.html> (referer: https://v.qq.com/x/page/S0010hEKGCW.html)
+Traceback (most recent call last):
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\utils\defer.py", line 102, in iter_errback
+    yield next(it)
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\spidermiddlewares\offsite.py", line 29, in process_spider_output
+    for x in result:
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\spidermiddlewares\referer.py", line 339, in <genexpr>
+    return (_set_referer(r) for r in result or ())
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\spidermiddlewares\urllength.py", line 37, in <genexpr>
+    return (r for r in result or () if _filter(r))
+  File "C:\Users\Axiohui\anaconda3\lib\site-packages\scrapy\spidermiddlewares\depth.py", line 58, in <genexpr>
+    return (r for r in result or () if _filter(r))
+  File "C:\Users\Axiohui\GitHub\TestWork\TestRepo\ScrapyProj\TXScrapy\TXScrapy\spiders\TXSpider.py", line 105, in getTvItem
+    rhtml = re.search(r'cover/(.*?).html',href).group(1).strip()
+AttributeError: 'NoneType' object has no attribute 'group'
