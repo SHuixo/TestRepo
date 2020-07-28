@@ -175,10 +175,10 @@ class YKSpider(scrapy.Spider):
         logging.warning("开始执行 getShowItem -> {}".format(self.TvUrl.format(ID=id)))
 
     def parseItem(self, response):
-        if "抱歉" in str(response.xpath(r'string(//*[@id="root"]/div/div/div[1])').extract_first()):
+        resHtml = response.text
+        if "404 Not Found" == re.search(r'<title>(.*?)</title>', resHtml).group(1):
             yield None
         else:
-            resHtml = response.text
             item = YKItem()
             if self.SWITCH:
                 item["title"] = self.strRegex.sub('',response.xpath('string(//*[@id="module_basic_dayu_sub"]/div/div[1]/a[1])').extract_first())
