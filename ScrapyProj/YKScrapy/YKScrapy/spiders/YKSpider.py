@@ -61,33 +61,34 @@ class YKSpider(scrapy.Spider):
                 logging.warning("读取完毕！！")
 
     def getHtml(self,response):
-        if "抱歉" in str(response.xpath(r'string(//*[@id="root"]/div/div/div[1])').extract_first()):
-            yield None
         resHtml = response.text
-        if self.SWITCH:
-            ktype = response.meta["ktype"]
-            index = [self.Maps[key] for key in self.Maps if key in ktype][0]
-            resData = re.search(r'data":(.*?),"code"',resHtml).group(1)
-            if resData == "[]":
-                yield None
-            videoIDs = re.findall(r'videoId":"(.*?)",',resData)
-            for videoID in videoIDs:
-                yield scrapy.Request(url=self.TvUrl.format(ID=videoID),meta=copy.deepcopy({"index":index,"id":videoID}),callback=self.Funcs[index])
+        if "404 Not Found" == re.search(r'<title>(.*?)</title>', resHtml).group(1):
+            yield None
         else:
-            id = response.meta["id"]
-            catName = str(re.search(r"catName: '(.*?)',",resHtml).group(1))
-            tFlag = response.xpath('string(//*[@id="app"]/div/div[2]/div[2]/div[1]/div/div[2]/div/div[2]/div[2]/div[1]/div/a)').extract_first()
-            if tFlag == "TA的视频":
-                response = scrapy.Request(url=self.TvUrl.format(ID=id),callback=self.getOtherItem,dont_filter=True)
-                yield response
+            if self.SWITCH:
+                ktype = response.meta["ktype"]
+                index = [self.Maps[key] for key in self.Maps if key in ktype][0]
+                resData = re.search(r'data":(.*?),"code"',resHtml).group(1)
+                if resData == "[]":
+                    yield None
+                videoIDs = re.findall(r'videoId":"(.*?)",',resData)
+                for videoID in videoIDs:
+                    yield scrapy.Request(url=self.TvUrl.format(ID=videoID),meta=copy.deepcopy({"index":index,"id":videoID}),callback=self.Funcs[index])
             else:
-                try:
-                    cindex = [self.CatMaps[key] for key in self.CatMaps if key in catName][0]
-                    yield scrapy.Request(url=self.TvUrl.format(ID=id),meta=copy.deepcopy({"index":cindex,"id":id}),callback=self.self.Funcs[cindex],dont_filter=True)
-                except:
-                    # print(catName,self.TvUrl.format(ID=id))
-                    response = scrapy.Request(url=self.TvUrl.format(ID=id),callback=self.parseItem,dont_filter=True)
+                id = response.meta["id"]
+                catName = str(re.search(r"catName: '(.*?)',",resHtml).group(1))
+                tFlag = response.xpath('string(//*[@id="app"]/div/div[2]/div[2]/div[1]/div/div[2]/div/div[2]/div[2]/div[1]/div/a)').extract_first()
+                if tFlag == "TA的视频":
+                    response = scrapy.Request(url=self.TvUrl.format(ID=id),callback=self.getOtherItem,dont_filter=True)
                     yield response
+                else:
+                    try:
+                        cindex = [self.CatMaps[key] for key in self.CatMaps if key in catName][0]
+                        yield scrapy.Request(url=self.TvUrl.format(ID=id),meta=copy.deepcopy({"index":cindex,"id":id}),callback=self.self.Funcs[cindex],dont_filter=True)
+                    except:
+                        # print(catName,self.TvUrl.format(ID=id))
+                        response = scrapy.Request(url=self.TvUrl.format(ID=id),callback=self.parseItem,dont_filter=True)
+                        yield response
 
     def getTVItem(self, response):
         index = response.meta["index"]

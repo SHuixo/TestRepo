@@ -79,7 +79,7 @@ class TXSpider(scrapy.Spider):
             for ltag, title in enumerate(titles):
                 item["uid"] = re.search(r'page/(.*?).html',hrefs[ltag]).group(1).strip()
                 item["name"] = title
-                item["type"] = re.search(r'type_name":"(.*?)"',response.text).group(1)
+                item["type"] = re.search(r'type_name":(.*?),',response.text).group(1).replace('"','')
                 item["app"] = "TENCENT"
                 yield item
 
