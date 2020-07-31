@@ -23,7 +23,7 @@ class LESpider(scrapy.Spider):
         self.Areas = [utils.TVAreas,utils.MovieAreas,utils.ShowAreas,utils.AnimalAreas,utils.VlogAreas]
         self.Maps = {"channel_id=2": 0, "channel_id=1": 1, "channel_id=6": 2, "channel_id=4": 3, "channel_id=3":4}
         self.Func = [self.ParseTvPage, self.ParseMoviePage, self.ParseShowPage, self.ParseAnimalPage,self.ParseVlogPage]
-        self.SWITCH = False  #用于从网站获取内容(True)和从本地文件(False)获取内容的切换。
+        self.SWITCH = True #False  #用于从网站获取内容(True)和从本地文件(False)获取内容的切换。
         self.IUrl = "https://www.iqiyi.com/v_{ID}.html"
         self.File = r"./checkIQIYI.txt"
 
@@ -108,6 +108,8 @@ class LESpider(scrapy.Spider):
             categories = re.findall(r'"categories":(.*?),', reshtml)
             actors = re.findall(r'"people":{(.*?)}', reshtml)
             for tag, playurl in enumerate(playUrls):
+                if playurl == '':
+                    continue
                 item = IQIYItem()
                 item["pid"] = albumIds[tag]
                 item["title"] = self.strRegex.sub('',titles[tag])
@@ -115,7 +117,6 @@ class LESpider(scrapy.Spider):
                 item["actor"] = self.strRegex.sub('',str(re.findall(r'"name":"(.*?)"}',str(actors[tag]))))
                 item["app"] = "IQIYI"
                 yield scrapy.Request(url=playurl,meta=copy.deepcopy({"item":item,"index":lindex}),callback= self.Func[lindex])
-
 
     def ParseTvPage(self, response):
 
@@ -127,11 +128,11 @@ class LESpider(scrapy.Spider):
         reshtml = requests.get(PageUrl.format(aid=item["pid"],page="1"), headers=headers).text
         tvIds = re.findall(r'tvId":(.*?),',reshtml)
         hids = re.findall(r'/v_(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',reshtml)))
-        names = re.findall(r'name":"(.*?)",',str(re.findall(r'"tvId":(.*?)"playUrl"',reshtml)))
+
         if len(hids) != len(tvIds):
             hids = [hid.split('/')[-1] for hid in re.findall(r'/(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',reshtml)))]
         rp =  re.findall(r'page":(.*?),',reshtml)
-        if rp is not None or rp != []:
+        if rp is not None and rp != []:
             pages = (int)(rp[0])
         else:
             pages = 1
@@ -145,12 +146,11 @@ class LESpider(scrapy.Spider):
                     htmp = [hid.split('/')[-1] for hid in re.findall(r'/(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',reshtml)))]
                 tvIds.extend(tvtmp)
                 hids.extend(htmp)
-                names.extend(nametmp)
 
         for tvTag, tvid in enumerate(tvIds):
             item["uid"] = tvid
             item["hid"] = hids[tvTag]
-            item["name"] = self.strRegex.sub('',names[tvTag])
+            item["name"] = item["title"]+"第{}集".format(tvTag+1)
             item["type"] = self.Type[lindex]
             yield item
 
@@ -222,8 +222,8 @@ class LESpider(scrapy.Spider):
             names = re.findall(r'"name":"(.*?)"',str(re.findall(r'"tvId":(.*?)"playUrl"',resSoup)))
             if len(hids) != len(tvIds):
                 hids = [hid.split('/')[-1] for hid in re.findall(r'/(.*?).html"',str(re.findall(r'"playUrl":(.*?),"issueTime',resSoup)))]
-            rp =  re.findall(r'page":(.*?),',resSoup)
-            if rp is not None:
+            rp = re.findall(r'page":(.*?),',resSoup)
+            if rp is not None and rp != []:
                 pages = (int)(rp[0])
             else:
                 pages = 1
