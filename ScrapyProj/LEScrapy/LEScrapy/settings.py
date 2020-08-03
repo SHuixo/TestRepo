@@ -61,7 +61,6 @@ COOKIES_ENABLED = False
 # Disable retry/download_delay/close_redirect/
 RETRY_ENABLED=False
 DOWNLOAD_TIMEOUT=15
-REDIRECT_ENABLED=False
 
 # Disable Telnet Console (enabled by default)
 #TELNETCONSOLE_ENABLED = False
