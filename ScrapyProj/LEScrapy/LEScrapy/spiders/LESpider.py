@@ -31,7 +31,7 @@ class LESpider(scrapy.Spider):
         self.Maps = {"cg=2&": 0, "cg=1&": 1, "cg=11&": 2, "cg=5&": 3}
         self.TypeMaps = {"1":"电影","2":"电视剧","3":"娱乐","5":"动漫","9":"音乐","11":"综艺","16":"纪录片","34":"亲子",
                          "20":"风尚","22":"财经","14":"汽车","23":"旅游","30":"热点","1035":"全景","1009":"资讯","1021":"教育"}
-        self.SWITCH = True #False   #用于从网站获取内容( True )和从本地文件( False )获取内容的切换。
+        self.SWITCH = False #True #False   #用于从网站获取内容( True )和从本地文件( False )获取内容的切换。
         self.File = r"./checkLE.txt"
 
     def start_requests(self):
@@ -65,7 +65,7 @@ class LESpider(scrapy.Spider):
                     item = LEItem()
                     item["uid"] = line[0]
                     ## 判断读取的为纯数字，否则pass
-                    if re.match('\\d+', line[0]):
+                    if str(line[0]).isdigit():
                         logging.warning("Start spider 读取到 line= {}".format(line[0]))
                         url = self.LEUrl.format(vid=line[0])
                         yield scrapy.Request(url=url, meta={"meta": copy.deepcopy(item)}, callback=self.parseItemDetails, dont_filter=True)
