@@ -76,19 +76,23 @@ class YKSpider(scrapy.Spider):
                     yield scrapy.Request(url=self.TvUrl.format(ID=videoID),meta=copy.deepcopy({"index":index,"id":videoID}),callback=self.Funcs[index])
             else:
                 id = response.meta["id"]
-                catName = str(re.search(r"catName: '(.*?)',",resHtml).group(1))
-                tFlag = response.xpath('string(//*[@id="app"]/div/div[2]/div[2]/div[1]/div/div[2]/div/div[2]/div[2]/div[1]/div/a)').extract_first()
-                if tFlag == "TA的视频":
-                    response = scrapy.Request(url=self.TvUrl.format(ID=id),callback=self.getOtherItem,dont_filter=True)
-                    yield response
+                reCat = re.search(r"catName: '(.*?)',",resHtml)
+                if reCat is None:
+                    yield None
                 else:
-                    try:
-                        cindex = [self.CatMaps[key] for key in self.CatMaps if key in catName][0]
-                        yield scrapy.Request(url=self.TvUrl.format(ID=id),meta=copy.deepcopy({"index":cindex,"id":id}),callback=self.self.Funcs[cindex],dont_filter=True)
-                    except:
-                        # print(catName,self.TvUrl.format(ID=id))
-                        response = scrapy.Request(url=self.TvUrl.format(ID=id),callback=self.parseItem,dont_filter=True)
+                    catName = str(reCat.group(1))
+                    tFlag = response.xpath('string(//*[@id="app"]/div/div[2]/div[2]/div[1]/div/div[2]/div/div[2]/div[2]/div[1]/div/a)').extract_first()
+                    if tFlag == "TA的视频":
+                        response = scrapy.Request(url=self.TvUrl.format(ID=id),callback=self.getOtherItem,dont_filter=True)
                         yield response
+                    else:
+                        try:
+                            cindex = [self.CatMaps[key] for key in self.CatMaps if key in catName][0]
+                            yield scrapy.Request(url=self.TvUrl.format(ID=id),meta=copy.deepcopy({"index":cindex,"id":id}),callback=self.self.Funcs[cindex],dont_filter=True)
+                        except:
+                            # print(catName,self.TvUrl.format(ID=id))
+                            response = scrapy.Request(url=self.TvUrl.format(ID=id),callback=self.parseItem,dont_filter=True)
+                            yield response
 
     def getTVItem(self, response):
         index = response.meta["index"]
@@ -190,10 +194,13 @@ class YKSpider(scrapy.Spider):
                 item["category"] = None
 
             item["name"] = self.strRegex.sub('',response.xpath('string(//*[@id="left-title-content-wrap"])').extract_first())
-            item["uid"] = re.search(r"videoId: '(.*?)',",resHtml).group(1).strip()
-            item["pid"] = re.search(r"showid: '(.*?)',",resHtml).group(1).strip()
-            item["hid"] = re.search(r"videoId2: '(.*?)',",resHtml).group(1).strip()
-            item["type"] = re.search(r"catName: '(.*?)',",resHtml).group(1).strip()
-            item["actor"] = None
-            item["app"] = "YOUKU"
-            yield item
+            if re.search(r"videoId: '(.*?)',",resHtml) is None:
+                yield None
+            else:
+                item["uid"] = re.search(r"videoId: '(.*?)',",resHtml).group(1).strip()
+                item["pid"] = re.search(r"showid: '(.*?)',",resHtml).group(1).strip()
+                item["hid"] = re.search(r"videoId2: '(.*?)',",resHtml).group(1).strip()
+                item["type"] = re.search(r"catName: '(.*?)',",resHtml).group(1).strip()
+                item["actor"] = None
+                item["app"] = "YOUKU"
+                yield item
