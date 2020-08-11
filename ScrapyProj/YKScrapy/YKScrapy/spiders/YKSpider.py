@@ -62,7 +62,7 @@ class YKSpider(scrapy.Spider):
 
     def getHtml(self,response):
         resHtml = response.text
-        if "404 Not Found" == re.search(r'<title>(.*?)</title>', resHtml).group(1):
+        if "404 Not Found" == re.search(r'<title>(.*?)</title>', resHtml, re.S|re.I|re.M).group(1):
             yield None
         else:
             if self.SWITCH:
@@ -180,7 +180,7 @@ class YKSpider(scrapy.Spider):
 
     def parseItem(self, response):
         resHtml = response.text
-        if "404 Not Found" == re.search(r'<title>(.*?)</title>', resHtml).group(1):
+        if "404 Not Found" == re.search(r'<title>(.*?)</title>', resHtml, re.S|re.I|re.M).group(1):
             yield None
         else:
             item = YKItem()
