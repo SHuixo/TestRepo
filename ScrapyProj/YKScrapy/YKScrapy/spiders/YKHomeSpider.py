@@ -47,23 +47,29 @@ class YKSpider(scrapy.Spider):
             hrefs = list(set(hrefs))
             for href in hrefs:
                 if "v.youku.com" in href:
+                    href = str(href).replace("\\u002F",'/')
                     print(href)
-                    yield scrapy.Request(url="https:"+href,callback=self.getHtml,dont_filter=True)
+                    if "http" in href:
+                        yield scrapy.Request(url=href,callback=self.getHtml,dont_filter=True)
+                    else:
+                        yield scrapy.Request(url="https:"+ href,callback=self.getHtml,dont_filter=True)
                 else:
                     continue
 
     def getHtml(self,response):
-        print('11')
         resHtml = response.text
         url = response.url
         if "404 Not Found" == re.search(r'<title>(.*?)</title>', resHtml).group(1):
             yield None
         else:
             cNgroup = re.search(r"catName: '(.*?)',",resHtml)
-            if cNgroup is not None:
+            vIgrop = re.search(r"videoId2: '(.*?)',",resHtml)
+            if cNgroup is not None and vIgrop is not None:
                 catName = cNgroup.group(1).strip()
+                id = vIgrop.group(1).strip()
             else:
                 catName = '其他'
+                id = '404 error!'
             index = [self.CatMaps[key] for key in self.CatMaps if key in catName]
             if index != []:
                 index = index[0]
@@ -72,17 +78,22 @@ class YKSpider(scrapy.Spider):
                     response = scrapy.Request(url=url,callback=self.getOtherItem,dont_filter=True)
                     yield response
                 else:
-                    yield scrapy.Request(url=url,callback=self.Funcs[index],dont_filter=True)
+                    yield scrapy.Request(url=url,meta=copy.deepcopy({"index": index,"id":id}), callback=self.Funcs[index],dont_filter=True)
             else:
-                response = scrapy.Request(url=url,callback=self.parseItem,dont_filter=True)
+                response = scrapy.Request(url=url,meta=copy.deepcopy({"index": index,"id":id}), callback=self.parseItem,dont_filter=True)
                 yield response
 
     def getTVItem(self, response):
         index = response.meta["index"]
         id = response.meta["id"]
-        self.browser = webdriver.Chrome(chrome_options=self.browser_options)
-        logging.warning("开始执行 getTVItem -> {}".format(self.TvUrl.format(ID=id)))
-        self.browser.get(self.TvUrl.format(ID=id))
+        if '404' not in id:
+            self.browser = webdriver.Chrome(chrome_options=self.browser_options)
+            logging.warning("开始执行 getTVItem -> {}".format(self.TvUrl.format(ID=id)))
+            self.browser.get(self.TvUrl.format(ID=id))
+        else:
+            self.browser = webdriver.Chrome(chrome_options=self.browser_options)
+            logging.warning("开始执行 getTVItem -> {}".format(response.url))
+            self.browser.get(response.url)
         resHtml = self.browser.page_source
         refList = []
         resEtree = etree.HTML(resHtml)
@@ -167,15 +178,11 @@ class YKSpider(scrapy.Spider):
             yield None
         else:
             item = YKItem()
-            if self.SWITCH:
-                item["title"] = self.strRegex.sub('',response.xpath('string(//*[@id="module_basic_dayu_sub"]/div/div[1]/a[1])').extract_first())
-                item["category"] = self.strRegex.sub('',response.xpath('string(//*[@id="app"]/div/div[2]/div[2]/div[2]/div[1]/div/div/div)').extract_first())
-                if '内容简介' in item["category"]:
-                    item["category"] = item["category"].split('内容简介')[1]
-            else:
-                item["title"] = None
-                item["category"] = None
 
+            item["title"] = self.strRegex.sub('',response.xpath('string(//*[@id="module_basic_dayu_sub"]/div/div[1]/a[1])').extract_first())
+            item["category"] = self.strRegex.sub('',response.xpath('string(//*[@id="app"]/div/div[2]/div[2]/div[2]/div[1]/div/div/div)').extract_first())
+            if '内容简介' in item["category"]:
+                item["category"] = item["category"].split('内容简介')[1]
             item["name"] = self.strRegex.sub('',response.xpath('string(//*[@id="left-title-content-wrap"])').extract_first())
             item["uid"] = re.search(r"videoId: '(.*?)',",resHtml).group(1).strip()
             item["pid"] = re.search(r"showid: '(.*?)',",resHtml).group(1).strip()
