@@ -15,7 +15,7 @@ class IqiyiscrapyPipeline(object):
         return item
 
 class MySQLPipeline(object):
-
+    data_list = []
     def __init__(self):
         self.dbparams = dict(
             host=settings['MYSQL_HOST'],  # 读取settings中的配置
@@ -31,16 +31,23 @@ class MySQLPipeline(object):
     ## pipeline默认调用
     def process_item(self, item, spider):
         asyncitem = copy.deepcopy(item)
-        query = self.dbpool.runInteraction(self._conditional_insert, asyncitem)  # 调用插入的方法
-        query.addErrback(self._handle_error, asyncitem, spider)  # 调用异常处理方法
+        if len(self.data_list) == 100:
+            # query = self.dbpool.runInteraction(self._conditional_insert, asyncitem)  # 调用插入的方法
+            # query.addErrback(self._handle_error, asyncitem, spider)  # 调用异常处理方法
+            query = self.dbpool.runInteraction(self._conditional_insert, self.data_list)  # 调用插入的方法
+            query.addErrback(self._handle_error, self.data_list, spider)  # 调用异常处理方法
+            self.data_list = []
+        else:
+            self.data_list.append((asyncitem["uid"], asyncitem["pid"],asyncitem["hid"], asyncitem["title"],asyncitem["name"], asyncitem["actor"],asyncitem["category"],asyncitem['type'],asyncitem["app"]))
         return asyncitem
 
     # 写入数据库中
     def _conditional_insert(self, tx, item):
         sql = "insert ignore into iqiyisrc(crawler_app_id1,crawler_app_id2,crawler_app_id3,crawler_name,crawler_name2,crawler_actor,crawler_property,crawler_content_type,app_from) " \
               "values(%s,%s, %s,%s,%s,%s,%s,%s,%s)"
-        params = (item["uid"], item["pid"],item["hid"], item["title"],item["name"], item["actor"],item["category"],item['type'],item["app"])
-        tx.execute(sql, params)
+        # params = (item["uid"], item["pid"],item["hid"], item["title"],item["name"], item["actor"],item["category"],item['type'],item["app"])
+        # tx.execute(sql, params)
+        tx.executemany(sql, item)
         print("database operation  success!!")
 
     # 错误处理方法

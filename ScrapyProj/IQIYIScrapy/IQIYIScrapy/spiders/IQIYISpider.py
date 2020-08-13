@@ -23,7 +23,7 @@ class LESpider(scrapy.Spider):
         self.Areas = [utils.TVAreas,utils.MovieAreas,utils.ShowAreas,utils.AnimalAreas,utils.VlogAreas]
         self.Maps = {"channel_id=2": 0, "channel_id=1": 1, "channel_id=6": 2, "channel_id=4": 3, "channel_id=3":4}
         self.Func = [self.ParseTvPage, self.ParseMoviePage, self.ParseShowPage, self.ParseAnimalPage,self.ParseVlogPage]
-        self.SWITCH = True #False  #用于从网站获取内容(True)和从本地文件(False)获取内容的切换。
+        self.SWITCH = False #True #False  #用于从网站获取内容(True)和从本地文件(False)获取内容的切换。
         self.IUrl = "https://www.iqiyi.com/v_{ID}.html"
         self.File = r"./checkIQIYI.txt"
 

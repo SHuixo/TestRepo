@@ -3,5 +3,5 @@
 from scrapy import cmdline
 
 
-# cmdline.execute("scrapy crawl TX".split())
-cmdline.execute("scrapy crawl TXRank".split())
+cmdline.execute("scrapy crawl TX".split())
+# cmdline.execute("scrapy crawl TXRank".split())
