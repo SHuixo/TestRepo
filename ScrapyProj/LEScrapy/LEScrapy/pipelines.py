@@ -39,9 +39,10 @@ class MySQLPipeline(object):
             query = self.dbpool.runInteraction(self._conditional_insert, self.data_list)  # 调用插入的方法
             query.addErrback(self._handle_error, self.data_list, spider)  # 调用异常处理方法
             self.data_list = []
+            yield query
         else:
             self.data_list.append((asyncitem["uid"], asyncitem["pid"],asyncitem["hid"], asyncitem["title"],asyncitem["name"], asyncitem["actor"],asyncitem["category"],asyncitem['type'],asyncitem["app"]))
-        return asyncitem
+            return asyncitem
 
     # 写入数据库中
     def _conditional_insert(self, tx, item):
