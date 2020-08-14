@@ -51,11 +51,14 @@ class TXSpider(scrapy.Spider):
                     #     print(line)
                     logging.warning("Start spider 读取到 line= {}".format(line[0]))
                     if line[1] == 'page':
-                        yield scrapy.Request(url=self.TxUrl2.format(ID=line[0]),meta=copy.deepcopy({"ID":line[0]}),callback=self.getOtherItem,dont_filter=True)
+                        url = self.TxUrl2.format(ID=line[0])
+                        yield scrapy.Request(url=url,meta=copy.deepcopy({"ID":line[0]}),callback=self.getOtherItem,dont_filter=True)
                     elif line[1] == '' or line[1] == 'cover' or line[0]==line[1]:
-                        yield scrapy.Request(url=self.TxUrl.format(ID=line[0]),meta=copy.deepcopy({"ID":line[0]}),callback=self.getOtherItem,dont_filter=True)
+                        url = self.TxUrl.format(ID=line[0])
+                        yield scrapy.Request(url=url,meta=copy.deepcopy({"ID":line[0]}),callback=self.getOtherItem,dont_filter=True)
                     elif line[0] != line[1]:
-                        yield scrapy.Request(url=self.TxUrl3.format(ID1=line[1],ID2=line[0]),meta=copy.deepcopy({"ID":line[0]}),callback=self.getOtherItem,dont_filter=True)
+                        url = self.TxUrl3.format(ID1=line[1],ID2=line[0])
+                        yield scrapy.Request(url=url,meta=copy.deepcopy({"ID":line[0]}),callback=self.getOtherItem,dont_filter=True)
                 logging.warning("读取完毕！！")
 
     def getOtherItem(self,response):
