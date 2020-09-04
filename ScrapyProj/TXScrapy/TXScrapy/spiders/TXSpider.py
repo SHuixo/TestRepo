@@ -45,10 +45,14 @@ class TXSpider(scrapy.Spider):
         else:
             #从本地文件读取入手！！
             with open(self.File, 'r', encoding='UTF-8') as csvfile:
-                lines = csv.reader(csvfile)
+                #文件行包含\0会报error异常，所以需要读取时做处理！
+                lines = csv.reader((row.replace('\0','') for row in csvfile), delimiter=',')
                 for line in lines:
                     # if line[1] != 'cover' and line[1] != 'page' and line[1] != '' and line[0] != line[1]:
                     #     print(line)
+                    if 'NUL' in line:
+                        logging.warning("spider Read EXCEPTION in line= {}".format(line[0]))
+                        continue
                     logging.warning("Start spider 读取到 line= {}".format(line[0]))
                     if line[1] == 'page':
                         url = self.TxUrl2.format(ID=line[0])

@@ -56,8 +56,11 @@ class YKSpider(scrapy.Spider):
             with open(self.File, 'r', encoding='UTF-8') as csvfile:
                 lines = csv.reader(csvfile)
                 for line in lines:
+                    if 'NUL' in line:
+                        logging.warning("spider Read EXCEPTION in line= {}".format(line[0]))
+                        continue
                     logging.warning("Start spider 读取到 line= {}".format(line[0]))
-                    yield scrapy.Request(url=self.TvUrl.format(ID=line[0]),meta=copy.deepcopy({"id":line[0]}),callback=self.getHtml,dont_filter=True)
+                    yield scrapy.Request(url=self.TvUrl.format(ID=line[0]), meta=copy.deepcopy({"id":line[0]}),callback=self.getHtml,dont_filter=True)
                 logging.warning("读取完毕！！")
 
     def getHtml(self,response):
