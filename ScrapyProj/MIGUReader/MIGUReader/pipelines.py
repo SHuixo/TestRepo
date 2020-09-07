@@ -42,8 +42,8 @@ class MySQLPipeline(object):
 
     # 写入数据库中
     def _conditional_insert(self, tx, item):
-        sql = "REPLACE into txsrc(crawler_app_id1,crawler_app_id2,crawler_app_id3,crawler_name,crawler_name2,crawler_actor,crawler_property,crawler_content_type,app_from) " \
-              "values(%s,%s, %s,%s,%s,%s,%s,%s,%s)"
+        sql = "REPLACE into mgreader(uid,classify,type,name,author,publish,ptime,price,isbn,country,label,score,commNum,readNum,collNum,app) " \
+              "values(%s,%s, %s,%s,%s,%s,%s,%s,%s,%s, %s,%s,%s,%s,%s,%s,%s)"
         # params = (item["uid"], item["pid"],item["hid"], item["title"],item["name"], item["actor"],item["category"],item['type'],item["app"])
         # tx.execute(sql, params)
         tx.executemany(sql, item)

@@ -13,7 +13,7 @@ class WxreaderItem(scrapy.Item):
     # name = scrapy.Field()
     pass
 
-class WEItem(scrapy.Item):
+class WXItem(scrapy.Item):
     uid = scrapy.Field()   # 图书唯一标志id
     classify = scrapy.Field() #图书分类
     type = scrapy.Field()   # 图书类型
