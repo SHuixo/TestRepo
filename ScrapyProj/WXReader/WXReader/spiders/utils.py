@@ -1,8 +1,8 @@
 
 urls =[
     #"https://weread.qq.com/web/category/{type}"
-    "https://weread.qq.com/web/bookListInCategory/all?maxIndex=40&rank=1",
-    "https://weread.qq.com/web/bookListInCategory/400000?maxIndex=40",
+    "https://weread.qq.com/web/bookListInCategory/{type}?maxIndex={index}&rank=1",
+    "https://weread.qq.com/web/bookListInCategory/{type}?maxIndex={index}",
 ]
 
 TopType = [
