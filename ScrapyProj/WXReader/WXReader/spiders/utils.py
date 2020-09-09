@@ -7,7 +7,8 @@ urls =[
 
 TopType = [
     #总榜，飙升，新书，男生小说，女生小说
-    "all","rising","newbook","novel_male","novel_female",
+    "all",
+    "rising","newbook","novel_male","novel_female",
 ]
 
 OtherType = [
