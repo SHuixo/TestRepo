@@ -78,11 +78,18 @@ class LESpider(scrapy.Spider):
         else:
             item["pid"] = None
 
-        item["title"] = self.strRegex.sub('',re.search(r'"albumName":"(.*?)",',reshtml).group(1))
-        try:
-            item["category"] = self.strRegex.sub('',re.search(r'"categories":"(.*?)",',reshtml).group(1))
-        except:
+        ang = re.search(r'"albumName":"(.*?)",',reshtml)
+        if ang is not None:
+            item["title"] = self.strRegex.sub('',ang.group(1))
+        else:
+            item["title"] = None
+
+        catg = re.search(r'"categories":"(.*?)",',reshtml)
+        if catg is not None:
+            item["category"] = self.strRegex.sub('',catg.group(1))
+        else:
             item["category"] = None
+
         if categoryName is None:
             indexl = []
         else:
