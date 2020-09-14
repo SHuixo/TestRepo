@@ -34,7 +34,7 @@ class WXSpider(scrapy.Spider):
                       utils.OtherType
                       ]
         self.url = "https://weread.qq.com/web/category/{ttype}" # 当 SWITCH 为 True 时使用！
-        self.SWITCH = True #False #True   # 定义两种数据爬取方式 True调用selenium插件，False 则通过url返回的json提取。
+        self.SWITCH = False #True #False #True   # 定义两种数据爬取方式 True调用selenium插件，False 则通过url返回的json提取。
 
     def start_requests(self):
 

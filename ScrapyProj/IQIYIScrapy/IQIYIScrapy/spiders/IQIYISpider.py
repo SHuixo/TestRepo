@@ -23,7 +23,7 @@ class LESpider(scrapy.Spider):
         self.Areas = [utils.TVAreas,utils.MovieAreas,utils.ShowAreas,utils.AnimalAreas,utils.VlogAreas]
         self.Maps = {"channel_id=2": 0, "channel_id=1": 1, "channel_id=6": 2, "channel_id=4": 3, "channel_id=3":4}
         self.Func = [self.ParseTvPage, self.ParseMoviePage, self.ParseShowPage, self.ParseAnimalPage,self.ParseVlogPage]
-        self.SWITCH = True #True #False  #用于从网站获取内容(True)和从本地文件(False)获取内容的切换。
+        self.SWITCH = False #True #False  #用于从网站获取内容(True)和从本地文件(False)获取内容的切换。
         self.IUrl = "https://www.iqiyi.com/v_{ID}.html"
         self.File = r"./checkIQIYI.txt"
 
@@ -53,21 +53,40 @@ class LESpider(scrapy.Spider):
                 logging.warning("读取完毕！！")
 
     def getOtherItem(self,response):
+        # //*[@id="block-B"]/div/div/div[2]/div/p
+        if "抱歉" in str(response.xpath(r'string(//*[@id="block-B"]/div/div/div[2]/div/p)').extract_first()):
+            yield None
 
-        if "抱歉" in  str(response.xpath(r'string(//*[@id="block-B"]/div/div/div[2]/div/p)').extract_first()):
+        if "对不起" in response.selector.re(r'<title>(.*)</title>')[0]:
+            yield None
+
+        if "error.html"in response.url:
             yield None
         reshtml = response.text
-        categoryName = re.search(r'"categoryName":"(.*?)",',reshtml).group(1)
+        reCate = re.search(r'"categoryName":"(.*?)",',reshtml)
+        if reCate is not None:
+            categoryName = reCate.group(1)
+        else:
+            categoryName = None
         item = IQIYItem()
         item["app"] = "IQIYI"
         item["actor"] = None
-        item["pid"] = re.findall(r'param\[\'albumid\'\] = "(.*?)";',reshtml)[0]
+
+        aidl = re.findall(r'param\[\'albumid\'\] = "(.*?)";',reshtml)
+        if aidl != []:
+            item["pid"] = aidl[0]
+        else:
+            item["pid"] = None
+
         item["title"] = self.strRegex.sub('',re.search(r'"albumName":"(.*?)",',reshtml).group(1))
         try:
             item["category"] = self.strRegex.sub('',re.search(r'"categories":"(.*?)",',reshtml).group(1))
         except:
             item["category"] = None
-        indexl = [self.TypeMap[key] for key in self.TypeMap if key in categoryName]
+        if categoryName is None:
+            indexl = []
+        else:
+            indexl = [self.TypeMap[key] for key in self.TypeMap if key in categoryName]
         if indexl != []:
             lindex = indexl[0]
             yield scrapy.Request(url=response.url,meta=copy.deepcopy({"item":item,"index":lindex}),callback= self.Func[lindex],dont_filter=True)
