@@ -55,5 +55,5 @@ urls = [
     "https://www.migu.cn/read/more-list/45594.html?size=28&page={page}",
     # 阅读排行榜
     # 热销榜top10  /  咪咕新锐榜top10  /  新书榜top10
-    "https://www.migu.cn/read.html"
+    "https://www.migu.cn/read.html",
 ]
