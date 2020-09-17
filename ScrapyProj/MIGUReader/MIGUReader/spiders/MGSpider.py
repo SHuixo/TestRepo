@@ -44,14 +44,16 @@ class MGSpider(scrapy.Spider):
         item["collNum"] = None
         item["app"] = "咪咕阅读"
 
-        for url in utils.urls:
+        for index, url in enumerate(utils.urls):
             if url == "https://www.migu.cn/read.html":
                 # 获取首页top排行榜数据！
+                item["type"] = utils.Types[index]
                 response = scrapy.Request(url=url, meta=copy.deepcopy({"meta": item}), callback=self.getHtml)
                 yield response
             else:
                 for page in range(1,201):
                     url = url.format(page=page)
+                    item["type"] = utils.Types[index]
                     response = scrapy.Request(url=url, meta=copy.deepcopy({"meta": item}), callback=self.getOtherHtml)
                     yield response
 
