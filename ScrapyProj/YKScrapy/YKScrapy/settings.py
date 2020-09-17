@@ -14,7 +14,7 @@ BOT_NAME = 'YKScrapy'
 SPIDER_MODULES = ['YKScrapy.spiders']
 NEWSPIDER_MODULE = 'YKScrapy.spiders'
 
-LOG_LEVEL = "WARNING"
+LOG_LEVEL = "INFO"
 LOG_FILE = "./LOG_YOUKU.log"
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'YKScrapy (+http://www.yourdomain.com)'
