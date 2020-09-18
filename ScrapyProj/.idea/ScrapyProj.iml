@@ -5,7 +5,7 @@
       <excludeFolder url="file://$MODULE_DIR$/TXScrapy/.scrapy" />
       <excludeFolder url="file://$MODULE_DIR$/YKScrapy/.scrapy" />
     </content>
-    <orderEntry type="jdk" jdkName="Python 3.7 (ScrapyProj)" jdkType="Python SDK" />
+    <orderEntry type="jdk" jdkName="Python 3.7" jdkType="Python SDK" />
     <orderEntry type="sourceFolder" forTests="false" />
   </component>
   <component name="TestRunnerService">

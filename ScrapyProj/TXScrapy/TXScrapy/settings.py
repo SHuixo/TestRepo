@@ -14,7 +14,7 @@ BOT_NAME = 'TXScrapy'
 SPIDER_MODULES = ['TXScrapy.spiders']
 NEWSPIDER_MODULE = 'TXScrapy.spiders'
 
-LOG_LEVEL = "WARNING"
+LOG_LEVEL = "INFO"
 LOG_FILE = "./LOG_TX.log"
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'TXScrapy (+http://www.yourdomain.com)'
@@ -45,7 +45,7 @@ USER_AGENTS = [
 ROBOTSTXT_OBEY = True
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-CONCURRENT_REQUESTS = 32
+CONCURRENT_REQUESTS = 500
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
