@@ -1,6 +1,6 @@
 import copy
 import random
-
+import logging
 import scrapy
 from scrapy.conf import settings
 from selenium import webdriver
@@ -47,15 +47,19 @@ class MGSpider(scrapy.Spider):
         for index, url in enumerate(utils.urls):
             if url == "https://www.migu.cn/read.html":
                 # 获取首页top排行榜数据！
+                logging.warning("spider url = {url}".format(url=url))
                 item["type"] = utils.Types[index]
                 response = scrapy.Request(url=url, meta=copy.deepcopy({"meta": item}), callback=self.getHtml)
                 yield response
             else:
+                logging.warning("start spider url = {url}".format(url=url))
                 for page in range(1,201):
+                    logging.warning("spider {url} page at {page}".format(url=url, page=page))
                     url = url.format(page=page)
                     item["type"] = utils.Types[index]
                     response = scrapy.Request(url=url, meta=copy.deepcopy({"meta": item}), callback=self.getOtherHtml)
                     yield response
+                logging.warning("finish spider url = {url} ".format(url=url))
 
     def getHtml(self, response):
 
@@ -89,5 +93,5 @@ class MGSpider(scrapy.Spider):
         item["classify"] = response.xpath(r'string(/html/body/div[4]/div[1]/div[1]/div/div[2]/div[4])').extract_first().split("：")[-1].strip()
         item["ptime"] = response.xpath(r'string(/html/body/div[4]/div[1]/div[1]/div/div[2]/div[6])').extract_first().split("：")[-1].strip()
         item["label"] = response.xpath(r'string(/html/body/div[4]/div[1]/div[1]/div/div[2]/div[7])').extract_first().split("：")[-1].strip()
-        #作者：	夏半秋
+        #done
         yield item
