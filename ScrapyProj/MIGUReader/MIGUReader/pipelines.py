@@ -37,13 +37,14 @@ class MySQLPipeline(object):
             query.addErrback(self._handle_error, self.data_list, spider)  # 调用异常处理方法
             self.data_list = []
         else:
-            self.data_list.append((asyncitem["uid"], asyncitem["pid"],asyncitem["hid"], asyncitem["title"],asyncitem["name"], asyncitem["actor"],asyncitem["category"],asyncitem['type'],asyncitem["app"]))
+            self.data_list.append((asyncitem["uid"], asyncitem["classify"],asyncitem["type"], asyncitem["name"],asyncitem["author"], asyncitem["publish"],asyncitem["ptime"],asyncitem['price']
+                                   ,asyncitem["isbn"] ,asyncitem["country"] ,asyncitem["label"] ,asyncitem["score"] ,asyncitem["commNum"] ,asyncitem["readNum"] ,asyncitem["collNum"] ,asyncitem["app"]))
         return asyncitem
 
     # 写入数据库中
     def _conditional_insert(self, tx, item):
         sql = "REPLACE into mgreader(uid,classify,type,name,author,publish,ptime,price,isbn,country,label,score,commNum,readNum,collNum,app) " \
-              "values(%s,%s, %s,%s,%s,%s,%s,%s,%s,%s, %s,%s,%s,%s,%s,%s,%s)"
+              "values(%s,%s, %s,%s,%s,%s,%s,%s,%s,%s, %s,%s,%s,%s,%s,%s)"
         # params = (item["uid"], item["pid"],item["hid"], item["title"],item["name"], item["actor"],item["category"],item['type'],item["app"])
         # tx.execute(sql, params)
         tx.executemany(sql, item)

@@ -21,7 +21,7 @@ class TXSpider(scrapy.Spider):
         self.Maps = {"tv": 0, "movie": 1, "variety": 2, "cartoon": 0, "child":0}
         self.TypeMaps = {"电视剧":0, "电影":1, "综艺":2, "动漫":0,"少儿":0,"纪录片":3}
         self.Funcs = [self.getTvItem,self.getMovieItem,self.getVarietyItem,self.getVlogItem]
-        self.SWITCH = False #True #False   #用于从网站获取内容(True)和从本地文件(False)获取内容的切换。
+        self.SWITCH = True #False   #用于从网站获取内容(True)和从本地文件(False)获取内容的切换。
         self.TxUrl = "https://v.qq.com/x/cover/{ID}.html"
         self.TxUrl2 = "https://v.qq.com/x/page/{ID}.html"
         self.TxUrl3 = "https://v.qq.com/x/cover/{ID1}/{ID2}.html"

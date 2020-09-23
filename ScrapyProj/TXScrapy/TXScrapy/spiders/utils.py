@@ -20,22 +20,22 @@ TX_ChildAreas = [
 ]
 ## {ofset} 设置为 30 的倍数
 TX_Urls = [
-    # "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=1&channel=tv&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=19",      ##剧集某地区最新
-    # "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=1&channel=tv&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=18",      ##剧集某地区最热
-    # "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=1&channel=tv&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=16",      ##剧集某地区好评
-    # "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=1&channel=tv&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=21",      ##剧集某地区口碑好剧
-    # "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=1&channel=tv&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=54",      ##剧集某地区高分好评
-    # "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=1&channel=tv&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=22",      ##剧集某地区知乎高分
-    # "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=0&channel=movie&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=18",   ##电影某地区最近热播
-    # "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=0&channel=movie&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=19",   #电影某地区最新上架
-    # "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=0&channel=movie&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=21",   #电影某地区高分好评
-    # "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=0&channel=movie&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=22",   #电影某地区知乎高分
-    # "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=0&channel=variety&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=5",  ##综艺某地区最新上架
-    # "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=0&channel=variety&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=4",  ##综艺某地区最近热播
+    "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=1&channel=tv&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=19",      ##剧集某地区最新
+    "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=1&channel=tv&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=18",      ##剧集某地区最热
+    "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=1&channel=tv&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=16",      ##剧集某地区好评
+    "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=1&channel=tv&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=21",      ##剧集某地区口碑好剧
+    "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=1&channel=tv&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=54",      ##剧集某地区高分好评
+    "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=1&channel=tv&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=22",      ##剧集某地区知乎高分
+    "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=0&channel=movie&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=18",   ##电影某地区最近热播
+    "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=0&channel=movie&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=19",   #电影某地区最新上架
+    "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=0&channel=movie&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=21",   #电影某地区高分好评
+    "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=0&channel=movie&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=22",   #电影某地区知乎高分
+    "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=0&channel=variety&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=5",  ##综艺某地区最新上架
+    "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=0&channel=variety&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=4",  ##综艺某地区最近热播
     "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=0&channel=cartoon&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=19", ##动漫某地区最新
-    # "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=0&channel=cartoon&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=18", ##动漫某地区最热
-    # "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=0&channel=cartoon&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=20",  ##动漫某地区好评
+    "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=0&channel=cartoon&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=18", ##动漫某地区最热
+    "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=0&channel=cartoon&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=20",  ##动漫某地区好评
     "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=0&channel=child&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=19",    ##少儿某地区最新
-    # "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=0&channel=child&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=18",    ##少儿某地区最热
-    # "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=0&channel=child&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=20",    ##少儿某地区好评
+    "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=0&channel=child&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=18",    ##少儿某地区最热
+    "https://v.qq.com/x/bu/pagesheet/list?_all=1&append=0&channel=child&iarea={iarea}&listpage=1&offset={ofset}&pagesize=30&sort=20",    ##少儿某地区好评
     ]

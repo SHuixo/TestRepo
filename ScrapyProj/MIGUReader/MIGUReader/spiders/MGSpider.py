@@ -2,8 +2,8 @@ import copy
 import random
 
 import scrapy
-from scrapy import settings
-from selenium.webdriver.chrome import webdriver
+from scrapy.conf import settings
+from selenium import webdriver
 from MIGUReader.spiders import utils
 from MIGUReader.items import MGItem
 
@@ -84,10 +84,10 @@ class MGSpider(scrapy.Spider):
 
         item = response.meta["meta"]
         item["name"] = response.xpath(r'string(/html/body/div[4]/div[1]/div[1]/h1)').extract_first().strip()
-        item["author"] = response.xpath(r'string(/html/body/div[4]/div[1]/div[1]/div/div[2]/div[1])').extract_first().strip()
-        item["publish"] = response.xpath(r'string(/html/body/div[4]/div[1]/div[1]/div/div[2]/div[2])').extract_first().strip()
-        item["classify"] = response.xpath(r'string(/html/body/div[4]/div[1]/div[1]/div/div[2]/div[4])').extract_first().strip()
-        item["ptime"] = response.xpath(r'string(/html/body/div[4]/div[1]/div[1]/div/div[2]/div[6])').extract_first().strip()
-        item["label"] = response.xpath(r'string(/html/body/div[4]/div[1]/div[1]/div/div[2]/div[7])').extract_first().strip()
-
+        item["author"] = response.xpath(r'string(/html/body/div[4]/div[1]/div[1]/div/div[2]/div[1])').extract_first().split("：")[-1].strip()
+        item["publish"] = response.xpath(r'string(/html/body/div[4]/div[1]/div[1]/div/div[2]/div[2])').extract_first().split("：")[-1].strip()
+        item["classify"] = response.xpath(r'string(/html/body/div[4]/div[1]/div[1]/div/div[2]/div[4])').extract_first().split("：")[-1].strip()
+        item["ptime"] = response.xpath(r'string(/html/body/div[4]/div[1]/div[1]/div/div[2]/div[6])').extract_first().split("：")[-1].strip()
+        item["label"] = response.xpath(r'string(/html/body/div[4]/div[1]/div[1]/div/div[2]/div[7])').extract_first().split("：")[-1].strip()
+        #作者：	夏半秋
         yield item
