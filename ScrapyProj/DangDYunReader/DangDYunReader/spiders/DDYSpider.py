@@ -19,7 +19,7 @@ from scrapy.selector import Selector
 class WXSpider(scrapy.Spider):
     # 可按照之前的方案爬取数据！
     # 获取数据方式需结合反推!
-    name = 'QQReader'
+    name = 'DDYReader'
     #allow_domains = ["weread.qq.com"]
 
     def __init__(self):
@@ -54,7 +54,7 @@ class WXSpider(scrapy.Spider):
         item["commNum"] = None
         item["readNum"] = None
         item["collNum"] = None
-        item["app"] = "QQ阅读"
+        item["app"] = "当当云阅读"
 
         if self.SWITCH :
             # 通过下拉页面刷新！
