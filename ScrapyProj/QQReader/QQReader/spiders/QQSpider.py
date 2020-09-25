@@ -36,7 +36,12 @@ class WXSpider(scrapy.Spider):
         self.url = "https://weread.qq.com/web/category/{ttype}" # 当 SWITCH 为 True 时使用！
         self.SWITCH = False #True #False #True   # 定义两种数据爬取方式 True调用selenium插件，False 则通过url返回的json提取。
 
+
     def start_requests(self):
+
+        pass
+
+    def start_requests2wx(self):
 
         item = WXItem()
         item["uid"] = None
@@ -95,7 +100,7 @@ class WXSpider(scrapy.Spider):
                 logging.warning("完成执行 ttype -> {}".format(types))
             logging.warning("完成执行 all types -> ")
 
-    def getJson(self, response):
+    def getJson2wx(self, response):
         # json格式的数据解析,存在部分字段信息缺失，优先以 getHtml 方法为主
         item = response.meta["meta"]
         resJson = response.text
@@ -140,8 +145,7 @@ class WXSpider(scrapy.Spider):
 
                 yield item
 
-
-    def getHtml(self, response):
+    def getHtml2wx(self, response):
 
         # 从动态页面获取阅读所有信息，获取数据比较完整，以此为主!
         item = response.meta["meta"]
