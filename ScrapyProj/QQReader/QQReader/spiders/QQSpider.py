@@ -11,8 +11,8 @@ from selenium.webdriver import ActionChains
 from selenium.webdriver.common.keys import Keys
 from scrapy.conf import settings
 from selenium import webdriver
-from WXReader.spiders import utils
-from WXReader.items import WXItem
+from QQReader.spiders import utils
+from QQReader.items import QQItem
 from scrapy.selector import Selector
 
 
@@ -33,17 +33,132 @@ class WXSpider(scrapy.Spider):
         self.types = [utils.TopType,
                       utils.OtherType
                       ]
-        self.url = "https://weread.qq.com/web/category/{ttype}" # 当 SWITCH 为 True 时使用！
-        self.SWITCH = False #True #False #True   # 定义两种数据爬取方式 True调用selenium插件，False 则通过url返回的json提取。
+
+        self.SWITCH = True #False #True   # 定义两种数据爬取方式 True调用selenium插件，False 则通过url返回的json提取。
 
 
     def start_requests(self):
 
+        item = QQItem()
+        item["uid"] = None
+        item["classify"] = None
+        item["type"] = None
+        item["name"] = None
+        item["author"] = None
+        item["publish"] = None
+        item["ptime"] = None
+        item["price"] = None
+        item["isbn"] = None
+        item["country"] = None
+        item["label"] = None
+        item["score"] = None
+        item["commNum"] = None
+        item["readNum"] = None
+        item["collNum"] = None
+        item["app"] = "QQ阅读"
+
+        if self.SWITCH:
+            for book in utils.csBooks:
+                logging.warning("utils.csBooks book id 是-> {} ！！".format(book))
+                for tag in utils.tags:
+                    logging.warning("utils.tags tag id 是 -> {} ！！".format(tag))
+                    url = book.format(tag=tag)
+                    logging.warning("url -> {} 页面下拉刷新完毕！！".format(url))
+                    response = scrapy.Request(url=url, meta=copy.deepcopy({"meta": item}), callback=self.getCsHtml)
+                    yield response
+                    logging.warning("请求完url = {} 的页面！！".format(url))
+                logging.warning("utils.tag 请求完毕！！")
+            logging.warning("utils.csBooks 请求完毕！！")
+
+            for book in utils.qqBooks:
+                logging.warning("utils.qqBooks book id 是-> {} ！！".format(book))
+                response = scrapy.Request(url=book, meta=copy.deepcopy({"meta": item}), callback=self.getqqBHtml)
+                yield response
+            logging.warning("utils.qqBooks 请求完毕！！")
+
+            for book in utils.qqRanks:
+                logging.warning("utils.qqRanks book id 是-> {} ！！".format(book))
+                response = scrapy.Request(url=book, meta=copy.deepcopy({"meta": item}), callback=self.getqqRHtml)
+                yield response
+            logging.warning("utils.qqRanks 请求完毕！！")
+
+            for book in utils.YQBooks:
+                if "yunqi.qq.com" not in book:
+                    url = "http://yunqi.qq.com" + book
+                else:
+                    url = book
+
+                logging.warning("utils.YQBooks book id 是-> {} ！！".format(book))
+                response = scrapy.Request(url=url, meta=copy.deepcopy({"meta": item}), callback=self.getYQHtml)
+                yield response
+            logging.warning("utils.qqRanks 请求完毕！！")
+        logging.warning("All utils 请求完毕！！")
+
+    def getCsHtml(self, response):
         pass
+
+    def getqqBHtml(self, response):
+        pass
+
+    def getqqRHtml(self,response):
+        pass
+
+    def getYQHtml(self, response):
+
+        item = response.meta["meta"]
+        resText = response.text
+
+        titles = response.xpath(r'//*[@id="BookListDiv"]/*/a/@title').extract()
+        hrefs = response.xpath(r'//*[@id="BookListDiv"]/*/a/@href').extract()
+        authors = response.xpath(r'string(//*[@id="BookListDiv"]/*/div/dl[1]/dd[1]/a)').extract_first()
+        types = response.xpath(r'string(//*[@id="BookListDiv"]/*/div/dl[1]/dd[2]/a)').extract_first()
+        ptimes = response.xpath(r'string(//*[@id="BookListDiv"]/*/div/dl[2]/dd[1])').extract_first()
+
+        for index, href in enumerate(hrefs):
+
+            item["author"] = authors[index]
+            item["classify"] = types[index]
+            item["type"] = types[index]
+            item["name"] = titles[index]
+            item["ptime"] = ptimes[index]
+
+            if '/bk/' in href:
+                item["uid"] = str(href).split("/")[-1].split(".")[0]
+                response = scrapy.Request(url=href, meta=copy.deepcopy({"meta": item}), callback=self.getYQItem)
+                yield response
+            else:
+                item["uid"] = str(href).split("bid=")[-1]
+                response = scrapy.Request(url=href, meta=copy.deepcopy({"meta": item}), callback=self.getYQItemO)
+                yield response
+
+    def getYQItem(self, response):
+        item = response.meta["meta"]
+        resText = response.text
+        # 作品标签：
+        #   宠文、总裁、杀伐果断、美食、豪门
+        item["label"] = str(response.xpath(r'string(/html/body/div[3]/div[2]/div[2]/div[1]/div[6])').extract_first()).split('：')[-1]
+
+        yield  item
+
+    def getYQItemO(self, response):
+
+        item = response.meta["meta"]
+        resText = response.text
+        #//*[@id="bookinfo"]/div[2]/dl[1]/dd[3]
+        item["type"] = response.xpath(r'string(//*[@id="bookinfo"]/div[2]/dl[1]/dd[3])').extract_first()
+        # //*[@id="favorCount"]
+        # //*[@id="recommendCount"]
+        item["commNum"] = response.xpath(r'string(//*[@id="recommendCount"])').extract_first()
+        item["readNum"] = response.xpath(r'string(//*[@id="recommendCount"])').extract_first()
+        item["collNum"] = response.xpath(r'string(//*[@id="favorCount"])').extract_first()
+        # //*[@id="StarIcoValue"]/b/font
+        item["score"] = response.xpath(r'string(//*[@id="StarIcoValue"]/b/font)').extract_first()
+
+        yield item
 
     def start_requests2wx(self):
 
-        item = WXItem()
+        item = QQItem()
         item["uid"] = None
         item["classify"] = None
         item["type"] = None
