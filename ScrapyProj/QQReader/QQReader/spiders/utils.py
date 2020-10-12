@@ -1,4 +1,4 @@
-#作品标签
+#作品标签（配合创世书库！）
 tags =[
     #不限，宅男，医生，学生，老师，杀手，特种兵，明星，黑客，特工，盗贼，豪门，孤儿，法师
     ""    ,"tg21101"    ,"tg21070"    ,"tg21067"    ,"tg21064"    ,"tg21062"
@@ -264,7 +264,7 @@ qqBooks=[
     ,"http://dushu.qq.com/store/index/cat2/13100/cat3/13106/sortkey/2/ps/30/p/1.html"
     # 文学
     #全部
-    ,"http://dushu.qq.com/store/index/cat2/14100/sortkey/2/ps/30/p/1.html           "
+    ,"http://dushu.qq.com/store/index/cat2/14100/sortkey/2/ps/30/p/1.html"
     #中国当代随笔
     ,"http://dushu.qq.com/store/index/cat2/14100/cat3/14107/sortkey/2/ps/30/p/1.html"
     #文学评论与鉴赏
@@ -289,7 +289,7 @@ qqBooks=[
     ,"http://dushu.qq.com/store/index/cat2/14100/cat3/14101/sortkey/2/ps/30/p/1.html"
     # 青春文学
     #全部
-    ,"http://dushu.qq.com/store/index/cat2/14300/sortkey/2/ps/30/p/1.html           "
+    ,"http://dushu.qq.com/store/index/cat2/14300/sortkey/2/ps/30/p/1.html"
     # 穿越/重生/架空
     ,"http://dushu.qq.com/store/index/cat2/14300/cat3/14312/sortkey/2/ps/30/p/1.html"
     #穿悬疑/惊悚
