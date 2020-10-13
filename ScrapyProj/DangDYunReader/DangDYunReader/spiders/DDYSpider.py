@@ -12,7 +12,7 @@ from selenium.webdriver.common.keys import Keys
 from scrapy.conf import settings
 from selenium import webdriver
 from WXReader.spiders import utils
-from WXReader.items import WXItem
+from WXReader.items import DDYItem
 from scrapy.selector import Selector
 
 
@@ -37,6 +37,30 @@ class WXSpider(scrapy.Spider):
         self.SWITCH = False #True #False #True   # 定义两种数据爬取方式 True调用selenium插件，False 则通过url返回的json提取。
 
     def start_requests(self):
+
+        item = DDYItem()
+        item["uid"] = None
+        item["classify"] = None
+        item["type"] = None
+        item["name"] = None
+        item["author"] = None
+        item["publish"] = None
+        item["ptime"] = None
+        item["price"] = None
+        item["isbn"] = None
+        item["country"] = None
+        item["label"] = None
+        item["score"] = None
+        item["commNum"] = None
+        item["readNum"] = None
+        item["collNum"] = None
+        item["app"] = "当当云阅读"
+
+        if self.SWITCH :
+            # 通过下拉页面刷新！
+            pass
+
+    def start_requests2(self):
 
         item = WXItem()
         item["uid"] = None
@@ -95,7 +119,7 @@ class WXSpider(scrapy.Spider):
                 logging.warning("完成执行 ttype -> {}".format(types))
             logging.warning("完成执行 all types -> ")
 
-    def getJson(self, response):
+    def getJson2(self, response):
         # json格式的数据解析,存在部分字段信息缺失，优先以 getHtml 方法为主
         item = response.meta["meta"]
         resJson = response.text
@@ -140,8 +164,7 @@ class WXSpider(scrapy.Spider):
 
                 yield item
 
-
-    def getHtml(self, response):
+    def getHtml2(self, response):
 
         # 从动态页面获取阅读所有信息，获取数据比较完整，以此为主!
         item = response.meta["meta"]
