@@ -37,6 +37,7 @@ class TXSpider(scrapy.Spider):
                     logging.warning("start requrl  iarea{}".format(iarea))
                     for lpage in range(1,50):
                         logging.warning("start requrl  iarea lpage{}".format(lpage))
+                        logging.warning("start request url is {}".format(reqUrl.format(iarea=iarea,ofset=lpage*30)))
                         response = scrapy.Request(url=reqUrl.format(iarea=iarea,ofset=lpage*30),meta=copy.deepcopy({"index":index}),callback=self.getHtml)
                         yield response
                     logging.warning("finish reqUrl all page")
@@ -94,19 +95,27 @@ class TXSpider(scrapy.Spider):
         index = response.meta["index"]
         resHtml = response.text
         title = re.search(r'<title>(.*?)</title>',resHtml)
-        if title is not None and '不见了' not in title.group(1):
+        if self.SWITCH:
             hrefs = response.xpath('/html/body/*/a/@href').extract()
             hrefs.extend(response.xpath('/html/body/div/div/div[2]/*/a/@href').extract())
             hrefs = list(set(hrefs))
             for href in hrefs:
                 response = scrapy.Request(url=href,callback=self.Funcs[index])
                 yield response
+        else:
+            if title is not None and '不见了' not in title.group(1):
+                hrefs = response.xpath('/html/body/*/a/@href').extract()
+                hrefs.extend(response.xpath('/html/body/div/div/div[2]/*/a/@href').extract())
+                hrefs = list(set(hrefs))
+                for href in hrefs:
+                    response = scrapy.Request(url=href,callback=self.Funcs[index])
+                    yield response
 
     def getTvItem(self, response):
         href = response.url
         reshtml = response.text
         title = re.search(r'<title>(.*?)</title>',reshtml)
-        if title is not None and '不见了' not in title.group(1):
+        if self.SWITCH:
             item = TXItem()
             item["title"] = self.strRegex.sub('',response.xpath('string(//*[@id="container_player"]/div/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/h2/a)').extract_first())
             item["category"] = self.strRegex.sub('',response.xpath('string(//*[@id="container_player"]/div/div[2]/div[1]/div[2]/div/div[4])').extract_first())
@@ -136,13 +145,43 @@ class TXSpider(scrapy.Spider):
             else:
                 logging.warning("Err no vidGroup at href {}".format(href))
         else:
-            logging.warning("Err No reshtml at href {}".format(href))
+            if title is not None and '不见了' not in title.group(1):
+                item = TXItem()
+                item["title"] = self.strRegex.sub('',response.xpath('string(//*[@id="container_player"]/div/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/h2/a)').extract_first())
+                item["category"] = self.strRegex.sub('',response.xpath('string(//*[@id="container_player"]/div/div[2]/div[1]/div[2]/div/div[4])').extract_first())
+                item["actor"] = None
+                if '/page' in href:
+                    rhtml = re.search(r'page/(.*?).html',href).group(1).strip()
+                elif '/cover' in href:
+                    rhtml = re.search(r'cover/(.*?).html',href).group(1).strip()
+                if len(rhtml.split("/")) == 1:
+                    item["pid"] =rhtml
+                elif len(rhtml.split("/")) == 2:
+                    item["pid"] =rhtml.split("/")[0]
+                item["hid"] = None
+                ## 获得每一集的ID
+                vidGroup = re.search(r'{"vid":\[(.*?)\],',reshtml)
+                if vidGroup is not None:
+                    vids = vidGroup.group(1)
+                    if len(vids) > 2:
+                        vids = vids.replace('"','').split(',')
+                        for vid in vids:
+                            item["uid"] = vid
+                            reqUrl = self.TxUrl3.format(ID1=item["pid"],ID2=item["uid"])
+                            response = scrapy.Request(url=reqUrl,meta=copy.deepcopy({"meta":item}),callback=self.getItem)
+                            yield response
+                    else:
+                        logging.warning("Err no vids at href {}".format(href))
+                else:
+                    logging.warning("Err no vidGroup at href {}".format(href))
+            else:
+                logging.warning("Err No reshtml at href {}".format(href))
 
     def getMovieItem(self,response):
         href = response.url
         reshtml = response.text
         title = re.search(r'<title>(.*?)</title>',reshtml)
-        if title is not None and '不见了' not in title.group(1):
+        if self.SWITCH:
             item = TXItem()
             vids = []
             if '/cover/' in href:
@@ -175,12 +214,45 @@ class TXSpider(scrapy.Spider):
             else:
                 logging.warning("Err no vidGroup at href {}".format(href))
         else:
-            logging.warning("Err No reshtml at href {}".format(href))
+            if title is not None and '不见了' not in title.group(1):
+                item = TXItem()
+                vids = []
+                if '/cover/' in href:
+                    item["title"] = self.strRegex.sub('',response.xpath('string(//*[@id="container_player"]/div/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/h2/a)').extract_first())
+                    item["category"] = self.strRegex.sub('',response.xpath('string(//*[@id="container_player"]/div/div[2]/div[1]/div[2]/div/div[3])').extract_first())
+                    item["actor"] = None
+                    rhtml = re.search(r'cover/(.*?).html',href).group(1).strip()
+                    if len(rhtml.split("/")) == 1:
+                        item["pid"] =rhtml
+                    elif len(rhtml.split("/")) == 2:
+                        item["pid"] =rhtml.split("/")[0]
+                elif '/page/' in href:
+                    rhtml = re.search(r'page/(.*?).html',href).group(1).strip()
+                    if len(rhtml.split("/")) == 1:
+                        vids.append(rhtml)
+                    item["title"] = None
+                    item["category"] = None
+                    item["actor"] = None
+                    item["pid"] = None
+                item["hid"] = None
+                ## 获得每一集的ID
+                vidGroup = re.search(r'{"vid":\[(.*?)\],',reshtml)
+                if vidGroup is not None:
+                    vids.extend(vidGroup.group(1).replace('"','').split(','))
+                    for vid in vids:
+                        item["uid"] = vid
+                        reqUrl = self.TxUrl3.format(ID1=item["pid"],ID2=item["uid"])
+                        response = scrapy.Request(url=reqUrl,meta=copy.deepcopy({"meta":item}),callback=self.getItem)
+                        yield response
+                else:
+                    logging.warning("Err no vidGroup at href {}".format(href))
+            else:
+                logging.warning("Err No reshtml at href {}".format(href))
 
     def getVarietyItem(self,response):
         reshtml = response.text
         title = re.search(r'<title>(.*?)</title>',reshtml)
-        if title is not None and '不见了' not in title.group(1):
+        if self.SWITCH:
             item = TXItem()
             item["title"] = self.strRegex.sub('',response.xpath('string(//*[@id="container_player"]/div[2]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/h2/a)').extract_first())
             item["category"] = self.strRegex.sub('',response.xpath('string(//*[@id="container_player"]/div[2]/div[2]/div[1]/div[2]/div/div[3])').extract_first())
@@ -197,12 +269,30 @@ class TXSpider(scrapy.Spider):
                 else:
                     logging.warning("Err href is None")
         else:
-            logging.warning("Err No reshtml at getVarietyItem")
+            if title is not None and '不见了' not in title.group(1):
+                item = TXItem()
+                item["title"] = self.strRegex.sub('',response.xpath('string(//*[@id="container_player"]/div[2]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/h2/a)').extract_first())
+                item["category"] = self.strRegex.sub('',response.xpath('string(//*[@id="container_player"]/div[2]/div[2]/div[1]/div[2]/div/div[3])').extract_first())
+                item["actor"] = None
+                item["pid"] = None
+                item["hid"] = None
+                hrefs = response.xpath('//*[@id="video_scroll_wrap"]/div[5]/div/ul/*/a[1]/@href').extract()
+                for href in hrefs:
+                    if href is not None:
+                        item["uid"] = href[:-5].split('/')[-1]
+                        reqUrl = "https://v.qq.com" + href
+                        response = scrapy.Request(url=reqUrl,meta=copy.deepcopy({"meta":item}),callback=self.getItem)
+                        yield response
+                    else:
+                        logging.warning("Err href is None")
+            else:
+                logging.warning("Err No reshtml at getVarietyItem")
 
     def getVlogItem(self,response):
         reshtml = response.text
         title = re.search(r'<title>(.*?)</title>',reshtml)
-        if title is not None and '不见了' not in title.group(1):
+
+        if self.SWITCH:
             item = TXItem()
             item["title"] = self.strRegex.sub('',response.xpath('string(//*[@id="container_player"]/div/div[1]/div[2]/div[2]/div[1]/div[1]/div/h2/a)').extract_first())
             item["category"] = self.strRegex.sub('',response.xpath('string(//*[@id="container_player"]/div/div[2]/div[1]/div[2]/div/div[4])').extract_first())
@@ -220,9 +310,28 @@ class TXSpider(scrapy.Spider):
                 else:
                     logging.warning("Err href is None")
         else:
-            logging.warning("Err No reshtml at getVlogItem")
+            if title is not None and '不见了' not in title.group(1):
+                item = TXItem()
+                item["title"] = self.strRegex.sub('',response.xpath('string(//*[@id="container_player"]/div/div[1]/div[2]/div[2]/div[1]/div[1]/div/h2/a)').extract_first())
+                item["category"] = self.strRegex.sub('',response.xpath('string(//*[@id="container_player"]/div/div[2]/div[1]/div[2]/div/div[4])').extract_first())
+                item["actor"] = None
+                item["hid"] = None
+                hrefs = response.xpath('//*[@id="video_scroll_wrap"]/div[4]/div/div/ul/*/a[1]/@href').extract()
+                for href in hrefs:
+                    if href is not None:
+                        lhref = href[:-5].split('/')
+                        item["uid"] = lhref[-1]
+                        item["pid"] = lhref[-2]
+                        reqUrl = "https://v.qq.com" + href
+                        response = scrapy.Request(url=reqUrl,meta=copy.deepcopy({"meta":item}),callback=self.getItem)
+                        yield response
+                    else:
+                        logging.warning("Err href is None")
+            else:
+                logging.warning("Err No reshtml at getVlogItem")
 
     def getItem(self,response):
+
         item = response.meta["meta"]
         item["type"] = re.search(r'type_name":"(.*?)"',response.text).group(1)
         if item["type"] == "综艺":

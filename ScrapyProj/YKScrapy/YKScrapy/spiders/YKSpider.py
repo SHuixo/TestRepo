@@ -2,6 +2,7 @@
 #使用selenium解决动态加载数据抓取
 import copy
 import csv
+import random
 import time
 from YKScrapy.items import YKItem
 import scrapy
@@ -10,12 +11,13 @@ from lxml import etree
 from selenium import webdriver
 from selenium.webdriver import ActionChains
 from YKScrapy.spiders import utils
+from scrapy.conf import settings
 import logging
 
 class YKSpider(scrapy.Spider):
     name = 'YK'
     allowed_domains = ["v.youku.com"]
-
+    #建议不直接爬取了！！封杀的很厉害
     def __init__(self):
         #chrome浏览器
         self.timeout = 30
@@ -45,7 +47,10 @@ class YKSpider(scrapy.Spider):
                             logging.warning("开始执行 reqUrl  type style area -> {}".format(area))
                             for page in range(1,17):
                                 logging.warning("开始执行 reqUrl  type style area lpage -> {}".format(page))
-                                yield scrapy.Request(url=reqUrl.format(ktype=ktype,style=style,area=area,lpage=page),meta=copy.deepcopy({"ktype":ktype}),callback=self.getHtml)
+                                logging.warning("requrl is {}".format(reqUrl.format(ktype=ktype,style=style,area=area,lpage=page)))
+                                headers = {"User-Agent" : random.choice(settings["USER_AGENTS"]),
+                                           "referer": "https://www.youku.com/category/show/c_{ktype}.html?spm=a2hcb.12701310.app.5~5!2~5!2~5~5~DL~DD~A&theme=dark".format(ktype=ktype)}
+                                yield scrapy.Request(url=reqUrl.format(ktype=ktype,style=style,area=area,lpage=page), headers=headers, meta=copy.deepcopy({"ktype":ktype}),callback=self.getHtml)
                             logging.warning("完成执行 reqUrl  type style area lpage !!")
                         logging.warning("完成执行 reqUrl  type style area !!")
                     logging.warning("完成执行 reqUrl  type style!!")
@@ -65,6 +70,7 @@ class YKSpider(scrapy.Spider):
 
     def getHtml(self,response):
         resHtml = response.text
+        print(resHtml)
         if "404 Not Found" == re.search(r'<title>(.*?)</title>', resHtml, re.S|re.I|re.M).group(1):
             yield None
         else:
