@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# Scrapy settings for leScrapySplash project
+# Scrapy settings for IQIYIScrapy project
 #
 # For simplicity, this file contains only settings considered important or
 # commonly used. You can find more settings consulting the documentation:
@@ -9,14 +9,15 @@
 #     https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 #     https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
-BOT_NAME = 'leScrapySplash'
+BOT_NAME = 'IQIYIScrapy'
 
-SPIDER_MODULES = ['leScrapySplash.spiders']
-NEWSPIDER_MODULE = 'leScrapySplash.spiders'
+SPIDER_MODULES = ['IQIYIScrapy.spiders']
+NEWSPIDER_MODULE = 'IQIYIScrapy.spiders'
 
-
+LOG_LEVEL = "WARNING"
+LOG_FILE = "./LOG_IQIYI.log"
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
-#USER_AGENT = 'leScrapySplash (+http://www.yourdomain.com)'
+#USER_AGENT = 'IQIYIScrapy (+http://www.yourdomain.com)'
 USER_AGENTS = [
         "Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.1 (KHTML, like Gecko) Chrome/22.0.1207.1 Safari/537.1",
         "Mozilla/5.0 (X11; CrOS i686 2268.111.0) AppleWebKit/536.11 (KHTML, like Gecko) Chrome/20.0.1132.57 Safari/536.11",
@@ -44,18 +45,22 @@ USER_AGENTS = [
 ROBOTSTXT_OBEY = True
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-#CONCURRENT_REQUESTS = 32
+CONCURRENT_REQUESTS = 32
 
 # Configure a delay for requests for the same website (default: 0)
 # See https://doc.scrapy.org/en/latest/topics/settings.html#download-delay
 # See also autothrottle settings and docs
-#DOWNLOAD_DELAY = 3
+DOWNLOAD_DELAY = 0.25
 # The download delay setting will honor only one of:
 #CONCURRENT_REQUESTS_PER_DOMAIN = 16
 #CONCURRENT_REQUESTS_PER_IP = 16
 
 # Disable cookies (enabled by default)
-#COOKIES_ENABLED = False
+COOKIES_ENABLED = False
+
+# Disable retry/download_delay/close_redirect/
+RETRY_ENABLED=False
+DOWNLOAD_TIMEOUT=15
 
 # Disable Telnet Console (enabled by default)
 #TELNETCONSOLE_ENABLED = False
@@ -69,14 +74,14 @@ ROBOTSTXT_OBEY = True
 # Enable or disable spider middlewares
 # See https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 #SPIDER_MIDDLEWARES = {
-#    'leScrapySplash.middlewares.LescrapysplashSpiderMiddleware': 543,
+#    'IQIYIScrapy.middlewares.IqiyiscrapySpiderMiddleware': 543,
 #}
 
 # Enable or disable downloader middlewares
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html
 DOWNLOADER_MIDDLEWARES = {
-   'leScrapySplash.middlewares.LescrapysplashDownloaderMiddleware': 543,
-    'leScrapySplash.middlewares.RandomUserAgentMiddleWare': 542,
+    'IQIYIScrapy.middlewares.IqiyiscrapyDownloaderMiddleware': 543,
+    'IQIYIScrapy.middlewares.RandomUserAgentMiddleWare': 542,
 }
 
 # Enable or disable extensions
@@ -88,17 +93,17 @@ DOWNLOADER_MIDDLEWARES = {
 # Configure item pipelines
 # See https://doc.scrapy.org/en/latest/topics/item-pipeline.html
 ITEM_PIPELINES = {
-   'leScrapySplash.pipelines.LescrapysplashPipeline': 300,
-    'leScrapySplash.pipelines.MySQLPipeline': 299,
+    'IQIYIScrapy.pipelines.IqiyiscrapyPipeline': 300,
+    'IQIYIScrapy.pipelines.MySQLPipeline': 299,
 }
 
 # Enable and configure the AutoThrottle extension (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/autothrottle.html
 #AUTOTHROTTLE_ENABLED = True
 # The initial download delay
-#AUTOTHROTTLE_START_DELAY = 5
+# AUTOTHROTTLE_START_DELAY = 1
 # The maximum download delay to be set in case of high latencies
-#AUTOTHROTTLE_MAX_DELAY = 60
+# AUTOTHROTTLE_MAX_DELAY = 3
 # The average number of requests Scrapy should be sending in parallel to
 # each remote server
 #AUTOTHROTTLE_TARGET_CONCURRENCY = 1.0
@@ -107,11 +112,11 @@ ITEM_PIPELINES = {
 
 # Enable and configure HTTP caching (disabled by default)
 # See https://doc.scrapy.org/en/latest/topics/downloader-middleware.html#httpcache-middleware-settings
-#HTTPCACHE_ENABLED = True
-#HTTPCACHE_EXPIRATION_SECS = 0
-#HTTPCACHE_DIR = 'httpcache'
-#HTTPCACHE_IGNORE_HTTP_CODES = []
-#HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
+# HTTPCACHE_ENABLED = True
+# HTTPCACHE_EXPIRATION_SECS = 1
+# HTTPCACHE_DIR = 'httpcache'
+# HTTPCACHE_IGNORE_HTTP_CODES = []
+# HTTPCACHE_STORAGE = 'scrapy.extensions.httpcache.FilesystemCacheStorage'
 
 #Mysql数据库的配置信息
 MYSQL_HOST = 'localhost'
@@ -120,13 +125,3 @@ MYSQL_USER = 'root'             #数据库账号，请修改
 MYSQL_PASSWD = '123456'         #数据库密码，请修改
 
 MYSQL_PORT = 3306               #数据库端口，在dbhelper中使用
-
-##
-# 自己安装的docker里的splash位置
-# 开发/测试
-SPLASH_URL = "http://172.19.9.11:8050/"
-
-DUPEFILTER_CLASS = "scrapy_splash.SplashAwareDupeFilter"
-HTTPCACHE_STORAGE = 'scrapy_splash.SplashAwareFSCacheStorage'
-
-CLOSESPIDER_TIMEOUT = 7200   # 超时100秒退出
