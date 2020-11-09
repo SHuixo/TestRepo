@@ -4,17 +4,25 @@ import copy
 import csv
 
 import requests
-from LEScrapy.items import LEItem
+from leScrapySplash.items import LEItem
 import logging
 import scrapy
 import re
+from scrapy_splash import SplashRequest
 
 
 class LESpider(scrapy.Spider):
     name = 'leScrapySplash'
 
     def __init__(self):
-
+        
+        self.splash_args = {"lua_source": """
+                        --splash.response_body_enabled = true
+                        splash.private_mode_enabled = false
+                        splash.images_enabled = false
+                        splash:wait(3)
+                        return {html = splash:html()}
+                        """}
         self.strRegex = re.compile('[^\w\u4e00-\u9fff]')
         self.Type = ['电视剧', '电影', '综艺', '动漫']
         self.ListUrls = [
@@ -54,7 +62,7 @@ class LESpider(scrapy.Spider):
                                 item = LEItem()
                                 item["uid"] = vid
                                 url = self.LEUrl.format(vid = vid)
-                                yield scrapy.Request(url=url, meta={"meta":copy.deepcopy(item)},callback= self.parseItemDetails)
+                                yield SplashRequest(url=url, args=self.splash_args, meta={"meta":copy.deepcopy(item)},callback= self.parseItemDetails)
                 logging.warning("finish reqUrl all page")
             logging.warning("Finish all reqUrls")
         else:
@@ -100,6 +108,6 @@ class LESpider(scrapy.Spider):
             except KeyError:
                 item["type"] = "其他"
             item["app"] = "LE"
-            yield item
+            #yield item
         else:
             logging.warning("Err No Item at uid {}".format(item["uid"]))

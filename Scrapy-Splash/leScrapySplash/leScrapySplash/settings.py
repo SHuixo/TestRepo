@@ -120,3 +120,13 @@ MYSQL_USER = 'root'             #数据库账号，请修改
 MYSQL_PASSWD = '123456'         #数据库密码，请修改
 
 MYSQL_PORT = 3306               #数据库端口，在dbhelper中使用
+
+##
+# 自己安装的docker里的splash位置
+# 开发/测试
+SPLASH_URL = "http://172.19.9.11:8050/"
+
+DUPEFILTER_CLASS = "scrapy_splash.SplashAwareDupeFilter"
+HTTPCACHE_STORAGE = 'scrapy_splash.SplashAwareFSCacheStorage'
+
+CLOSESPIDER_TIMEOUT = 7200   # 超时100秒退出
