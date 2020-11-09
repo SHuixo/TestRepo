@@ -12,3 +12,14 @@ class LescrapysplashItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     pass
+
+class LEItem(scrapy.Item):
+    uid = scrapy.Field()   # 视频url请求id
+    pid = scrapy.Field()   # 视频系列id
+    hid = scrapy.Field()   # 视频隐藏id
+    title = scrapy.Field()   # 视频标题名称
+    name = scrapy.Field()   # 视频剧集名称
+    actor = scrapy.Field()   # 视频演员
+    category = scrapy.Field()   # 视频标签
+    type = scrapy.Field()   # 视频类型
+    app = scrapy.Field()   # app（网站）名称
