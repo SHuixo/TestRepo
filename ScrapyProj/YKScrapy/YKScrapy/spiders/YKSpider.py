@@ -70,7 +70,6 @@ class YKSpider(scrapy.Spider):
 
     def getHtml(self,response):
         resHtml = response.text
-        print(resHtml)
         if "404 Not Found" == re.search(r'<title>(.*?)</title>', resHtml, re.S|re.I|re.M).group(1):
             yield None
         else:
