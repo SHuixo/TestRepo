@@ -5,8 +5,17 @@
 # See documentation in:
 # https://doc.scrapy.org/en/latest/topics/spider-middleware.html
 
+import random
 from scrapy import signals
+from scrapy.conf import settings
 
+class RandomUserAgentMiddleWare(object):
+
+    def __init__(self):
+        self.user_agents=settings["USER_AGENTS"]
+
+    def process_request(self, request, spider):
+        request.headers.setdefault("User-Agent", random.choice(self.user_agents))
 
 class LescrapysplashSpiderMiddleware(object):
     # Not all methods need to be defined. If a method is not defined,
